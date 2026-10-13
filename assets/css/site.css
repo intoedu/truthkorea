@@ -585,13 +585,16 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
 }
 .info-list dd { margin: 0 0 1rem; }
 .info-list dd a { display: inline-flex; align-items: center; min-height: 48px; }
+/* 넓은 화면: 이름(dt) 옆에 내용(dd). 내용 칸이 12글자보다 좁아지면 이름 아래로 내려갑니다 */
 @media (min-width: 48em) {
   .info-list > div {
-    display: grid;
-    grid-template-columns: 9rem minmax(0, 1fr);
-    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1rem;
     align-items: baseline;
   }
+  .info-list dt { flex: 0 0 9rem; }
+  .info-list dd { flex: 1 1 12em; min-width: 0; }
 }
 
 /* 소식 */
@@ -770,6 +773,10 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
   overflow-wrap: anywhere;
 }
 .org-table th { background: var(--c-tint); font-weight: 700; }
+@media (max-width: 47.99em) {
+  .org-table th, .org-table td { padding: .5rem .75rem; }
+  .btn { padding-inline: 1rem; }
+}
 
 /* 자료실 */
 .help-box {
