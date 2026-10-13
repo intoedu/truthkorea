@@ -3,21 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>활동 소식 - 국민주권운동</title>
-<meta name="description" content="국민주권운동의 활동 소식과 공지를 알려 드립니다.">
+<title>뉴스·영상 - 트루스코리아</title>
+<meta name="description" content="트루스코리아의 종합뉴스, TK 뉴스, 진실알리기 글과 영상을 최근 것부터 보여 드립니다.">
 <meta name="color-scheme" content="only light">
-<meta name="theme-color" content="#1E2A30">
+<meta name="theme-color" content="#10315C">
 <meta name="format-detection" content="telephone=no">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="국민주권운동">
+<meta property="og:site_name" content="트루스코리아">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="국민주권운동 - 활동 소식">
-<meta property="og:description" content="국민주권운동의 활동 소식과 공지를 알려 드립니다.">
-<!-- og:image / og:url: 배포 주소가 정해지면 절대 주소로 추가합니다 (README 참고). -->
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="트루스코리아 - 뉴스·영상">
+<meta property="og:description" content="자유대한민국 5,000만 국민주권운동!">
+<meta property="og:url" content="https://xn--3e0b9b67w9mjb2nckd.com/news.html">
+<meta property="og:image" content="https://xn--3e0b9b67w9mjb2nckd.com/assets/img/brand/og-image.png">
+<meta property="og:image:width" content="499">
+<meta property="og:image:height" content="254">
+<meta property="og:image:alt" content="언론 영화 소액주주운동, 3.5% 175만명의 기적, TruthKorea국민주권재단이라고 쓰인 트루스코리아 안내 그림">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/img/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
 <link rel="stylesheet" href="assets/css/site.css">
 <script src="assets/js/site.js"></script>
+<script src="assets/js/config.js" defer></script>
+<script src="assets/js/posts.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">본문 바로가기</a>
@@ -37,12 +45,15 @@
   </div>
 
   <div class="container brand-row">
-    <a class="wordmark" href="index.html">국민주권운동<span class="sr-only"> 처음 화면으로</span></a>
-    <a class="header-call" href="tel:" data-ph="contact-phone">
+    <a class="brand" href="index.html">
+      <img class="brand__emblem" src="assets/img/brand/emblem-112.png" srcset="assets/img/brand/emblem-112.png 2x, assets/img/brand/emblem.png 3x" width="56" height="56" alt="">
+      <span class="brand__text"><span class="brand__name">트루스코리아</span><span class="brand__sub">TK 국민주권운동</span></span><span class="sr-only"> 처음 화면으로</span>
+    </a>
+    <a class="header-call" href="contact.html">
       <svg class="header-call__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg>
       <span class="header-call__text">
         <span class="header-call__label">전화 문의</span>
-        <span class="header-call__number"><span class="ph" data-ph="contact-phone">[입력 필요: 대표 전화번호]</span></span>
+        <span class="header-call__number">010-2705-5000</span>
       </span>
     </a>
   </div>
@@ -51,9 +62,10 @@
     <ul class="container gnb__list">
       <li><a class="gnb__link" href="index.html">처음으로</a></li>
       <li><a class="gnb__link" href="about.html">단체 소개</a></li>
-      <li><a class="gnb__link" href="news.html" aria-current="page">활동 소식</a></li>
-      <li><a class="gnb__link" href="resources.html">자료실</a></li>
-      <li><a class="gnb__link" href="contact.html">오시는 길</a></li>
+      <li><a class="gnb__link" href="news.html" aria-current="page">뉴스·<wbr>영상</a></li>
+      <li><a class="gnb__link" href="events.html">행사·<wbr>세미나</a></li>
+      <li><a class="gnb__link" href="support.html">후원하기</a></li>
+      <li><a class="gnb__link gnb__link--ext" href="https://truthkorea.net/">서명운동 <span class="gnb__ext">(다른 사이트)</span></a></li>
     </ul>
   </nav>
 </header>
@@ -61,55 +73,32 @@
 <nav class="breadcrumb" aria-label="현재 위치">
   <ol class="container breadcrumb__list">
     <li><a class="breadcrumb__link" href="index.html">처음으로</a><span class="breadcrumb__sep" aria-hidden="true">›</span></li>
-    <li aria-current="page">활동 소식</li>
+    <li aria-current="page">뉴스·영상</li>
   </ol>
 </nav>
 
 <main id="main" tabindex="-1">
   <div class="page-head">
     <div class="container">
-      <h1 class="page-title">활동 소식</h1>
-      <p class="lead">우리 단체의 활동 소식과 공지를 최근 것부터 알려 드립니다.</p>
+      <h1 class="page-title">뉴스·영상</h1>
+      <p class="lead">종합뉴스, TK 뉴스, 진실알리기 글과 영상을 최근 것부터 보여 드립니다.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="container content">
-      <!-- 소식이 6개 이상이면 맨 위에 '소식 목록'(각 글로 가는 링크 목록)을 추가합니다. 15개가 넘으면 지난 소식을 news-YYYY.html로 옮깁니다. id(news-N)는 바꾸지 않습니다. -->
-      <!-- 날짜는 'YYYY년 M월 D일'로 씁니다. 실제 날짜를 채울 때만 <time datetime="YYYY-MM-DD">로 감쌉니다. -->
-      <article class="news-item" id="news-1" aria-labelledby="news-1-title">
-        <p class="news-item__meta"><span class="badge"><span class="ph" data-ph="news-1-category">[입력 필요: 공지 또는 활동]</span></span> 올린&nbsp;날: <span class="ph" data-ph="news-1-date">[입력 필요: 올린 날짜]</span></p>
-        <h2 class="news-item__title" id="news-1-title"><span class="ph" data-ph="news-1-title">[입력 필요: 소식 제목]</span></h2>
-        <div class="prose">
-          <div class="ph ph-block" data-ph="news-1-body">[입력 필요: 소식 내용]</div>
-        </div>
-        <!-- 선택: 사진이 있을 때만 (news-1-photo)
-        <figure><img src="assets/img/news-1.jpg" alt="(사진 설명)" width="(가로)" height="(세로)"><figcaption>(사진 설명)</figcaption></figure>
-        -->
-        <p class="to-top-row"><a class="to-top" href="#top"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg>맨 위로</a></p>
-      </article>
-      <article class="news-item" id="news-2" aria-labelledby="news-2-title">
-        <p class="news-item__meta"><span class="badge"><span class="ph" data-ph="news-2-category">[입력 필요: 공지 또는 활동]</span></span> 올린&nbsp;날: <span class="ph" data-ph="news-2-date">[입력 필요: 올린 날짜]</span></p>
-        <h2 class="news-item__title" id="news-2-title"><span class="ph" data-ph="news-2-title">[입력 필요: 소식 제목]</span></h2>
-        <div class="prose">
-          <div class="ph ph-block" data-ph="news-2-body">[입력 필요: 소식 내용]</div>
-        </div>
-        <!-- 선택: 사진이 있을 때만 (news-2-photo)
-        <figure><img src="assets/img/news-2.jpg" alt="(사진 설명)" width="(가로)" height="(세로)"><figcaption>(사진 설명)</figcaption></figure>
-        -->
-        <p class="to-top-row"><a class="to-top" href="#top"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg>맨 위로</a></p>
-      </article>
-      <article class="news-item" id="news-3" aria-labelledby="news-3-title">
-        <p class="news-item__meta"><span class="badge"><span class="ph" data-ph="news-3-category">[입력 필요: 공지 또는 활동]</span></span> 올린&nbsp;날: <span class="ph" data-ph="news-3-date">[입력 필요: 올린 날짜]</span></p>
-        <h2 class="news-item__title" id="news-3-title"><span class="ph" data-ph="news-3-title">[입력 필요: 소식 제목]</span></h2>
-        <div class="prose">
-          <div class="ph ph-block" data-ph="news-3-body">[입력 필요: 소식 내용]</div>
-        </div>
-        <!-- 선택: 사진이 있을 때만 (news-3-photo)
-        <figure><img src="assets/img/news-3.jpg" alt="(사진 설명)" width="(가로)" height="(세로)"><figcaption>(사진 설명)</figcaption></figure>
-        -->
-        <p class="to-top-row"><a class="to-top" href="#top"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg>맨 위로</a></p>
-      </article>
+    <div class="container">
+      <nav class="catnav" aria-labelledby="catnav-label">
+        <p class="catnav__label" id="catnav-label">보실 분류를 누르세요</p>
+        <ul class="catnav__list">
+          <li><a class="catnav__link" href="news.html" data-cat="">전체</a></li>
+          <li><a class="catnav__link" href="news.html?cat=broadcast" data-cat="broadcast">종합뉴스</a></li>
+          <li><a class="catnav__link" href="news.html?cat=tknews" data-cat="tknews">TK 뉴스</a></li>
+          <li><a class="catnav__link" href="news.html?cat=truth" data-cat="truth">진실알리기</a></li>
+        </ul>
+      </nav>
+      <h2 class="section-title list-title" id="list-title">전체 글</h2>
+      <noscript><p class="notice notice--warn">뉴스와 영상 목록은 자바스크립트가 켜져 있어야 보입니다. 인터넷 앱의 설정에서 자바스크립트를 켜 주시거나, 전화(010-2705-5000)로 문의해 주세요.</p></noscript>
+      <div class="post-list" data-tk-list data-cats="broadcast,tknews,truth" data-url-cat="1" data-page-size="10" data-heading="list-title"></div>
     </div>
   </div>
 </main>
@@ -117,40 +106,39 @@
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__info">
-      <p class="site-footer__name">국민주권운동</p>
-      <address class="site-footer__address">
-        <dl class="info-list info-list--on-dark">
-          <div><dt>주소</dt><dd><span class="ph" data-ph="contact-address">[입력 필요: 도로명 주소와 건물 이름·층]</span></dd></div>
-          <div><dt>전화</dt><dd><a class="footer-link" href="tel:" data-ph="contact-phone"><span class="ph" data-ph="contact-phone">[입력 필요: 대표 전화번호]</span></a></dd></div>
-          <div><dt>이메일</dt><dd><a class="footer-link break-any" href="mailto:" data-ph="contact-email"><span class="ph" data-ph="contact-email">[입력 필요: 이메일 주소]</span></a></dd></div>
-          <div><dt>전화 받는 시간</dt><dd><span class="ph" data-ph="contact-hours">[입력 필요: 전화 받는 요일과 시간]</span></dd></div>
-          <!-- 선택(있을 때만 주석을 풀고 채움):
-          <div><dt>대표자</dt><dd><span class="ph" data-ph="org-representative">[입력 필요: 대표자 직함과 이름]</span></dd></div>
-          <div><dt>고유번호</dt><dd><span class="ph" data-ph="org-registration-no">[입력 필요: 고유번호 또는 등록번호]</span></dd></div>
-          -->
-        </dl>
-      </address>
+      <p class="site-footer__name"><img class="site-footer__emblem" src="assets/img/brand/emblem-112.png" width="48" height="48" alt=""><span>트루스코리아<span class="site-footer__sub">TK 국민주권운동</span></span></p>
+      <dl class="info-list info-list--on-dark">
+        <div><dt>명칭</dt><dd>TRUTHKOREA국민주권</dd></div>
+        <div><dt>전화</dt><dd><a class="footer-link" href="tel:01027055000">010-2705-5000</a></dd></div>
+        <div><dt>이메일</dt><dd><a class="footer-link break-any" href="mailto:suntrees@naver.com">suntrees@naver.com</a></dd></div>
+        <div><dt>후원 계좌</dt><dd>하나은행 <span class="nowrap">212-910016-02504</span><br>예금주: 트루스코리아</dd></div>
+      </dl>
     </div>
     <nav class="footer-menu" aria-label="아래 메뉴">
       <ul class="footer-menu__list">
           <li><a class="footer-menu__link" href="index.html">처음으로</a></li>
           <li><a class="footer-menu__link" href="about.html">단체 소개</a></li>
-          <li><a class="footer-menu__link" href="news.html" aria-current="page">활동 소식</a></li>
-          <li><a class="footer-menu__link" href="resources.html">자료실</a></li>
-          <li><a class="footer-menu__link" href="contact.html">오시는 길</a></li>
+          <li><a class="footer-menu__link" href="news.html" aria-current="page">뉴스·<wbr>영상</a></li>
+          <li><a class="footer-menu__link" href="events.html">행사·<wbr>세미나</a></li>
+          <li><a class="footer-menu__link" href="support.html">후원하기</a></li>
+          <li><a class="footer-menu__link" href="https://truthkorea.net/">서명운동 (다른 사이트)</a></li>
+          <li><a class="footer-menu__link" href="contact.html">연락처</a></li>
       </ul>
     </nav>
   </div>
   <div class="container site-footer__bottom">
     <p class="site-footer__tip needs-js">글자를 더 크게 보시려면 화면 맨 위 <span class="nowrap">‘글자 크기’</span>에서 ‘크게’나 ‘아주 크게’를 누르세요.</p>
     <p class="site-footer__tip">컴퓨터에서는 Ctrl 키와&nbsp;+&nbsp;키를 함께 눌러도 글자가 커집니다.</p>
-    <p class="site-footer__copy">© 국민주권운동</p>
+    <div class="site-footer__copyrow">
+      <p class="site-footer__copy">© TRUTHKOREA국민주권</p>
+      <a class="footer-admin" href="admin/">관리자</a>
+    </div>
   </div>
 </footer>
 
 <nav class="quickbar" aria-label="빠른 메뉴">
-  <a class="quickbar__item quickbar__item--call" href="tel:" data-ph="contact-phone"><svg class="quickbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg><span>전화 걸기</span></a>
-  <a class="quickbar__item" href="contact.html#directions"><svg class="quickbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>오시는 길</span></a>
+  <a class="quickbar__item quickbar__item--call" href="tel:01027055000"><svg class="quickbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg><span>전화 걸기</span></a>
+  <a class="quickbar__item quickbar__item--donate" href="support.html"><svg class="quickbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20s-7-4.4-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.6-9 9-9 9z"/></svg><span>후원하기</span></a>
   <a class="quickbar__item" href="#top"><svg class="quickbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>맨 위로</span></a>
 </nav>
 </body>
