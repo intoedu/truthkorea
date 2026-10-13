@@ -19,8 +19,12 @@ const rows = posts.map((p) => {
   const images = (p.images || []).map((im) => {
     const o = { src: im.src, alt: im.alt || '' };
     if (im.width && im.height) { o.width = im.width; o.height = im.height; }
+    for (const k of ['caption', 'thumb', 'full']) if (im[k]) o[k] = im[k];
+    if (Number.isInteger(im.after)) o.after = im.after;
     return o;
   });
+  const extraVideos = (p.extra_videos || []).map((v) => ({ id: v.id, after: v.after }));
+  const links = (p.links || []).map((l) => ({ text: l.text, href: l.href }));
   const ev = p.event_date || {};
   return `  (${[
     lit(p.id),
@@ -28,6 +32,9 @@ const rows = posts.map((p) => {
     lit(p.title),
     lit(p.body || '') === 'null' ? "''" : lit(p.body),
     lit(p.youtube_id),
+    Number.isInteger(p.video_after) ? String(p.video_after) : 'null',
+    `${lit(JSON.stringify(extraVideos))}::jsonb`,
+    `${lit(JSON.stringify(links))}::jsonb`,
     `${lit(JSON.stringify(images))}::jsonb`,
     `${lit(p.published_at)}::timestamptz`,
     bool(p.is_published, true),
@@ -44,7 +51,7 @@ const sql = `-- 자동으로 만든 파일입니다. 고치지 말고 data/posts
 -- 같은 id가 이미 있으면 건너뜁니다(여러 번 실행해도 안전).
 
 insert into public.posts
-  (id, category, title, body, youtube_id, images, published_at, is_published, show_on_home, source_url, event_start, event_end)
+  (id, category, title, body, youtube_id, video_after, extra_videos, links, images, published_at, is_published, show_on_home, source_url, event_start, event_end)
 values
 ${rows.join(',\n')}
 on conflict (id) do nothing;

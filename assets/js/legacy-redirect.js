@@ -15,13 +15,14 @@
     PresidentYoon: 'news.html?cat=truth',
     event: 'events.html'
   };
-  /* 같은 글이 두 게시판에 있던 경우: 목록에 남긴 글로 보냅니다 */
-  var SAME = { 'legacy-PresidentYoon-8': 'legacy-truth-12' };
+  /* 같은 글이 두 게시판에 있던 경우: 목록에 남긴 글로 보냅니다 (posts.js의 LEGACY_SAME과 같게) */
+  var SAME = { 'legacy-PresidentYoon-8': 'legacy-truth-12', 'legacy-TK_NEWS-13': 'legacy-truth-14', 'legacy-truth-11': 'legacy-TK_broadcast-22' };
   var PAGES = { visionpc: 'about.html', vision: 'about.html', intro: 'about.html', supportpc: 'support.html', support: 'support.html' };
   var q, to = null, path = location.pathname;
   try { q = new URLSearchParams(location.search); } catch (e) { return; }
   if (/\/bbs\/board\.php$/.test(path)) {
-    var bo = q.get('bo_table') || '', wr = q.get('wr_id') || '';
+    /* 옛 사이트의 공유 단추가 만든 주소는 &amp;wr_id= 꼴이라 'amp;wr_id'로 읽힙니다 */
+    var bo = q.get('bo_table') || '', wr = q.get('wr_id') || q.get('amp;wr_id') || '';
     if (LIST.hasOwnProperty(bo)) {
       if (/^\d{1,9}$/.test(wr)) {
         var id = 'legacy-' + bo + '-' + wr;

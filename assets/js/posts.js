@@ -18,7 +18,11 @@
 
   var CATS = { broadcast: '종합뉴스', tknews: 'TK 뉴스', truth: '진실알리기', event: '행사·세미나' };
   var NEWS_CATS = ['broadcast', 'tknews', 'truth'];
-  var SELECT = 'id,category,title,body,youtube_id,images,published_at,show_on_home,event_start,event_end';
+  var SELECT = 'id,category,title,body,youtube_id,video_after,extra_videos,links,images,published_at,show_on_home,event_start,event_end';
+  /* 옛 홈페이지 게시판 → 새 목록 (옛 글 번호로 들어왔는데 글이 없을 때 그 목록으로 안내) */
+  var LEGACY_LIST = { TK_broadcast: 'broadcast', TK_NEWS: 'tknews', truth: 'truth', Culture_War: 'truth', PresidentYoon: 'truth', event: 'event' };
+  /* 옛 홈페이지에서 두 게시판에 똑같이 올라 있던 글: 숨긴 쪽 → 보이는 쪽 (legacy-redirect.js와 같게) */
+  var LEGACY_SAME = { 'legacy-PresidentYoon-8': 'legacy-truth-12', 'legacy-TK_NEWS-13': 'legacy-truth-14', 'legacy-truth-11': 'legacy-TK_broadcast-22' };
   var ID_RE = /^[A-Za-z0-9_-]{1,100}$/;
   var YT_RE = /^[A-Za-z0-9_-]{11}$/;
   var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -35,6 +39,8 @@
   /* ---------- 작은 도구 ---------- */
   function str(v) { return typeof v === 'string' ? v : (v == null ? '' : String(v)); }
   function posInt(v) { var n = Number(v); return n > 0 && n < 100000 && Math.floor(n) === n ? n : 0; }
+  /* 문단 번호(0 이상 정수)이면 그 값, 아니면 null */
+  function slot(v) { return typeof v === 'number' && v >= 0 && v < 10000 && Math.floor(v) === v ? v : null; }
   function byId(id) { return id ? document.getElementById(id) : null; }
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -69,6 +75,16 @@
       s.appendChild(p);
     });
     return s;
+  }
+  /* 제목 글자: ‘·’ 바로 뒤에서 줄을 바꿀 수 있게 <wbr>을 넣습니다 (글자는 그대로).
+     낱말을 붙여 쓰는 한국어 제목이 좁은 화면에서 엉뚱한 곳에서 끊기지 않게 하려는 것입니다. */
+  function setTitle(node, text) {
+    while (node.firstChild) node.removeChild(node.firstChild);
+    str(text).split('·').forEach(function (part, i, all) {
+      node.appendChild(document.createTextNode(part + (i < all.length - 1 ? '·' : '')));
+      if (i < all.length - 1) node.appendChild(document.createElement('wbr'));
+    });
+    return node;
   }
   function button(cls, label, iconName) {
     var b = el('button', cls);
@@ -132,12 +148,25 @@
   }
 
   /* ---------- 데이터 정리 ---------- */
+  /* 사진: src(화면용), alt(설명), caption(사진 아래 글), after(몇 번째 문단 뒤), thumb(목록용 작은 그림), full(크게 보기용 원본) */
   function normImg(im) {
     if (typeof im === 'string') im = { src: im };
     if (!im || typeof im !== 'object') return null;
     var src = str(im.src);
     if (!src) return null;
-    return { src: src, alt: str(im.alt), width: posInt(im.width), height: posInt(im.height) };
+    return { src: src, alt: str(im.alt), width: posInt(im.width), height: posInt(im.height),
+      caption: str(im.caption).trim(), after: slot(im.after), thumb: str(im.thumb), full: str(im.full) };
+  }
+  function normVideos(a) {
+    return (Array.isArray(a) ? a : []).filter(function (v) {
+      return v && typeof v === 'object' && YT_RE.test(str(v.id));
+    }).slice(0, 10).map(function (v) { return { id: v.id, after: slot(v.after) }; });
+  }
+  /* 글자에 숨은 링크: [{ text: '자세히보기', href: 'https://…' }] */
+  function normLinks(a) {
+    return (Array.isArray(a) ? a : []).filter(function (l) {
+      return l && typeof l === 'object' && str(l.text).trim() && str(l.text).length <= 200 && safeHref(str(l.href));
+    }).slice(0, 20).map(function (l) { return { text: str(l.text).trim(), href: safeHref(str(l.href)) }; });
   }
   function norm(p) {
     if (!p || typeof p !== 'object') return null;
@@ -151,6 +180,9 @@
       title: str(p.title).trim() || '(제목 없음)',
       body: str(p.body),
       youtube_id: YT_RE.test(str(p.youtube_id)) ? p.youtube_id : null,
+      video_after: slot(p.video_after),
+      extra_videos: normVideos(p.extra_videos),
+      links: normLinks(p.links),
       images: (Array.isArray(p.images) ? p.images : []).map(normImg).filter(Boolean),
       published_at: str(p.published_at),
       is_published: p.is_published !== false,
@@ -250,44 +282,57 @@
 
   /* ---------- 글 본문: 빈 줄 = 새 문단, 한 줄 바꿈 = <br>, 인터넷 주소 = 링크 ---------- */
   var URL_RE = /https?:\/\/[^\s<>"'“”‘’]+/g;
-  function appendLinked(parent, text) {
+  function linkEl(text, href) {
+    var a = el('a', 'break-any', text);
+    a.href = href;
+    a.rel = 'noopener';
+    return a;
+  }
+  /* 글자 속 숨은 링크(links)를 찾아 링크로 만듭니다. 링크마다 처음 나오는 한 곳만 바꿉니다. */
+  function appendPlain(parent, text, links) {
+    while (text) {
+      var best = -1, at = -1;
+      for (var i = 0; links && i < links.length; i++) {
+        if (links[i].used) continue;
+        var k = text.indexOf(links[i].text);
+        if (k >= 0 && (at < 0 || k < at)) { at = k; best = i; }
+      }
+      if (best < 0) { parent.appendChild(document.createTextNode(text)); return; }
+      if (at > 0) parent.appendChild(document.createTextNode(text.slice(0, at)));
+      links[best].used = true;
+      parent.appendChild(linkEl(links[best].text, links[best].href));
+      text = text.slice(at + links[best].text.length);
+    }
+  }
+  function appendLinked(parent, text, links) {
     var last = 0, m;
     URL_RE.lastIndex = 0;
     while ((m = URL_RE.exec(text))) {
       var raw = m[0].replace(/[.,!?;:)\]}>…·]+$/, '');
       var start = m.index, end = start + raw.length;
       if (end <= start) { URL_RE.lastIndex = m.index + m[0].length; continue; }
-      if (start > last) parent.appendChild(document.createTextNode(text.slice(last, start)));
+      if (start > last) appendPlain(parent, text.slice(last, start), links);
       var href = safeHref(raw);
-      if (href) {
-        var a = el('a', 'break-any', raw);
-        a.href = href;
-        a.rel = 'noopener';
-        parent.appendChild(a);
-      } else {
-        parent.appendChild(document.createTextNode(raw));
-      }
+      parent.appendChild(href ? linkEl(raw, href) : document.createTextNode(raw));
       last = end;
       URL_RE.lastIndex = end;
     }
-    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+    if (last < text.length) appendPlain(parent, text.slice(last), links);
   }
-  function renderText(container, text) {
-    var paras = str(text).replace(/\r\n?/g, '\n').split(/\n[ \t 　]*\n+/);
-    paras.forEach(function (para) {
-      if (!para.trim()) return;
-      var p = el('p');
-      para.replace(/^\n+|\n+$/g, '').split('\n').forEach(function (line, i) {
-        if (i) p.appendChild(el('br'));
-        appendLinked(p, line);
-      });
-      container.appendChild(p);
+  /* 빈 줄로 나눈 문단들 (빈 문단은 뺌) */
+  function splitParas(text) {
+    return str(text).replace(/\r\n?/g, '\n').split(/\n[ \t\u00a0\u3000]*\n+/).filter(function (para) { return para.trim(); });
+  }
+  function appendLines(parent, text, links) {
+    str(text).replace(/^\n+|\n+$/g, '').split('\n').forEach(function (line, i) {
+      if (i) parent.appendChild(el('br'));
+      appendLinked(parent, line, links);
     });
   }
   function squash(s) { return str(s).replace(/\s+/g, ' ').trim(); }
 
   /* ---------- 유튜브: 누르기 전에는 바깥에 아무것도 요청하지 않음 ---------- */
-  function renderVideo(container, id, title) {
+  function renderVideo(container, id, title, nth) {
     var wrap = el('div', 'video');
     var box = el('div', 'video__box');
     var btn = el('button', 'video__facade');
@@ -297,11 +342,12 @@
     play.appendChild(icon('play'));
     btn.appendChild(play);
     btn.appendChild(el('span', 'video__label', '영상 보기'));
-    btn.appendChild(el('span', 'video__title', title));
+    var name = nth > 1 ? title + ' (' + nth + '번째 영상)' : title;
+    btn.appendChild(el('span', 'video__title', name));
     btn.addEventListener('click', function () {
       var f = document.createElement('iframe');
       f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&playsinline=1';
-      f.title = '영상: ' + title;
+      f.title = '영상: ' + name;
       f.width = '560'; f.height = '315';
       f.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
       f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
@@ -316,43 +362,71 @@
     a.rel = 'noopener';
     a.appendChild(icon('external'));
     a.appendChild(document.createTextNode('유튜브에서 보기 (다른 사이트)'));
+    if (nth > 1) a.appendChild(el('span', 'sr-only', ' (' + nth + '번째 영상)'));
     ext.appendChild(a);
     wrap.appendChild(ext);
     wrap.appendChild(el('p', 'video__help', '‘영상 보기’를 누르면 이 화면에서 바로 영상이 나옵니다.'));
     container.appendChild(wrap);
   }
 
-  /* 글 하나의 내용(영상, 본문, 사진)을 container에 그립니다. 관리자 미리 보기에서도 씁니다. */
+  function renderFigure(container, p, im, i, opts) {
+    var src = safeSrc(im.src, opts.allowBlob);
+    if (!src) return;
+    var fig = el('figure', 'post__figure');
+    var img = el('img');
+    img.src = src;
+    img.alt = im.alt || ('‘' + p.title + '’ 글의 사진 ' + (i + 1));
+    if (im.width && im.height) { img.width = im.width; img.height = im.height; }
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    fig.appendChild(img);
+    if (im.caption) {
+      var cap = el('figcaption', 'post__caption');
+      appendLines(cap, im.caption, null);
+      fig.appendChild(cap);
+    }
+    if (!/^blob:/.test(src)) {
+      var a = el('a', 'post__figure-link');
+      a.href = (im.full && safeSrc(im.full)) || src;
+      a.appendChild(icon('zoom'));
+      a.appendChild(document.createTextNode('사진 크게 보기'));
+      a.appendChild(el('span', 'sr-only', ' (' + (i + 1) + '번째 사진)'));
+      fig.appendChild(a);
+    }
+    container.appendChild(fig);
+  }
+
+  /* 글 하나의 내용(영상, 본문, 사진)을 container에 그립니다. 관리자 미리 보기에서도 씁니다.
+     영상과 사진은 저장된 자리(after = 몇 번째 문단 뒤)에 놓습니다.
+     자리가 없으면 첫 영상은 맨 위, 사진과 다른 영상은 맨 아래에 놓습니다. */
   function renderPostContent(container, p, opts) {
     opts = opts || {};
     while (container.firstChild) container.removeChild(container.firstChild);
-    if (p.youtube_id) renderVideo(container, p.youtube_id, p.title);
-    if (p.body && squash(p.body) !== squash(p.title)) {
-      var body = el('div', 'post__body');
-      renderText(body, p.body);
-      if (body.firstChild) container.appendChild(body);
-    }
-    p.images.forEach(function (im, i) {
-      var src = safeSrc(im.src, opts.allowBlob);
-      if (!src) return;
-      var fig = el('figure', 'post__figure');
-      var img = el('img');
-      img.src = src;
-      img.alt = im.alt || ('‘' + p.title + '’ 글의 사진 ' + (i + 1));
-      if (im.width && im.height) { img.width = im.width; img.height = im.height; }
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      fig.appendChild(img);
-      if (!/^blob:/.test(src)) {
-        var a = el('a', 'post__figure-link');
-        a.href = src;
-        a.appendChild(icon('zoom'));
-        a.appendChild(document.createTextNode('사진 크게 보기'));
-        a.appendChild(el('span', 'sr-only', ' (' + (i + 1) + '번째 사진)'));
-        fig.appendChild(a);
+    var paras = (p.body && squash(p.body) !== squash(p.title)) ? splitParas(p.body) : [];
+    var links = (p.links || []).map(function (l) { return { text: l.text, href: l.href, used: false }; });
+    var media = [], nth = 0;
+    if (p.youtube_id) media.push({ at: p.video_after == null ? 0 : p.video_after, video: p.youtube_id, nth: ++nth });
+    (p.extra_videos || []).forEach(function (v) { media.push({ at: v.after == null ? Infinity : v.after, video: v.id, nth: ++nth }); });
+    (p.images || []).forEach(function (im, i) { media.push({ at: im.after == null ? Infinity : im.after, im: im, i: i }); });
+    media.forEach(function (m, k) { m.k = k; });
+    media.sort(function (a, b) { return a.at === b.at ? a.k - b.k : (a.at < b.at ? -1 : 1); });
+    var body = el('div', 'post__body');
+    var mi = 0;
+    function mediaUpTo(n) {
+      while (mi < media.length && media[mi].at <= n) {
+        var m = media[mi++];
+        if (m.video) renderVideo(body, m.video, p.title, m.nth);
+        else renderFigure(body, p, m.im, m.i, opts);
       }
-      container.appendChild(fig);
-    });
+    }
+    for (var i = 0; i < paras.length; i++) {
+      mediaUpTo(i);
+      var para = el('p');
+      appendLines(para, paras[i], links);
+      body.appendChild(para);
+    }
+    mediaUpTo(Infinity);
+    if (body.firstChild) container.appendChild(body);
   }
 
   function badge(text, extra) { return el('span', 'badge' + (extra ? ' ' + extra : ''), text); }
@@ -398,7 +472,10 @@
     a.href = postHref(p.id);
     var thumb;
     var first = null, firstSrc = null;
-    for (var i = 0; i < p.images.length && !firstSrc; i++) { first = p.images[i]; firstSrc = safeSrc(first.src); }
+    for (var i = 0; i < p.images.length && !firstSrc; i++) {
+      first = p.images[i];
+      firstSrc = (first.thumb && safeSrc(first.thumb)) || safeSrc(first.src);  /* 목록에는 작은 그림(thumb)이 있으면 그것을 씀 */
+    }
     if (firstSrc || !p.youtube_id) {
       thumb = el('span', 'post-card__thumb' + (p.category === 'event' ? ' post-card__thumb--poster' : ''));
       var img = el('img');
@@ -417,7 +494,7 @@
     thumb.setAttribute('aria-hidden', 'true');
     a.appendChild(thumb);
     var body = el('span', 'post-card__body');
-    body.appendChild(el('span', 'post-card__title', p.title));
+    body.appendChild(setTitle(el('span', 'post-card__title'), p.title));
     var meta = el('span', 'post-card__meta');
     fillMeta(meta, p, { showCat: showCat });
     body.appendChild(meta);
@@ -428,7 +505,7 @@
 
   function briefItem(p) {
     var li = el('li', 'news-brief__item');
-    var a = el('a', 'news-brief__link', p.title);
+    var a = setTitle(el('a', 'news-brief__link'), p.title);
     a.href = postHref(p.id);
     li.appendChild(a);
     var meta = el('p', 'news-brief__meta');
@@ -476,7 +553,8 @@
     host.appendChild(more);
 
     var offset = 0, busy = false;
-    function load(first) {
+    /* retried: ‘다시 불러오기’를 눌러 다시 부른 경우. 눌렀던 단추가 사라지므로 새로 나온 첫 글(또는 알림)로 초점을 옮깁니다. */
+    function load(first, retried) {
       if (busy) return;
       busy = true;
       clear(status);
@@ -488,7 +566,9 @@
         clear(status);
         if (first && !res.items.length) {
           var where = urlCat ? '‘' + CATS[urlCat] + '’에 ' : (cats.length === 1 ? '‘' + CATS[cats[0]] + '’에 ' : '');
-          status.appendChild(notice('', null, '아직 ' + where + '올라온 글이 없습니다.'));
+          var empty = notice('', null, '아직 ' + where + '올라온 글이 없습니다.');
+          status.appendChild(empty);
+          if (retried) { empty.tabIndex = -1; empty.focus(); }
           return;
         }
         var firstNew = null;
@@ -500,7 +580,7 @@
         ul.hidden = false;
         offset += res.items.length;
         more.hidden = !(paged && res.more);
-        if (!first && firstNew) {
+        if ((!first || retried) && firstNew) {
           var link = firstNew.querySelector('a');
           if (link) link.focus();
         }
@@ -508,7 +588,7 @@
         busy = false;
         moreBtn.disabled = false;
         clear(status);
-        status.appendChild(notice('error', ERR_TITLE, ERR_TEXT, function () { load(first); }));
+        status.appendChild(notice('error', ERR_TITLE, ERR_TEXT, function () { load(first, true); }));
       });
     }
     moreBtn.addEventListener('click', function () { load(false); });
@@ -522,22 +602,36 @@
     var actions = byId('post-actions');
     if (!titleEl || !statusEl || !contentEl) return;
     var id = getParam('id');
+    if (id && LEGACY_SAME.hasOwnProperty(id)) { location.replace(postHref(LEGACY_SAME[id])); return; }
 
-    function notFound() {
+    function notFound(retried) {
       titleEl.textContent = '글을 찾을 수 없습니다';
       document.title = '글을 찾을 수 없습니다 - 트루스코리아';
       clear(statusEl);
-      statusEl.appendChild(notice('', null, '주소가 잘못되었거나 글이 내려갔을 수 있습니다. 아래 ‘목록으로’ 단추를 눌러 다른 글을 보세요.'));
+      /* 옛 홈페이지 글 번호(legacy-게시판-번호)이면 그 분류의 목록으로 안내합니다 */
+      var m = /^legacy-([A-Za-z_]+)-\d+$/.exec(str(id));
+      var cat = m && LEGACY_LIST.hasOwnProperty(m[1]) ? LEGACY_LIST[m[1]] : null;
+      var box = notice('', null, cat
+        ? '옛 홈페이지의 글 주소입니다. 이 글은 지금 홈페이지에 없습니다. 아래 단추를 눌러 ‘' + CATS[cat] + '’ 목록에서 다른 글을 보세요.'
+        : '주소가 잘못되었거나 글이 내려갔을 수 있습니다. 아래 ‘목록으로’ 단추를 눌러 다른 글을 보세요.');
+      if (cat) {
+        var go = el('a', 'btn btn--primary', CATS[cat] + ' 목록 보기');
+        go.href = listHref(cat);
+        box.appendChild(go);
+        if (back) { back.href = listHref(cat); back.lastChild.textContent = CATS[cat] + ' 목록으로'; }
+      }
+      statusEl.appendChild(box);
+      if (retried) { titleEl.tabIndex = -1; titleEl.focus(); }
     }
 
-    function load() {
+    function load(retried) {
       clear(statusEl);
       statusEl.appendChild(el('p', 'notice', LOADING));
       get(id).then(function (p) {
         clear(statusEl);
-        if (!p) { notFound(); return; }
+        if (!p) { notFound(retried); return; }
         document.title = p.title + ' - 트루스코리아';
-        titleEl.textContent = p.title;
+        setTitle(titleEl, p.title);
         if (metaEl) fillMeta(metaEl, p, { full: true });
         renderPostContent(contentEl, p);
         var isEvent = p.category === 'event';
@@ -550,7 +644,7 @@
           crumb.textContent = '행사·세미나';
         }
         if (isEvent) {
-          var links = document.querySelectorAll('.gnb__link');
+          var links = document.querySelectorAll('.gnb__link, .footer-menu__link');
           for (var i = 0; i < links.length; i++) {
             var href = links[i].getAttribute('href');
             if (href === 'events.html') links[i].setAttribute('aria-current', 'page');
@@ -558,12 +652,14 @@
           }
         }
         if (actions) addShare(actions, p);
+        /* ‘다시 불러오기’ 단추가 사라졌으므로 글 제목으로 초점을 옮깁니다 */
+        if (retried) { titleEl.tabIndex = -1; titleEl.focus(); }
       }, function () {
         clear(statusEl);
-        statusEl.appendChild(notice('error', ERR_TITLE, ERR_TEXT, load));
+        statusEl.appendChild(notice('error', ERR_TITLE, ERR_TEXT, function () { load(true); }));
       });
     }
-    load();
+    load(false);
   }
 
   function addShare(actions, p) {
@@ -608,7 +704,8 @@
       var m = u.pathname.match(/^\/(?:embed|shorts|live|v|e)\/([^/?#]+)/);
       id = m ? m[1] : u.searchParams.get('v');
     }
-    return id && YT_RE.test(id) ? id : null;
+    /* 재생목록 주소(/embed/videoseries?list=…)는 영상 하나가 아니므로 받지 않습니다 */
+    return id && YT_RE.test(id) && id !== 'videoseries' ? id : null;
   }
 
   window.TK = {

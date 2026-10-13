@@ -20,8 +20,15 @@ create table public.posts (
   title         text not null check (length(btrim(title)) between 1 and 300),
   body          text not null default '',
   youtube_id    text check (youtube_id is null or youtube_id ~ '^[A-Za-z0-9_-]{11}$'),
+  video_after   integer check (video_after is null or video_after between 0 and 9999),
+                -- 영상을 몇 번째 문단 뒤에 놓을지 (비어 있으면 맨 위). 옛 글에서만 씀
+  extra_videos  jsonb not null default '[]'::jsonb check (jsonb_typeof(extra_videos) = 'array'),
+                -- 두 번째 이후 영상: [{ "id": "유튜브 영상 번호", "after": 문단 번호 }]. 옛 글에서만 씀
+  links         jsonb not null default '[]'::jsonb check (jsonb_typeof(links) = 'array'),
+                -- 본문 글자에 숨은 링크: [{ "text": "자세히보기", "href": "https://…" }]. 옛 글에서만 씀
   images        jsonb not null default '[]'::jsonb check (jsonb_typeof(images) = 'array'),
-                -- [{ "src": "https://…/post-images/… 또는 assets/uploads/legacy/…", "alt": "사진 설명", "width": 1000, "height": 563 }]
+                -- [{ "src": "https://…/post-images/… 또는 assets/uploads/legacy/…", "alt": "사진 설명", "width": 1000, "height": 563,
+                --    "caption": "사진 아래 글(선택)", "after": 문단 번호(선택, 옛 글), "thumb": "목록용 작은 그림(선택)", "full": "원본(선택)" }]
   published_at  timestamptz not null default now(),
   is_published  boolean not null default true,
   show_on_home  boolean not null default true,
@@ -95,7 +102,8 @@ grant select on table public.posts to anon, authenticated;
 grant insert, update, delete on table public.posts to authenticated;
 grant select on table public.admins to authenticated;
 
-create policy "posts: 게시된 글은 누구나, 숨긴 글은 관리자만 읽기"
+-- 정책 이름은 63바이트(한글 약 20자)를 넘지 않게 짧게 씁니다. 설명은 comment on policy 로 붙입니다.
+create policy "posts: 누구나 게시 글, 관리자는 모두 읽기"
   on public.posts for select
   to anon, authenticated
   using (is_published or (select public.is_admin()));
@@ -120,6 +128,8 @@ create policy "admins: 관리자만 읽기"
   on public.admins for select
   to authenticated
   using ((select public.is_admin()));
+
+comment on policy "posts: 누구나 게시 글, 관리자는 모두 읽기" on public.posts is '게시된 글은 누구나, 숨긴 글은 관리자만 읽을 수 있습니다.';
 -- admins 표에는 insert/update/delete 정책이 없으므로 화면(anon/authenticated)에서는 바꿀 수 없습니다.
 
 -- ---------------------------------------------------------------------------

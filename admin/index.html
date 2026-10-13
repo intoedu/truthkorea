@@ -39,7 +39,7 @@
   <div class="container brand-row">
     <a class="brand" href="../index.html">
       <img class="brand__emblem" src="../assets/img/brand/emblem-112.png" srcset="../assets/img/brand/emblem-112.png 2x, ../assets/img/brand/emblem.png 3x" width="56" height="56" alt="">
-      <span class="brand__text"><span class="brand__name">트루스코리아</span><span class="brand__sub">TK 국민주권운동</span></span><span class="sr-only"> 처음 화면으로</span>
+      <span class="brand__text"><span class="brand__name">트루스코리아</span><span class="brand__sub">TK국민주권운동</span></span><span class="sr-only"> 처음 화면으로</span>
     </a>
     <p class="admin-badge">관리자 화면</p>
   </div>
@@ -87,6 +87,14 @@
             <button type="submit" class="btn btn--primary" id="btn-login">로그인</button>
           </div>
         </form>
+      </section>
+
+      <section class="admin-view" id="view-error" aria-labelledby="error-title" hidden>
+        <h2 class="section-title" id="error-title">관리자인지 확인하지 못했습니다</h2>
+        <p>관리자 확인 중 문제가 생겼습니다. 인터넷 연결을 확인한 뒤 ‘다시 시도’ 단추를 눌러 주세요.</p>
+        <div class="btn-row">
+          <button type="button" class="btn btn--primary" id="btn-retry-admin">다시 시도</button>
+        </div>
       </section>
 
       <section class="admin-view" id="view-denied" aria-labelledby="denied-title" hidden>
@@ -165,7 +173,7 @@
           </div>
           <fieldset class="field fieldset">
             <legend class="field__label">사진</legend>
-            <p class="field__help">사진은 올릴 때 긴 쪽이 1600픽셀이 되도록 저절로 줄어듭니다. 사진마다 ‘사진 설명’을 써 주세요. 눈이 불편한 분께 읽어 드리는 글입니다.</p>
+            <p class="field__help">사진은 올릴 때 긴 쪽이 1600픽셀이 되도록 저절로 줄어듭니다. 사진마다 ‘사진 설명’을 써 주세요. 눈이 불편한 분께 읽어 드리는 글입니다. 새로 넣은 사진은 홈페이지에서 본문 아래에 이 순서대로 놓입니다.</p>
             <ul class="photo-list" id="photo-list"></ul>
             <div class="field">
               <label class="field__label field__label--sub" for="f-photos">사진 고르기 (여러 장을 한꺼번에 고를 수 있습니다)</label>

@@ -11,11 +11,16 @@
   var TK = window.TK;
   var sb = null, C = null, user = null;
   var editing = null;   // 고치는 중인 글(새 글이면 null)
-  var photos = [];      // { src, alt, width, height, isNew, blob, previewUrl }
+  var photos = [];      // { src, alt, caption, width, height, isNew, blob, previewUrl, extra }
   var dirty = false, listOffset = 0, saving = false;
+  var listGen = 0;        // 목록을 새로 열 때마다 늘어남: 늦게 도착한 옛 응답은 버림
+  var editorSession = 0;  // 글 쓰기 화면을 열고 닫을 때마다 늘어남: 닫은 뒤에 끝난 사진 준비는 버림
+  var preparing = null;   // 사진을 준비(줄이기)하는 중이면 그 Promise
+  var sessionUploads = []; // 이번 글 쓰기에서 올렸지만 아직 어느 글에도 저장되지 않은 사진 파일 경로
+  var dateAtOpen = '';    // 글을 열었을 때의 ‘올린 날짜와 시간’ 칸 값
 
   /* ---------- 화면 바꾸기와 알림 ---------- */
-  var VIEWS = ['view-loading', 'view-setup', 'view-login', 'view-denied', 'view-list', 'view-editor'];
+  var VIEWS = ['view-loading', 'view-setup', 'view-login', 'view-denied', 'view-error', 'view-list', 'view-editor'];
   function show(id) {
     VIEWS.forEach(function (v) { var e = $(v); if (e) e.hidden = v !== id; });
   }
@@ -160,6 +165,8 @@
   }
 
   function signedOut() {
+    discardUploads();
+    editorSession++;
     user = null;
     $('admin-userbar').hidden = true;
     show('view-login');
@@ -170,11 +177,19 @@
     $('admin-user-email').textContent = u.email || '';
     $('admin-userbar').hidden = false;
     show('view-loading');
+    msg('', '');
+    /* 확인 자체가 실패하면(인터넷·서버 문제) ‘권한 없음’이 아니라 ‘다시 시도’ 화면을 보입니다 */
+    function failed() {
+      show('view-error');
+      var h = $('error-title');
+      h.tabIndex = -1;
+      h.focus();
+    }
     return sb.from('admins').select('user_id').eq('user_id', u.id).maybeSingle().then(function (res) {
-      if (res.error) { show('view-denied'); msg('error', '관리자인지 확인하지 못했습니다: ' + dbError(res.error)); return; }
+      if (res.error) { failed(); return; }
       if (!res.data) { show('view-denied'); return; }
       openList();
-    });
+    }, failed);
   }
 
   /* ---------- 글 목록 ---------- */
@@ -182,6 +197,10 @@
     $('admin-title').textContent = '글 관리';
     document.title = '글 관리 - 트루스코리아 관리자';
     editing = null;
+    editorSession++;
+    setPreparing(false);
+    preparing = null;
+    listGen++;
     setDirty(false);
     show('view-list');
     listOffset = 0;
@@ -191,6 +210,7 @@
   }
 
   function loadMore() {
+    var gen = listGen;
     var filter = $('list-filter').value;
     var q = sb.from('posts')
       .select('id,category,title,published_at,is_published,show_on_home', { count: 'exact' })
@@ -201,8 +221,9 @@
     var more = $('btn-more');
     busy(more, true, '불러오는 중…');
     return q.then(function (res) {
+      if (gen !== listGen) return null;  /* 그사이 분류를 바꾸었거나 목록을 새로 열었음 */
       busy(more, false);
-      if (res.error) { $('list-count').textContent = ''; msg('error', '글 목록을 불러오지 못했습니다: ' + dbError(res.error), true); return; }
+      if (res.error) { $('list-count').textContent = ''; msg('error', '글 목록을 불러오지 못했습니다: ' + dbError(res.error), true); return null; }
       var rows = res.data || [];
       var ul = $('admin-list');
       var firstNew = null;
@@ -259,6 +280,10 @@
 
   function openEditor(post) {
     msg('', '');
+    discardUploads();
+    editorSession++;
+    preparing = null;
+    setPreparing(false);
     editing = post || null;
     var f = $('post-form');
     f.reset();
@@ -268,6 +293,7 @@
     $('f-category').value = post ? post.category : 'broadcast';
     $('f-title').value = post ? post.title : '';
     $('f-date').value = toLocalInput(post ? post.published_at : null);
+    dateAtOpen = $('f-date').value;
     $('f-event-start').value = post && post.event_start ? post.event_start : '';
     $('f-event-end').value = post && post.event_end ? post.event_end : '';
     $('f-body').value = post ? (post.body || '') : '';
@@ -278,7 +304,10 @@
     photos.forEach(function (p) { if (p.previewUrl) URL.revokeObjectURL(p.previewUrl); });
     photos = (post && Array.isArray(post.images) ? post.images : []).map(function (im) {
       if (typeof im === 'string') im = { src: im };
-      return { src: im.src, alt: im.alt || '', width: im.width || 0, height: im.height || 0, isNew: false };
+      /* 이 화면에서 고치지 않는 값(옛 글의 사진 자리 after, 목록용 thumb, 원본 full)은 그대로 다시 저장합니다 */
+      var extra = {};
+      Object.keys(im).forEach(function (k) { if (['src', 'alt', 'caption', 'width', 'height'].indexOf(k) < 0) extra[k] = im[k]; });
+      return { src: im.src, alt: im.alt || '', caption: im.caption || '', width: im.width || 0, height: im.height || 0, isNew: false, extra: extra };
     });
     renderPhotos();
     updateEventField();
@@ -329,6 +358,14 @@
       inp.addEventListener('input', function () { p.alt = inp.value; setDirty(true); });
       body.appendChild(lab);
       body.appendChild(inp);
+      var cid = 'photo-cap-' + i;
+      var clab = el('label', 'field__label field__label--sub', (i + 1) + '번째 사진 아래에 보일 글 (넣지 않아도 됩니다)');
+      clab.htmlFor = cid;
+      var cinp = el('input', 'field__input');
+      cinp.type = 'text'; cinp.id = cid; cinp.value = p.caption || ''; cinp.maxLength = 500;
+      cinp.addEventListener('input', function () { p.caption = cinp.value; setDirty(true); });
+      body.appendChild(clab);
+      body.appendChild(cinp);
       if (p.isNew) body.appendChild(el('p', 'field__help', '새 사진입니다. ‘저장하기’를 누르면 올라갑니다.'));
       var row = el('div', 'btn-row photo__actions');
       if (i > 0) {
@@ -363,28 +400,47 @@
     renderPhotos();
   }
 
+  /* 사진을 준비하는 동안에는 ‘저장하기’와 ‘미리 보기’를 누를 수 없게 합니다 (준비가 덜 된 사진이 빠지지 않게) */
+  function setPreparing(on) {
+    busy($('btn-save'), on, '사진 준비 중…');
+    busy($('btn-preview'), on, '사진 준비 중…');
+  }
   function addFiles(files) {
     files = Array.prototype.slice.call(files || []);
     if (!files.length) return;
-    msg('', '사진을 준비하는 중입니다…');
+    var session = editorSession;
+    msg('', '사진을 준비하는 중입니다… 끝날 때까지 잠시 기다려 주세요.');
+    setPreparing(true);
     var added = 0, failed = [];
-    var chain = Promise.resolve();
+    var chain = preparing || Promise.resolve();
     files.forEach(function (file) {
       chain = chain.then(function () {
+        if (session !== editorSession) return;
         if (!/^image\//.test(file.type)) { failed.push(file.name); return; }
         return resizeImage(file).then(function (r) {
-          photos.push({ src: '', alt: '', width: r.width, height: r.height, isNew: true, blob: r.blob, previewUrl: URL.createObjectURL(r.blob) });
+          if (session !== editorSession) return;  /* 그사이 글 쓰기 화면을 닫았음 */
+          photos.push({ src: '', alt: '', caption: '', width: r.width, height: r.height, isNew: true, blob: r.blob, previewUrl: URL.createObjectURL(r.blob), extra: {} });
           added++;
         }, function () { failed.push(file.name); });
       });
     });
-    return chain.then(function () {
-      setDirty(true);
+    var done = chain.then(function () {
+      if (session !== editorSession) return;
+      if (preparing === done) { preparing = null; setPreparing(false); }
+      if (added) setDirty(true);
       renderPhotos();
       var t = added ? '사진 ' + added + '장을 넣었습니다. 사진마다 설명을 써 주시고, ‘저장하기’를 누르면 올라갑니다.' : '';
       if (failed.length) msg('error', t + ' 읽지 못한 파일: ' + failed.join(', ') + ' (사진 파일만 올릴 수 있습니다)');
       else msg('ok', t);
     });
+    preparing = done;
+    return done;
+  }
+  /* 올렸지만 저장하지 않은 사진 파일을 저장소에서 지웁니다 (실패해도 그냥 넘어감) */
+  function discardUploads() {
+    var paths = sessionUploads;
+    sessionUploads = [];
+    if (paths.length && sb) sb.storage.from(BUCKET).remove(paths).then(function () {}, function () {});
   }
 
   function collect() {
@@ -416,13 +472,18 @@
   function save(ev) {
     ev.preventDefault();
     if (saving) return;
+    if (preparing) { msg('error', '사진을 준비하는 중입니다. 끝난 뒤에 ‘저장하기’를 눌러 주세요.', true); return; }
     var d = collect();
     var bad = validate(d);
     if (bad) { msg('error', bad[1], true); var f = $(bad[0]); if (f) f.setAttribute('aria-invalid', 'true'); return; }
     ['f-title', 'f-date', 'f-youtube', 'f-event-end'].forEach(function (id) { $(id).removeAttribute('aria-invalid'); });
+    /* 고칠 때 날짜 칸을 건드리지 않았으면 올린 시각(초 단위까지)을 그대로 둡니다 */
+    if (editing && $('f-date').value === dateAtOpen) delete d.published_at;
     saving = true;
+    var session = editorSession;
     var sbtn = $('btn-save');
     busy(sbtn, true, '저장하는 중…');
+    $('f-photos').disabled = true;
     var newOnes = photos.filter(function (p) { return p.isNew; });
     var n = 0;
     var chain = Promise.resolve();
@@ -433,6 +494,7 @@
         var path = newPath();
         return sb.storage.from(BUCKET).upload(path, p.blob, { contentType: 'image/jpeg', cacheControl: '31536000', upsert: false }).then(function (res) {
           if (res.error) throw { stage: 'upload', error: res.error };
+          if (session === editorSession) sessionUploads.push(path);
           p.src = sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
           p.isNew = false;
           if (p.previewUrl) { URL.revokeObjectURL(p.previewUrl); p.previewUrl = null; }
@@ -442,7 +504,11 @@
     });
     chain.then(function () {
       d.images = photos.map(function (p) {
-        var o = { src: p.src, alt: p.alt.trim() };
+        var o = {};
+        Object.keys(p.extra || {}).forEach(function (k) { o[k] = p.extra[k]; });
+        o.src = p.src;
+        o.alt = p.alt.trim();
+        if ((p.caption || '').trim()) o.caption = p.caption.trim();
         if (p.width && p.height) { o.width = p.width; o.height = p.height; }
         return o;
       });
@@ -452,6 +518,7 @@
         : sb.from('posts').insert(d).select('id,images').single();
       return q.then(function (res) {
         if (res.error) throw { stage: 'save', error: res.error };
+        sessionUploads = [];  /* 이제 글에 저장되었으므로 지우면 안 됨 */
         return res.data;
       });
     }).then(function (saved) {
@@ -463,6 +530,7 @@
       return cleanup.then(function () {
         saving = false;
         busy(sbtn, false);
+        $('f-photos').disabled = false;
         setDirty(false);
         renderPhotos();
         var text = '저장했습니다. ' + (d.is_published ? '홈페이지에 바로 보입니다.' : '‘숨김’으로 저장했으므로 홈페이지에는 보이지 않습니다.');
@@ -471,6 +539,7 @@
     }).catch(function (e) {
       saving = false;
       busy(sbtn, false);
+      $('f-photos').disabled = false;
       renderPhotos();
       var err = e && e.error ? e.error : e;
       var where = e && e.stage === 'upload' ? '사진을 올리지 못했습니다: ' : '저장하지 못했습니다: ';
@@ -495,20 +564,27 @@
   }
 
   function preview() {
+    if (preparing) { msg('error', '사진을 준비하는 중입니다. 끝난 뒤에 ‘미리 보기’를 눌러 주세요.', true); return; }
     var d = collect();
-    var post = {
+    var post = TK.norm({
       id: 'preview',
       category: d.category,
       title: d.title || '(제목 없음)',
       body: d.body,
       youtube_id: d.youtube_id,
+      /* 옛 글의 영상 자리·숨은 링크는 이 화면에서 고치지 않으므로 저장된 값을 그대로 보여 줍니다 */
+      video_after: editing ? editing.video_after : null,
+      extra_videos: editing ? editing.extra_videos : null,
+      links: editing ? editing.links : null,
       published_at: d.published_at || new Date().toISOString(),
       event_start: d.event_start,
       event_end: d.event_end,
-      images: photos.map(function (p) {
-        return { src: p.isNew ? p.previewUrl : p.src, alt: p.alt, width: p.width, height: p.height };
-      })
-    };
+      images: []
+    });
+    post.images = photos.map(function (p) {
+      return { src: p.isNew ? p.previewUrl : p.src, alt: p.alt, caption: (p.caption || '').trim(), width: p.width, height: p.height,
+        after: p.extra && typeof p.extra.after === 'number' ? p.extra.after : null, thumb: '', full: p.isNew ? '' : (p.extra && p.extra.full) || '' };
+    });
     $('preview-post-title').textContent = post.title;
     TK.fillMeta($('preview-meta'), post, { full: true });
     TK.renderPostContent($('preview-content'), post, { allowBlob: true });
@@ -543,6 +619,7 @@
       sb.auth.signOut().then(function () { signedOut(); msg('ok', '로그아웃했습니다.'); });
     });
     $('btn-new').addEventListener('click', function () { openEditor(null); });
+    $('btn-retry-admin').addEventListener('click', function () { if (user) afterLogin(user); });
     $('btn-more').addEventListener('click', function () {
       loadMore().then(function (first) { var b = first && first.querySelector('button'); if (b) b.focus(); });
     });
@@ -561,11 +638,12 @@
       if (dirty && !window.confirm('저장하지 않은 내용이 사라집니다. 목록으로 갈까요?')) return;
       photos.forEach(function (p) { if (p.previewUrl) URL.revokeObjectURL(p.previewUrl); });
       photos = [];
+      discardUploads();
       msg('', '');
       openList();
     });
     $('btn-delete').addEventListener('click', function () {
-      if (editing) deletePost({ id: editing.id, title: editing.title }, $('btn-delete'));
+      if (editing) { discardUploads(); deletePost({ id: editing.id, title: editing.title }, $('btn-delete')); }
     });
     window.addEventListener('beforeunload', function (e) {
       if (dirty) { e.preventDefault(); e.returnValue = ''; }
