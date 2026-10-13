@@ -196,7 +196,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
   background: var(--c-tint);
   border-bottom: 1px solid var(--c-rule);
 }
-/* 글자 크기 단추 줄은 px로만 정합니다: 단추를 눌러도 단추 위치가 그대로 (rem을 쓰면 옆으로 밀림) */
+/* px만 씀: 눌러도 단추가 움직이지 않게 */
 .util-bar__inner {
   max-width: 1152px;
   display: flex;
@@ -270,7 +270,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
   align-items: center;
   gap: .6rem;
   min-height: 48px;
-  font-size: var(--fs-wordmark);
+  font-size: min(var(--fs-wordmark), 9vw);
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: .02em;
@@ -320,10 +320,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
 }
 
 /* ===== 5. 주 메뉴 (늘 보임, 숨김 없음) =====
-   칸 너비를 고정하지 않고 글자 길이에 맞춰 줄을 바꿉니다(flex-wrap).
-   글자가 커져서 한 줄에 다 들어가지 않으면 낱말을 자르지 않고 칸 수를 줄입니다.
-   휴대전화: 앞의 두 칸(처음으로 · 단체 소개)이 첫 줄, 나머지가 둘째 줄.
-   메뉴 개수를 바꿀 때: 4개면 그대로 2 + 2, 6개면 아래 nth-child(-n+2)를 (-n+3)으로, 46%를 30%로 바꾸면 3 + 3. */
+   글자가 커지면 낱말을 자르지 않고 칸 수를 줄임. 메뉴 개수 바꾸기는 README 7 */
 .gnb__list {
   list-style: none;
   margin-block: 0;
@@ -370,7 +367,6 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
 }
 @media (min-width: 48em) {
   .gnb__list { padding-bottom: 16px; }
-  /* 컴퓨터: 한 줄에 같은 너비로. 메뉴 글자는 한 줄을 지키고, 모자라면 칸 수가 줄어듭니다 */
   .gnb__list > li,
   .gnb__list > li:nth-child(-n+2) { flex-basis: 0; min-width: max-content; }
 }
@@ -425,8 +421,14 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
 }
 .home-hero__text > * { max-width: 34em; }
+.home-split {
+  display: grid;
+  gap: 3rem;
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+}
+.home-split > * > :last-child { margin-bottom: 0; }
 .home-hero__text > :last-child { margin-bottom: 0; }
-/* 단체 이름은 띄어쓰기가 없어, 아주 좁은 화면에서만 화면 너비에 맞춰 줄입니다 */
 .home-title {
   font-size: min(var(--fs-h1-home), 12.5vw);
   line-height: 1.25;
@@ -532,6 +534,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
   margin: 0;
   padding: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
 .tiles > li { margin: 0; }
@@ -585,7 +588,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
 }
 .info-list dd { margin: 0 0 1rem; }
 .info-list dd a { display: inline-flex; align-items: center; min-height: 48px; }
-/* 넓은 화면: 이름(dt) 옆에 내용(dd). 내용 칸이 12글자보다 좁아지면 이름 아래로 내려갑니다 */
+/* dd가 12em보다 좁아지면 dt 아래로 */
 @media (min-width: 48em) {
   .info-list > div {
     display: flex;
@@ -668,8 +671,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
   border-radius: var(--radius-lg);
 }
 .toc__label { font-weight: 700; margin: 0 0 .75rem; }
-/* 칸 너비 6.4em = 가장 긴 차례 이름(화살표 포함)이 한 줄에 들어가는 너비. 글자가 커지면 칸 수가 줄고,
-   마지막 줄의 남는 칸은 옆으로 늘어납니다. 낱말 중간에서 줄이 바뀌지 않습니다. */
+/* 6.4em = 가장 긴 차례 이름 너비. 글자가 커지면 칸 수가 줄어듦 */
 .toc__list {
   list-style: none;
   margin: 0;
@@ -819,8 +821,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
 .file-item__action { grid-column: 1 / -1; }
 .file-item__action .btn { width: 100%; }
 @media (min-width: 48em) {
-  .file-item { grid-template-columns: auto minmax(0, 1fr) auto; }
-  .file-item__action { grid-column: auto; }
+  .file-item__action { grid-column: 2; }
   .file-item__action .btn { width: auto; }
 }
 
@@ -839,7 +840,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
 }
 
 /* ===== 9. 바닥글 ===== */
-/* 휴대전화 아래 막대에 가리지 않도록 바닥글 아래쪽을 막대 높이만큼 늘립니다(흰 띠가 생기지 않게) */
+/* 아래 막대 높이만큼 바닥글을 늘림 */
 .site-footer {
   background: var(--c-brand);
   color: var(--c-on-dark);
@@ -848,13 +849,13 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
 @media (min-width: 48em), (max-height: 30em) {
   .site-footer { padding-bottom: 2rem; }
 }
-.site-footer__inner { display: grid; gap: 2rem 3rem; }
+.site-footer__inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem 3rem; }
 .site-footer__name {
   display: flex;
   align-items: center;
   gap: .6rem;
   margin: 0 0 1.5rem;
-  font-size: 1.5rem;
+  font-size: min(1.5rem, 9vw);
   font-weight: 800;
   line-height: 1.2;
 }
@@ -884,7 +885,6 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
   .footer-link:hover,
   .footer-menu__link:hover { background: var(--c-on-dark-hover); color: var(--c-on-dark); }
 }
-/* 휴대전화: 한 줄에 둘. 글자가 커져서 둘이 안 들어가면 한 줄에 하나(겹치지 않음) */
 .footer-menu__list {
   list-style: none;
   margin: 0;
@@ -917,7 +917,7 @@ a:where(:active) { color: var(--c-link-hover); background: var(--c-hover); }
 }
 .site-footer__tip { font-size: var(--fs-body); line-height: 1.75; margin-bottom: .75em; }
 @media (min-width: 48em) {
-  .site-footer__inner { grid-template-columns: 2fr 1fr; }
+  .site-footer__inner { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
   .footer-menu__list > li { flex-basis: 100%; }
 }
 
@@ -1054,6 +1054,8 @@ html:not(.js) .needs-js { display: none !important; }
     text-decoration: underline;
   }
   .tile__icon, .call-card__icon, .file-item__icon { display: none; }
+  .file-item { display: block; padding-block: .75rem; }
+  .file-item__action { margin-top: .5rem; }
   .org-table th { background: #fff; }
   a[href^="http"]::after { content: " (" attr(href) ")"; }
   .ph { background: none; outline: 1px dashed #000; }

@@ -84,29 +84,41 @@
     </div>
   </div>
 
-  <section class="section" id="latest" aria-labelledby="latest-title">
-    <div class="container content">
-      <h2 class="section-title" id="latest-title">최근 소식</h2>
-      <ul class="news-brief">
-        <li class="news-brief__item">
-          <a class="news-brief__link" href="news.html#news-1"><span class="ph" data-ph="news-1-title">[입력 필요: 소식 제목]</span></a>
-          <p class="news-brief__date">올린&nbsp;날: <span class="ph" data-ph="news-1-date">[입력 필요: 올린 날짜]</span></p>
-        </li>
-        <li class="news-brief__item">
-          <a class="news-brief__link" href="news.html#news-2"><span class="ph" data-ph="news-2-title">[입력 필요: 소식 제목]</span></a>
-          <p class="news-brief__date">올린&nbsp;날: <span class="ph" data-ph="news-2-date">[입력 필요: 올린 날짜]</span></p>
-        </li>
-        <li class="news-brief__item">
-          <a class="news-brief__link" href="news.html#news-3"><span class="ph" data-ph="news-3-title">[입력 필요: 소식 제목]</span></a>
-          <p class="news-brief__date">올린&nbsp;날: <span class="ph" data-ph="news-3-date">[입력 필요: 올린 날짜]</span></p>
-        </li>
-      </ul>
-      <!-- news.html 맨 위 3개 소식과 같게 유지합니다 -->
-      <div class="btn-row">
-        <a class="btn btn--secondary" href="news.html">소식 전체 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a>
-      </div>
+  <!-- 넓은 화면에서는 '최근 소식'과 '오시는 길'이 나란히, 좁은 화면에서는 위아래로 놓입니다 -->
+  <div class="section">
+    <div class="container home-split">
+      <section class="content" id="latest" aria-labelledby="latest-title">
+        <h2 class="section-title" id="latest-title">최근 소식</h2>
+        <ul class="news-brief">
+          <li class="news-brief__item">
+            <a class="news-brief__link" href="news.html#news-1"><span class="ph" data-ph="news-1-title">[입력 필요: 소식 제목]</span></a>
+            <p class="news-brief__date">올린&nbsp;날: <span class="ph" data-ph="news-1-date">[입력 필요: 올린 날짜]</span></p>
+          </li>
+          <li class="news-brief__item">
+            <a class="news-brief__link" href="news.html#news-2"><span class="ph" data-ph="news-2-title">[입력 필요: 소식 제목]</span></a>
+            <p class="news-brief__date">올린&nbsp;날: <span class="ph" data-ph="news-2-date">[입력 필요: 올린 날짜]</span></p>
+          </li>
+          <li class="news-brief__item">
+            <a class="news-brief__link" href="news.html#news-3"><span class="ph" data-ph="news-3-title">[입력 필요: 소식 제목]</span></a>
+            <p class="news-brief__date">올린&nbsp;날: <span class="ph" data-ph="news-3-date">[입력 필요: 올린 날짜]</span></p>
+          </li>
+        </ul>
+        <!-- news.html 맨 위 3개 소식과 같게 유지합니다 -->
+        <div class="btn-row">
+          <a class="btn btn--secondary" href="news.html">소식 전체 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a>
+        </div>
+      </section>
+      <section class="content" id="visit" aria-labelledby="visit-title">
+        <h2 class="section-title" id="visit-title">오시는 길</h2>
+        <dl class="info-list">
+          <div><dt>주소</dt><dd><span class="ph" data-ph="contact-address">[입력 필요: 도로명 주소와 건물 이름·층]</span></dd></div>
+        </dl>
+        <div class="btn-row">
+          <a class="btn btn--secondary" href="contact.html#directions">오시는 길 자세히 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a>
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
 
   <section class="section section--paper no-print" id="menu" aria-labelledby="menu-title">
     <div class="container">
@@ -117,18 +129,6 @@
         <li><a class="tile" href="resources.html"><svg class="tile__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><span class="tile__title">자료실</span><span class="tile__desc">자료를 보시고 내려받으실 수 있습니다</span></a></li>
         <li><a class="tile" href="contact.html"><svg class="tile__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span class="tile__title">오시는 길</span><span class="tile__desc">주소와 연락처를 보실 수 있습니다</span></a></li>
       </ul>
-    </div>
-  </section>
-
-  <section class="section" id="visit" aria-labelledby="visit-title">
-    <div class="container content">
-      <h2 class="section-title" id="visit-title">오시는 길</h2>
-      <dl class="info-list">
-        <div><dt>주소</dt><dd><span class="ph" data-ph="contact-address">[입력 필요: 도로명 주소와 건물 이름·층]</span></dd></div>
-      </dl>
-      <div class="btn-row">
-        <a class="btn btn--secondary" href="contact.html#directions">오시는 길 자세히 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a>
-      </div>
     </div>
   </section>
 </main>

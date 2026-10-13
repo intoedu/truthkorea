@@ -80,19 +80,19 @@
 | [ ] | `resource-1-format` | resources.html (자료실) | [입력 필요: 파일 형식] | 파일 형식 (예: PDF, 한글(HWP)). |
 | [ ] | `resource-1-size` | resources.html (자료실) | [입력 필요: 파일 크기] | 파일 크기 (예: ○○○KB, ○.○MB). |
 | [ ] | `resource-1-date` | resources.html (자료실) | [입력 필요: 올린 날짜] | 자료를 올린 날짜 ('YYYY년 M월 D일' 형식). |
-| [ ] | `resource-1-file` | resources.html (자료실) | [입력 필요: 파일 연결] | 실제 파일. assets/files/ 폴더에 영문·숫자 파일 이름으로 넣고 노란 칸을 ‘내려받기’ 단추로 바꿉니다(주석의 틀 사용). |
+| [ ] | `resource-1-file` | resources.html (자료실) | [입력 필요: 올릴 자료 파일] | 올릴 자료 파일 자체(PDF 등). assets/files/ 폴더에 영문·숫자 파일 이름으로 넣고 노란 칸을 ‘내려받기’ 단추로 바꿉니다(주석의 틀 사용). |
 | [ ] | `resource-2-title` | resources.html (자료실) | [입력 필요: 자료 이름] | 자료 이름. |
 | [ ] | `resource-2-desc` | resources.html (자료실) | [입력 필요: 자료 설명 한 줄] | 자료를 설명하는 한 줄. |
 | [ ] | `resource-2-format` | resources.html (자료실) | [입력 필요: 파일 형식] | 파일 형식 (예: PDF, 한글(HWP)). |
 | [ ] | `resource-2-size` | resources.html (자료실) | [입력 필요: 파일 크기] | 파일 크기 (예: ○○○KB, ○.○MB). |
 | [ ] | `resource-2-date` | resources.html (자료실) | [입력 필요: 올린 날짜] | 자료를 올린 날짜 ('YYYY년 M월 D일' 형식). |
-| [ ] | `resource-2-file` | resources.html (자료실) | [입력 필요: 파일 연결] | 실제 파일. assets/files/ 폴더에 영문·숫자 파일 이름으로 넣고 노란 칸을 ‘내려받기’ 단추로 바꿉니다(주석의 틀 사용). |
+| [ ] | `resource-2-file` | resources.html (자료실) | [입력 필요: 올릴 자료 파일] | 올릴 자료 파일 자체(PDF 등). assets/files/ 폴더에 영문·숫자 파일 이름으로 넣고 노란 칸을 ‘내려받기’ 단추로 바꿉니다(주석의 틀 사용). |
 | [ ] | `resource-3-title` | resources.html (자료실) | [입력 필요: 자료 이름] | 자료 이름. |
 | [ ] | `resource-3-desc` | resources.html (자료실) | [입력 필요: 자료 설명 한 줄] | 자료를 설명하는 한 줄. |
 | [ ] | `resource-3-format` | resources.html (자료실) | [입력 필요: 파일 형식] | 파일 형식 (예: PDF, 한글(HWP)). |
 | [ ] | `resource-3-size` | resources.html (자료실) | [입력 필요: 파일 크기] | 파일 크기 (예: ○○○KB, ○.○MB). |
 | [ ] | `resource-3-date` | resources.html (자료실) | [입력 필요: 올린 날짜] | 자료를 올린 날짜 ('YYYY년 M월 D일' 형식). |
-| [ ] | `resource-3-file` | resources.html (자료실) | [입력 필요: 파일 연결] | 실제 파일. assets/files/ 폴더에 영문·숫자 파일 이름으로 넣고 노란 칸을 ‘내려받기’ 단추로 바꿉니다(주석의 틀 사용). |
+| [ ] | `resource-3-file` | resources.html (자료실) | [입력 필요: 올릴 자료 파일] | 올릴 자료 파일 자체(PDF 등). assets/files/ 폴더에 영문·숫자 파일 이름으로 넣고 노란 칸을 ‘내려받기’ 단추로 바꿉니다(주석의 틀 사용). |
 
 ## 오시는 길
 
