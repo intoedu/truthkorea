@@ -21,8 +21,8 @@
   var SELECT = 'id,category,title,body,youtube_id,video_after,extra_videos,links,images,published_at,show_on_home,event_start,event_end';
   /* 옛 홈페이지 게시판 → 새 목록 (옛 글 번호로 들어왔는데 글이 없을 때 그 목록으로 안내) */
   var LEGACY_LIST = { TK_broadcast: 'broadcast', TK_NEWS: 'tknews', truth: 'truth', Culture_War: 'truth', PresidentYoon: 'truth', event: 'event' };
-  /* 옛 홈페이지에서 두 게시판에 똑같이 올라 있던 글: 숨긴 쪽 → 보이는 쪽 (legacy-redirect.js와 같게) */
-  var LEGACY_SAME = { 'legacy-PresidentYoon-8': 'legacy-truth-12', 'legacy-TK_NEWS-13': 'legacy-truth-14', 'legacy-truth-11': 'legacy-TK_broadcast-22' };
+  /* 옛 홈페이지에서 두 게시판에 똑같이 올라 있던 글: 숨긴 쪽 → 보이는 쪽 (legacy-redirect.js의 SAME과 같게) */
+  var LEGACY_SAME = { 'legacy-PresidentYoon-8': 'legacy-truth-12' };
   var ID_RE = /^[A-Za-z0-9_-]{1,100}$/;
   var YT_RE = /^[A-Za-z0-9_-]{11}$/;
   var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
