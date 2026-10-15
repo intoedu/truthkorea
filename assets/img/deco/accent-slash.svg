@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="24" viewBox="0 0 36 24" aria-hidden="true" focusable="false">
+  <!-- 제목 앞에 붙이는 빨간 두 빗금 ( // ), 옛 ‘TRUTHKOREA NEWS’ 그림의 꾸밈에서 따옴 -->
+  <path d="M10 0h8L8 24H0z" fill="#C8102E"/>
+  <path d="M26 0h8L24 24h-8z" fill="#C8102E"/>
+</svg>

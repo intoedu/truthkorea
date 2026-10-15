@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+  <!-- 트루스코리아 꾸밈 그림 (직접 만든 그림, 저작권 걱정 없음): 남색 바탕 위에 깃발이 날리는 듯한 빨강·파랑 띠. 글자는 위쪽 60%에 두세요. -->
+  <defs>
+    <linearGradient id="tkRed" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C8102E" stop-opacity="0"/>
+      <stop offset=".35" stop-color="#C8102E" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#A00B1C"/>
+    </linearGradient>
+    <linearGradient id="tkBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2F6DB5" stop-opacity="0"/>
+      <stop offset=".4" stop-color="#2F6DB5" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#1D4A82"/>
+    </linearGradient>
+    <linearGradient id="tkGlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset=".7" stop-color="#FFFFFF" stop-opacity=".07"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity=".02"/>
+    </linearGradient>
+  </defs>
+  <path d="M-80 470 C 380 300, 900 640, 1680 330" fill="none" stroke="url(#tkGlow)" stroke-width="150"/>
+  <path d="M0 735 C 420 600, 900 880, 1600 650 L1600 900 L0 900 Z" fill="#0B2240" fill-opacity=".55"/>
+  <path d="M0 700 C 420 565, 900 845, 1600 615" fill="none" stroke="url(#tkRed)" stroke-width="22" stroke-linecap="round"/>
+  <path d="M0 745 C 420 610, 900 890, 1600 660" fill="none" stroke="url(#tkBlue)" stroke-width="22" stroke-linecap="round"/>
+  <path d="M0 790 C 420 655, 900 935, 1600 705" fill="none" stroke="#FFFFFF" stroke-opacity=".18" stroke-width="3"/>
+</svg>
