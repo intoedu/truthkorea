@@ -45,6 +45,7 @@
 | [ ] | Supabase 프로젝트 만들기 → `supabase/migrations/0001_init.sql` 실행 → `supabase/seed.sql` 실행(옛 처음 화면의 글 20개) |
 | [ ] | 관리자 계정 만들기(Authentication → Add user) → `public.admins`에 그 사용자 UID 넣기 → 새 가입 막기 |
 | [ ] | `assets/js/config.js`에 Supabase 주소와 공개 키 넣기 |
+| [ ] | 모든 페이지 맨 아래에 ‘관리자’ 링크 다시 넣기 (Supabase 연결 전이라 빼 두었음. README ‘Supabase 연결하기’ 9번) |
 | [ ] | 호스팅 정하기, 파일 올리기(`assets/uploads/legacy/` 사진 31개 파일 포함), 404.html이 도메인 맨 위 기준(`/`로 시작하는 주소)인지 확인 |
 | [ ] | 국민주권운동.com(`xn--3e0b9b67w9mjb2nckd.com`)과 `www` DNS를 새 호스팅으로 옮기기 |
 | [ ] | 새 HTTPS 인증서 확인 (옛 사이트 인증서는 2026년 8월 29일에 만료됨) |
