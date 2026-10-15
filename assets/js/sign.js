@@ -1,4 +1,4 @@
-/* 트루스코리아: 서명운동 (처음 화면의 서명운동 띠, sign.html의 서명 받기)
+/* 트루스코리아: 서명운동 (처음 화면의 서명운동 띠와 단추 이름, 글 아래 타일 이름, sign.html의 서명 받기)
    - config.js에 Supabase 주소와 공개 키가 없으면 ‘서명 접수를 준비하고 있습니다’ 안내만 보이고 서명 칸은 나오지 않습니다.
    - 있으면: 이름·휴대폰(필수), 사는 곳·손글씨 서명(선택), 개인정보 동의(필수)를 받아
      손글씨 서명 그림(PNG)을 비공개 저장소(signatures)에 먼저 올리고, 서명 줄을 public.signatures 표에 넣습니다.
@@ -380,6 +380,8 @@
 
   function init() {
     var c = config();
+    /* 서명 접수 전/후에 따라 단추 이름 등을 바꿉니다 (처음 화면의 ‘서명운동’/‘서명하기’, 글 아래 타일 등) */
+    if (document.querySelector('[data-sign-state]')) setState(c.on);
     initBand(c);
     if (document.getElementById('sign-form')) {
       if (!c.on) { setState(false); return; }

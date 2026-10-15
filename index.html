@@ -71,7 +71,7 @@
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__media">
       <picture>
-        <source media="(min-width: 600px)" srcset="assets/img/banners/hero-rally-800.webp 800w, assets/img/banners/hero-rally-1280.webp 1280w" sizes="(min-width: 1024px) 1000px, 100vw">
+        <source media="(min-width: 600px)" srcset="assets/img/banners/hero-rally-800.webp 800w, assets/img/banners/hero-rally-1280.webp 1280w" sizes="(min-width: 1024px) 1000px, 100vw" width="1280" height="720">
         <img class="hero__img" src="assets/img/banners/hero-rally-3x2-720.webp" srcset="assets/img/banners/hero-rally-3x2-720.webp 720w, assets/img/banners/hero-rally-3x2-1080.webp 1080w" sizes="100vw" width="720" height="480" alt="태극기와 성조기를 든 시민들이 공항에 모인 모습" fetchpriority="high">
       </picture>
     </div>
@@ -81,7 +81,7 @@
         <h1 class="hero__title" id="hero-title"><span class="sr-only">트루스코리아: </span><span class="hero__line">자유대한민국 <span class="gold">5,000만</span></span> <span class="hero__line">국민주권운동!</span></h1>
         <p class="hero__lead">영상과 뉴스, 행사 소식을 전하고 서명운동과 후원을 안내합니다.</p>
         <ul class="hero-tiles">
-          <li><a class="hero-tile hero-tile--red" href="sign.html"><span class="hero-tile__disc"><svg class="hero-tile__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span><span class="hero-tile__label">서명하기</span></a></li>
+          <li><a class="hero-tile hero-tile--red" href="sign.html"><span class="hero-tile__disc"><svg class="hero-tile__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span><span class="hero-tile__label"><span data-sign-state="on" hidden>서명하기</span><span data-sign-state="off">서명운동</span></span></a></li>
           <li><a class="hero-tile hero-tile--white" href="news.html?cat=broadcast"><span class="hero-tile__disc"><svg class="hero-tile__icon hero-tile__icon--play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></span><span class="hero-tile__label">영상 보기</span></a></li>
         </ul>
       </div>
@@ -105,12 +105,12 @@
 
   <section class="band band--sign band--a072" aria-labelledby="sign-title" data-sign-band>
     <picture class="band__media">
-      <source media="(min-width: 768px)" srcset="assets/img/banners/truth-band-bg-1910.webp 1910w" sizes="100vw">
+      <source media="(min-width: 768px)" srcset="assets/img/banners/truth-band-bg-1910.webp 1910w" sizes="100vw" width="1910" height="434">
       <img class="band__img" src="assets/img/banners/truth-band-bg-m-640.webp" width="640" height="434" alt="" loading="lazy">
     </picture>
     <div class="container sign-band">
       <div class="sign-band__text">
-        <p class="chip chip--gold"><svg class="chip__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>서명운동</p>
+        <p class="band-eyebrow">서명운동</p>
         <h2 class="band__title" id="sign-title">민주당 해산을 위한 서명에 동의합니다!</h2>
         <div class="sign-band__state" data-sign-state="off">
           <p class="band__text">서명 접수를 준비하고 있습니다. 준비가 끝나면 이 홈페이지에서 바로 서명하실 수 있습니다.</p>
@@ -122,15 +122,17 @@
         </div>
       </div>
       <div class="sign-band__action">
-        <div class="sign-paper" aria-hidden="true">
-          <span class="sign-paper__pen"><svg class="sign-paper__pen-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span>
-          <span class="sign-paper__row"><span class="sign-paper__label">이름</span><span class="sign-paper__line"></span></span>
-          <span class="sign-paper__row"><span class="sign-paper__label">휴대폰</span><span class="sign-paper__line"></span></span>
-          <span class="sign-paper__row sign-paper__row--sign"><span class="sign-paper__label">서명</span><span class="sign-paper__line"></span>
-            <svg class="sign-paper__ink" viewBox="0 0 220 60" width="220" height="60" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M6 48c10-30 22-42 26-30s-6 34 2 30 14-36 22-34 2 30 10 28 16-28 24-26-2 22 8 22c18 0 40-16 64-20s36-2 52-6"/></svg>
+        <a class="sign-cta" href="sign.html">
+          <span class="sign-paper" aria-hidden="true">
+            <span class="sign-paper__pen"><svg class="sign-paper__pen-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span>
+            <span class="sign-paper__row"><span class="sign-paper__label">이름</span><span class="sign-paper__line"></span></span>
+            <span class="sign-paper__row"><span class="sign-paper__label">휴대폰</span><span class="sign-paper__line"></span></span>
+            <span class="sign-paper__row sign-paper__row--sign"><span class="sign-paper__label">서명</span><span class="sign-paper__line"></span>
+              <svg class="sign-paper__ink" viewBox="0 0 220 60" width="220" height="60" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M6 48c10-30 22-42 26-30s-6 34 2 30 14-36 22-34 2 30 10 28 16-28 24-26-2 22 8 22c18 0 40-16 64-20s36-2 52-6"/></svg>
+            </span>
           </span>
-        </div>
-        <a class="btn btn--red btn--xl btn--block" href="sign.html"><span data-sign-state="on" hidden>서명하러 가기</span><span data-sign-state="off">서명운동 안내 보기</span><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a>
+          <span class="btn btn--red btn--xl btn--block sign-cta__btn"><span data-sign-state="on" hidden>서명하러 가기</span><span data-sign-state="off">서명운동 안내 보기</span><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></span>
+        </a>
       </div>
     </div>
   </section>
@@ -186,20 +188,19 @@
 
   <section class="band band--give band--a080" id="give" aria-labelledby="give-title">
     <picture class="band__media">
-      <source media="(min-width: 1024px)" srcset="assets/img/banners/culture-war-1900.webp 1900w" sizes="100vw">
+      <source media="(min-width: 1024px)" srcset="assets/img/banners/culture-war-1900.webp 1900w" sizes="100vw" width="1900" height="318">
       <img class="band__img" src="assets/img/banners/culture-war-m-768.webp" width="768" height="511" alt="" loading="lazy">
     </picture>
     <div class="container give-band">
       <div class="give-band__text">
-        <p class="kicker">문화전쟁 · 소액주주운동</p>
-        <p class="tag">후원하기</p>
+        <p class="band-eyebrow">후원하기 <span class="band-eyebrow__sub">문화전쟁 · 소액주주운동</span></p>
         <h2 class="band__title give-band__title" id="give-title"><span class="gold">3.5%</span> 175만 명의 기적, <span class="nowrap">당신의 손으로!</span></h2>
         <p class="band__text give-band__sub">소액주주운동으로 언론과 문화를 되찾아 자유를 수호합시다!</p>
       </div>
       <div class="give-band__card">
         <div class="account-card account-card--dark">
           <p class="account-card__bank"><span class="sr-only">은행: </span>하나은행</p>
-          <p class="account-card__number"><span class="sr-only">계좌번호: </span><span id="home-account-number">212-910016-02504</span></p>
+          <p class="account-card__number"><span class="sr-only">계좌번호: </span><span id="home-account-number">212-<wbr>910016-<wbr>02504</span></p>
           <p class="account-card__holder">예금주 트루스코리아</p>
           <div class="copy needs-js">
             <button type="button" class="btn btn--red btn--block copy__btn" data-copy-text="21291001602504" data-copy-status="home-account-copy-status" data-copy-ok="계좌번호를 복사했습니다. 은행 앱의 계좌번호 칸에 붙여 넣으시면 됩니다. 은행은 하나은행, 예금주는 트루스코리아입니다."><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>계좌번호 복사</button>

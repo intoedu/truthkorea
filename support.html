@@ -68,7 +68,7 @@
 <main id="main" tabindex="-1">
   <div class="page-band band band--photo band--a08">
   <picture class="band__media">
-    <source media="(min-width: 1024px)" srcset="assets/img/banners/culture-war-1900.webp 1900w" sizes="100vw">
+    <source media="(min-width: 1024px)" srcset="assets/img/banners/culture-war-1900.webp 1900w" sizes="100vw" width="1900" height="318">
     <img class="band__img" src="assets/img/banners/culture-war-m-768.webp" width="768" height="511" alt="">
   </picture>
     <div class="container page-band__inner">
@@ -85,33 +85,40 @@
 
   <div class="section section--paper account-section" id="account">
     <div class="container account-section__inner">
-      <div class="account-card">
-        <p class="account-card__bank"><span class="sr-only">은행: </span>하나은행</p>
-        <p class="account-card__number"><span class="sr-only">계좌번호: </span><span id="support-account-number">212-910016-02504</span></p>
-        <p class="account-card__holder">예금주 트루스코리아</p>
-        <div class="copy needs-js">
-          <button type="button" class="btn btn--red btn--block copy__btn" data-copy-text="21291001602504" data-copy-status="support-account-copy-status" data-copy-ok="계좌번호를 복사했습니다. 은행 앱의 계좌번호 칸에 붙여 넣으시면 됩니다. 은행은 하나은행, 예금주는 트루스코리아입니다."><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>계좌번호 복사</button>
-          <p class="copy__status" id="support-account-copy-status" role="status"></p>
+      <div class="account-section__main">
+        <div class="account-card">
+          <p class="account-card__bank"><span class="sr-only">은행: </span>하나은행</p>
+          <p class="account-card__number"><span class="sr-only">계좌번호: </span><span id="support-account-number">212-<wbr>910016-<wbr>02504</span></p>
+          <p class="account-card__holder">예금주 트루스코리아</p>
+          <div class="copy needs-js">
+            <button type="button" class="btn btn--red btn--block copy__btn" data-copy-text="21291001602504" data-copy-status="support-account-copy-status" data-copy-ok="계좌번호를 복사했습니다. 은행 앱의 계좌번호 칸에 붙여 넣으시면 됩니다. 은행은 하나은행, 예금주는 트루스코리아입니다."><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>계좌번호 복사</button>
+            <p class="copy__status" id="support-account-copy-status" role="status"></p>
+          </div>
+        </div>
+        <div class="account-help">
+          <p class="account-help__text">후원에 대해 궁금하신 점은 전화로 문의해 주세요.</p>
+          <a class="btn-call" href="tel:01027055000">
+            <span class="btn-call__label"><svg class="btn-call__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg>전화 걸기</span>
+            <span class="btn-call__number">010-2705-5000</span>
+          </a>
         </div>
       </div>
-      <p class="account-section__note">후원에 대해 궁금하신 점은 전화(<a class="nowrap" href="tel:01027055000">010-2705-5000</a>)로 문의해 주세요.</p>
+      <section class="campaign" aria-labelledby="campaign-title">
+        <div class="campaign__grid">
+          <div class="campaign__text">
+            <h2 class="campaign__title" id="campaign-title"><span class="t-red">3.5%</span> 175만 명의 기적,<br>당신의 손으로!</h2>
+            <p class="campaign__sub">소액주주운동으로 언론과 문화를 되찾아 자유를 수호합시다!</p>
+          </div>
+          <picture class="campaign__pic">
+            <source media="(min-width: 768px)" srcset="assets/img/banners/campaign-35-wide.webp" width="499" height="254">
+            <img class="campaign__img" src="assets/img/banners/campaign-35-square.webp" width="388" height="386" alt="자유민주주의 수호를 위한 3.5% 175만명의 기적, TK 국민주권재단 소액주주운동 안내 그림" loading="lazy">
+          </picture>
+        </div>
+      </section>
     </div>
   </div>
 
-  <section class="section campaign" aria-labelledby="campaign-title">
-    <div class="container campaign__grid">
-      <div class="campaign__text">
-        <h2 class="campaign__title" id="campaign-title"><span class="t-red">3.5%</span> 175만 명의 기적,<br>당신의 손으로!</h2>
-        <p class="campaign__sub">소액주주운동으로 언론과 문화를 되찾아 자유를 수호합시다!</p>
-      </div>
-      <picture class="campaign__pic">
-        <source media="(min-width: 768px)" srcset="assets/img/banners/campaign-35-wide.webp" width="499" height="254">
-        <img class="campaign__img" src="assets/img/banners/campaign-35-square.webp" width="388" height="386" alt="자유민주주의 수호를 위한 3.5% 175만명의 기적, TK 국민주권재단 소액주주운동 안내 그림" loading="lazy">
-      </picture>
-    </div>
-  </section>
-
-  <section class="section section--paper" id="why" aria-labelledby="why-title">
+  <section class="section" id="why" aria-labelledby="why-title">
     <div class="container prose">
       <h2 class="section-title" id="why-title">왜 소액주주운동인가?</h2>
       <p>대한민국은 자유와 민주주의라는 토대 위에 번영을 이루어왔습니다. 그러나 최근 언론과 문화계가 <strong>특정 이념에 의해 점차 장악</strong>되고 있습니다. 반미와 친북 성향을 띠는 일부 단체들이 사회적 담론을 왜곡하고, 자유로운 목소리를 억압하며, 심지어 김정은을 환영하는 피켓시위와 북한 체제를 옹호하는 움직임이 공공연히 나타나고 있습니다.</p>
@@ -120,7 +127,7 @@
     </div>
   </section>
 
-  <section class="section" id="mission" aria-labelledby="mission-title">
+  <section class="section section--paper" id="mission" aria-labelledby="mission-title">
     <div class="container">
       <h2 class="section-title" id="mission-title"><span class="t-red" lang="en">TruthKorea</span>국민주권 MISSION</h2>
       <ul class="vcards vcards--2">
@@ -148,7 +155,7 @@
     </div>
   </section>
 
-  <section class="section section--paper" id="film" aria-labelledby="film-title">
+  <section class="section" id="film" aria-labelledby="film-title">
     <div class="container">
       <h2 class="section-title" id="film-title">영화 후원</h2>
       <div class="film" data-tk-film="j9oDuu-ZhoE" data-tk-film-title="&lt;5월의 침묵&gt;">
@@ -161,7 +168,7 @@
     </div>
   </section>
 
-  <section class="section" id="future" aria-labelledby="future-title">
+  <section class="section section--paper" id="future" aria-labelledby="future-title">
     <div class="container prose">
       <h2 class="section-title" id="future-title">함께 만들어가는 미래</h2>
       <p>175만 명, 대한민국 인구의 단 3.5%가 손을 맞잡는다면, 우리는 언론과 문화계를 되찾아 자유와 진실이 살아 숨 쉬는 대한민국을 만들 수 있습니다.<br>당신의 참여가 그 시작입니다.</p>

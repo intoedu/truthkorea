@@ -33,6 +33,9 @@
   var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
   var SVGNS = 'http://www.w3.org/2000/svg';
   var NEWS_DEFAULT = { src: 'assets/img/banners/truthkorea-news-800.webp', width: 800, height: 450 };
+  /* 목록 카드에 큰 화면용으로 함께 주는 사진의 최대 가로 크기. 관리자 화면에서 올린 1600px 사진은 주지 않습니다
+     (폰이 목록에서 큰 사진을 받지 않도록; 폰에는 640px 작은 그림으로 충분합니다). */
+  var BIG_MAX = 1200;
   var WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
   function config() {
@@ -219,7 +222,9 @@
     var t = p.thumb ? safeSrc(p.thumb) : null;
     if (t) {
       var tw = p.thumb_w || 480, th = p.thumb_h || 270;
-      if (firstSrc && first.width > tw && first.height) big = { src: firstSrc, w: first.width };
+      /* 목록 그림이 첫 사진을 줄인 것일 때만 첫 사진을 큰 화면용으로 함께 줍니다 */
+      var same = first && (p.thumb === first.thumb || p.thumb.replace(/-thumb(\.[A-Za-z]+)$/, '$1') === first.src);
+      if (firstSrc && same && first.width > tw && first.width <= BIG_MAX && first.height) big = { src: firstSrc, w: first.width };
       return { src: t, w: tw, h: th, big: big };
     }
     for (var i = 0; p.images && i < p.images.length; i++) {
@@ -229,7 +234,7 @@
       var w = im.width || 0, h = im.height || 0;
       if (small) {
         var sw = 640, sh = w && h ? Math.round(640 * h / w) : 360;
-        if (main && w > sw) big = { src: main, w: w };
+        if (main && w > sw && w <= BIG_MAX) big = { src: main, w: w };
         return { src: small, w: sw, h: sh, big: big };
       }
       return { src: main, w: w || 1600, h: h || 900, big: null };
@@ -376,12 +381,16 @@
 
   /* ---------- 유튜브: 누르기 전에는 바깥에 아무것도 요청하지 않음 (미리 보기 그림은 옛 글이면 사이트 안 그림) ---------- */
   function videoPoster(p, id, nth, allowBlob) {
+    /* 옛 글: 옮겨 올 때 받아 둔 사이트 안 그림(assets/uploads/legacy/yt-영상번호.jpg)만 씁니다.
+       관리자 화면에서 영상을 바꾸면 목록 그림(thumb)이 지워지므로, 그때는 그림 없이 둡니다(바깥 그림을 쓰지 않음). */
+    if (isLegacy(p)) {
+      return nth === 1 && p.thumb && YT_RE.test(id) ? { src: ROOT + 'assets/uploads/legacy/yt-' + id + '.jpg', w: 480, h: 270 } : null;
+    }
     if (nth === 1 && p.thumb) {
       var t = safeSrc(p.thumb, allowBlob);
       if (t) return { src: t, w: p.thumb_w || 480, h: p.thumb_h || 270 };
     }
-    if (!isLegacy(p)) return { src: ytThumb(id), w: 480, h: 360 };
-    return null;
+    return { src: ytThumb(id), w: 480, h: 360 };
   }
   function renderVideo(container, p, id, nth, opts) {
     var title = p.title;
@@ -397,7 +406,8 @@
       amb.style.backgroundImage = 'url("' + pic.src.replace(/["\\\n\r]/g, '') + '")';
       poster.appendChild(amb);
       var img = el('img', 'video__img');
-      if (nth > 1) img.loading = 'lazy';
+      /* 첫 화면에 없는 영상(두 번째 영상, 또는 몇 문단 뒤에 놓인 영상)의 그림은 화면에 다가올 때 받습니다 */
+      if (nth > 1 || (p.video_after != null && p.video_after > 0)) img.loading = 'lazy';
       img.decoding = 'async';
       img.alt = '';
       img.width = pic.w; img.height = pic.h;
@@ -545,6 +555,14 @@
   function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
 
   /* ---------- 목록 카드 ---------- */
+  /* 카드 그림이 화면에서 차지하는 너비 (site.css의 배치와 맞춤): 브라우저가 알맞은 크기의 그림을 고릅니다 */
+  var SIZES = {
+    lead: '(min-width: 1024px) 380px, (min-width: 600px) 480px, 100vw',
+    card: '(min-width: 1024px) 380px, (min-width: 600px) 50vw, 100vw',
+    row: '(min-width: 1024px) 380px, (min-width: 600px) 50vw, (max-width: 359.98px) 100vw, 44vw',
+    poster: '(min-width: 1280px) 381px, (min-width: 768px) 33vw, (max-width: 359.98px) 112px, 50vw',
+    posterRow: '(min-width: 1280px) 381px, (min-width: 768px) 33vw, 112px'
+  };
   /* kind: 'card' | 'lead' | 'row' */
   function cardItem(p, kind, showCat) {
     var isVideo = !!p.youtube_id;
@@ -559,9 +577,10 @@
     img.decoding = 'async';
     img.alt = '';
     img.width = t.w; img.height = t.h;
-    if (kind === 'lead' && t.big) {
+    if (t.big) {
       img.srcset = t.src + ' ' + t.w + 'w, ' + t.big.src + ' ' + t.big.w + 'w';
-      img.sizes = '(min-width: 1024px) 380px, (min-width: 600px) 400px, 100vw';
+      img.sizes = SIZES[kind] || SIZES.card;
+      if (kind === 'row' && document.documentElement.getAttribute('data-font-size') === 'xlarge') img.sizes = SIZES.card;
     }
     img.src = t.src;
     media.appendChild(img);
@@ -578,9 +597,13 @@
     var body = el('span', 'card__body');
     body.appendChild(setTitle(el('span', 'card__title'), p.title));
     var meta = el('span', 'card__meta');
-    /* 낱말 사이 빈칸은 진짜 빈칸(줄 바꿈 자리), 가운뎃점은 CSS가 앞 낱말 끝에 붙입니다 */
-    if (showCat) { meta.appendChild(el('span', 'card__cat', CATS[p.category])); meta.appendChild(document.createTextNode(' ')); }
-    if (isVideo) { meta.appendChild(el('span', 'card__kind', '영상')); meta.appendChild(document.createTextNode(' ')); }
+    /* 첫 줄: ‘종합뉴스 · 영상’ (가운뎃점은 CSS가 ‘영상’ 앞에 붙임), 둘째 줄: 날짜. 줄 끝에 점이 홀로 남지 않습니다. */
+    if (showCat || isVideo) {
+      var labels = el('span', 'card__labels');
+      if (showCat) labels.appendChild(el('span', 'card__cat', CATS[p.category]));
+      if (isVideo) labels.appendChild(el('span', 'card__kind', '영상'));
+      meta.appendChild(labels);
+    }
     meta.appendChild(timeEl(p.published_at, '', 'card__date'));
     body.appendChild(meta);
     a.appendChild(body);
@@ -600,6 +623,10 @@
     img.decoding = 'async';
     img.alt = '';
     img.width = t.w; img.height = t.h;
+    if (t.big) {
+      img.srcset = t.src + ' ' + t.w + 'w, ' + t.big.src + ' ' + t.big.w + 'w';
+      img.sizes = document.documentElement.getAttribute('data-font-size') === 'xlarge' ? SIZES.posterRow : SIZES.poster;
+    }
     img.src = t.src;
     media.appendChild(img);
     a.appendChild(media);
@@ -613,7 +640,7 @@
       /* ‘2025년 9월 19일 ~ 9월 20일’: 날짜 하나는 한 줄에, ‘~’ 앞에서만 줄이 바뀜 */
       var parts = fmtEvent(p.event_start, p.event_end).split(' ~ ');
       dt.appendChild(el('span', 'nowrap', parts[0]));
-      if (parts[1]) { dt.appendChild(document.createTextNode(' ')); dt.appendChild(el('span', 'nowrap', '~ ' + parts[1])); }
+      if (parts[1]) { dt.appendChild(document.createTextNode(' ')); dt.appendChild(el('span', 'nowrap', '~\u00a0' + parts[1])); }
     } else dt.appendChild(timeEl(p.published_at, '', 'nowrap'));
     d.appendChild(dt);
     meta.appendChild(d);
@@ -738,6 +765,11 @@
     var contentEl = byId('post-content'), back = byId('post-back'), crumb = byId('crumb-list'), here = byId('crumb-here');
     var chip = byId('post-chip');
     var actions = byId('post-actions');
+    /* 글을 다 불러온 뒤에야 ‘목록으로’ 단추와 서명·후원 타일을 보여 줍니다 (불러오는 동안 밀려 내려가지 않게) */
+    function unpend() {
+      var w = document.querySelectorAll('[data-post-pending]');
+      for (var i = 0; i < w.length; i++) w[i].removeAttribute('data-post-pending');
+    }
     if (!titleEl || !statusEl || !contentEl) return;
     var id = getParam('id');
     if (id && LEGACY_SAME.hasOwnProperty(id)) { location.replace(postHref(LEGACY_SAME[id])); return; }
@@ -794,14 +826,18 @@
         setBack(cat);
       }
       statusEl.appendChild(box);
+      unpend();
       if (retried) { titleEl.tabIndex = -1; titleEl.focus(); }
     }
 
     function load(retried) {
       clear(statusEl);
       statusEl.appendChild(el('p', 'notice', LOADING));
+      /* 불러오는 동안 자리를 넉넉히 잡아 바닥글이 화면 밖에 있게 합니다 (글이 들어올 때 화면이 덜컥거리지 않게) */
+      statusEl.classList.add('is-loading');
       get(id).then(function (p) {
         clear(statusEl);
+        statusEl.classList.remove('is-loading');
         if (!p) { notFound(retried); return; }
         document.title = p.title + ' - 트루스코리아';
         setTitle(titleEl, p.title);
@@ -817,11 +853,14 @@
           if (give) give.parentNode.removeChild(give);  /* 행사 글 아래에는 후원 타일을 두지 않음 */
         }
         if (actions) addShare(actions, p);
+        unpend();
         initRelated(p);
         /* ‘다시 불러오기’ 단추가 사라졌으므로 글 제목으로 초점을 옮깁니다 */
         if (retried) { titleEl.tabIndex = -1; titleEl.focus(); }
       }, function () {
         clear(statusEl);
+        statusEl.classList.remove('is-loading');
+        unpend();
         statusEl.appendChild(notice('error', ERR_TITLE, ERR_TEXT, function () { load(true); }));
       });
     }
@@ -836,6 +875,8 @@
     host.setAttribute('data-done', '1');
     var h = byId('more-title');
     if (h) h.textContent = p.category === 'event' ? '다른 행사·세미나' : '다른 ' + CATS[p.category] + ' 소식';
+    /* 포스터 3장: 폰(두 칸)에서는 2장만, 넓은 화면(세 칸)에서는 3장을 보여 줍니다 (한 장만 홀로 남지 않게) */
+    if (p.category === 'event') host.classList.add('post-list--three-posters');
     runList(host, {
       cats: [p.category],
       style: p.category === 'event' ? 'poster' : 'rows',
@@ -857,6 +898,7 @@
         out.textContent = ok
           ? '글 주소를 복사했습니다. 카카오톡 대화창에 붙여 넣으시면 이 글을 보낼 수 있습니다.'
           : '복사하지 못했습니다. 화면 위 주소창의 주소를 길게 눌러 복사해 주세요.';
+        if (typeof window.TKReveal === 'function') window.TKReveal(out);
       };
       if (typeof window.TKCopy === 'function') window.TKCopy(location.href, null, done);
       else done(false);

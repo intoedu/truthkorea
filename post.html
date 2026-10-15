@@ -25,6 +25,7 @@
 <script src="assets/js/site.js"></script>
 <script src="assets/js/config.js" defer></script>
 <script src="assets/js/posts.js" defer></script>
+<script src="assets/js/sign.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">본문 바로가기</a>
@@ -77,10 +78,10 @@
       <p class="post__chip" id="post-chip" hidden></p>
       <h1 class="post__title" id="post-title">글 보기</h1>
       <p class="post__meta" id="post-meta"></p>
+      <div class="post__status is-loading" id="post-status" role="status"></div>
     </div>
-    <div class="container post__main">
+    <div class="container post__main" data-post-pending>
       <noscript><p class="notice notice--warn">글 내용은 자바스크립트가 켜져 있어야 보입니다. 인터넷 앱의 설정에서 자바스크립트를 켜 주시거나, 전화(<span class="nowrap">010-2705-5000</span>)로 문의해 주세요.</p></noscript>
-      <div class="post__status" id="post-status" role="status"></div>
       <div class="post__content" id="post-content"></div>
       <div class="post__actions" id="post-actions">
         <div class="btn-row">
@@ -90,20 +91,20 @@
     </div>
   </article>
 
+  <section class="section next-steps" aria-labelledby="next-title" data-post-pending>
+    <div class="container">
+      <h2 class="sr-only" id="next-title">함께해 주세요</h2>
+      <ul class="next-tiles">
+        <li><a class="next-tile next-tile--red" href="sign.html"><span class="next-tile__disc"><svg class="next-tile__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span><span class="next-tile__text"><span class="next-tile__title"><span data-sign-state="on" hidden>서명하기</span><span data-sign-state="off">서명운동</span></span><span class="next-tile__sub"><span data-sign-state="on" hidden>서명운동 참여</span><span data-sign-state="off">안내 보기</span></span></span></a></li>
+        <li data-next-give><a class="next-tile next-tile--white" href="support.html"><span class="next-tile__disc"><svg class="next-tile__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20s-7-4.4-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.6-9 9-9 9z"/></svg></span><span class="next-tile__text"><span class="next-tile__title">후원하기</span><span class="next-tile__sub">후원 계좌 안내</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="section section--paper post-more" id="post-more" aria-labelledby="more-title" hidden>
     <div class="container">
       <h2 class="section-title" id="more-title">다른 소식</h2>
       <div class="post-list" data-tk-related data-style="rows"></div>
-    </div>
-  </section>
-
-  <section class="section next-steps" aria-labelledby="next-title">
-    <div class="container">
-      <h2 class="sr-only" id="next-title">함께해 주세요</h2>
-      <ul class="next-tiles">
-        <li><a class="next-tile next-tile--red" href="sign.html"><span class="next-tile__disc"><svg class="next-tile__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span><span class="next-tile__text"><span class="next-tile__title">서명하기</span><span class="next-tile__sub">서명운동 참여</span></span></a></li>
-        <li data-next-give><a class="next-tile next-tile--white" href="support.html"><span class="next-tile__disc"><svg class="next-tile__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20s-7-4.4-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.6-9 9-9 9z"/></svg></span><span class="next-tile__text"><span class="next-tile__title">후원하기</span><span class="next-tile__sub">후원 계좌 안내</span></span></a></li>
-      </ul>
     </div>
   </section>
 </main>

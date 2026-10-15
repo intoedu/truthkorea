@@ -17,8 +17,8 @@
       }
     ],
     "thumb": "assets/uploads/legacy/TK_NEWS-22-1-thumb.jpg",
-    "thumb_w": 480,
-    "thumb_h": 263,
+    "thumb_w": 600,
+    "thumb_h": 329,
     "links": [
       {
         "text": "자세히보기",
@@ -74,8 +74,8 @@
       }
     ],
     "thumb": "assets/uploads/legacy/event-69-1-thumb.jpg",
-    "thumb_w": 480,
-    "thumb_h": 728,
+    "thumb_w": 633,
+    "thumb_h": 960,
     "source_url": "http://xn--3e0b9b67w9mjb2nckd.com/bbs/board.php?bo_table=event&wr_id=69",
     "show_on_home": true,
     "event_start": "2025-09-25",
@@ -137,8 +137,8 @@
       }
     ],
     "thumb": "assets/uploads/legacy/TK_NEWS-20-1-thumb.jpg",
-    "thumb_w": 480,
-    "thumb_h": 360,
+    "thumb_w": 600,
+    "thumb_h": 450,
     "links": [
       {
         "text": "기사자세히보기",
@@ -208,8 +208,8 @@
       }
     ],
     "thumb": "assets/uploads/legacy/event-63-1-thumb.jpg",
-    "thumb_w": 480,
-    "thumb_h": 578,
+    "thumb_w": 640,
+    "thumb_h": 771,
     "source_url": "http://xn--3e0b9b67w9mjb2nckd.com/bbs/board.php?bo_table=event&wr_id=63",
     "show_on_home": true,
     "event_start": "2025-09-19",
@@ -227,14 +227,14 @@
         "src": "assets/uploads/legacy/event-66-1.jpg",
         "thumb": "assets/uploads/legacy/event-66-1-thumb.jpg",
         "alt": "할렐루야 2025 대뉴욕 복음화대회(Hallelujah New York Evangelical Crusade) 포스터. 일시 2025. 9.19(금)~9.21(주일), 장소 프라미스교회(허연행 목사), 130-30 31st Ave., Flushing, NY 11354. 강사 김한요 목사, 마크 최 목사, 이혜진 목사. 주최 뉴욕지구한인교회협의회",
-        "width": 1308,
-        "height": 1934,
+        "width": 1080,
+        "height": 1597,
         "after": 0
       }
     ],
     "thumb": "assets/uploads/legacy/event-66-1-thumb.jpg",
-    "thumb_w": 480,
-    "thumb_h": 710,
+    "thumb_w": 640,
+    "thumb_h": 946,
     "source_url": "http://xn--3e0b9b67w9mjb2nckd.com/bbs/board.php?bo_table=event&wr_id=66",
     "show_on_home": true,
     "event_start": "2025-09-19",
@@ -258,8 +258,8 @@
       }
     ],
     "thumb": "assets/uploads/legacy/event-67-1-thumb.jpg",
-    "thumb_w": 480,
-    "thumb_h": 594,
+    "thumb_w": 640,
+    "thumb_h": 792,
     "source_url": "http://xn--3e0b9b67w9mjb2nckd.com/bbs/board.php?bo_table=event&wr_id=67",
     "show_on_home": true,
     "event_start": "2025-10-02",
@@ -353,8 +353,8 @@
       }
     ],
     "thumb": "assets/uploads/legacy/TK_NEWS-19-1-thumb.jpg",
-    "thumb_w": 480,
-    "thumb_h": 270,
+    "thumb_w": 640,
+    "thumb_h": 360,
     "source_url": "http://xn--3e0b9b67w9mjb2nckd.com/bbs/board.php?bo_table=TK_NEWS&wr_id=19",
     "show_on_home": true
   },
@@ -375,9 +375,9 @@
         "after": 1
       }
     ],
-    "thumb": "assets/uploads/legacy/yt-5KjzqkNTQO0.jpg",
-    "thumb_w": 480,
-    "thumb_h": 270,
+    "thumb": "assets/uploads/legacy/TK_NEWS-17-thumb.webp",
+    "thumb_w": 960,
+    "thumb_h": 540,
     "source_url": "http://xn--3e0b9b67w9mjb2nckd.com/bbs/board.php?bo_table=TK_NEWS&wr_id=17",
     "show_on_home": true
   },
@@ -413,8 +413,8 @@
       }
     ],
     "thumb": "assets/uploads/legacy/truth-14-1-thumb.jpg",
-    "thumb_w": 480,
-    "thumb_h": 213,
+    "thumb_w": 600,
+    "thumb_h": 266,
     "source_url": "http://xn--3e0b9b67w9mjb2nckd.com/bbs/board.php?bo_table=truth&wr_id=14",
     "show_on_home": true
   },
