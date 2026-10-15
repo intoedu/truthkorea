@@ -6,7 +6,7 @@
      - 공지사항 등 다른 게시판   →  처음 화면
      - 옛 소개·후원 쪽          →  새 쪽         예) /bbs/page.php?hid=supportpc               →  /support.html
      - 옛 서명하기 게시판       →  서명운동 화면  예) /bbs/board.php?bo_table=Sign               →  /sign.html
-     - 옛 진실알리기·문화전쟁·대통령 게시판의 옮기지 않은 글과 목록 → 종합뉴스 목록 (/news.html?cat=broadcast)
+     - 옛 truth·Culture_War·PresidentYoon 게시판의 옮기지 않은 글과 목록 → 종합뉴스 목록 (/news.html?cat=broadcast)
    카카오톡 등으로 퍼진 옛 글 주소가 없는 글 화면으로 가지 않고 늘 열리는 화면으로 가게 하려는 것입니다.
    관리자 화면에서 옛 글을 지우면 그 옛 주소는 ‘글을 찾을 수 없습니다’와 목록 단추가 있는 화면으로 갑니다.
    사이트를 도메인 맨 위가 아닌 하위 폴더에 올리면 BASE를 그 폴더('/폴더/')로 바꿉니다. */
@@ -17,7 +17,7 @@
   var LIST = {
     TK_broadcast: 'news.html?cat=broadcast',
     TK_NEWS: 'news.html?cat=tknews',
-    /* 옛 진실알리기·문화전쟁·대통령 게시판의 글은 새 홈페이지에서 종합뉴스로 모았습니다 */
+    /* 옛 truth·Culture_War·PresidentYoon 게시판의 글은 새 홈페이지에서 종합뉴스로 모았습니다 */
     truth: 'news.html?cat=broadcast',
     Culture_War: 'news.html?cat=broadcast',
     PresidentYoon: 'news.html?cat=broadcast',

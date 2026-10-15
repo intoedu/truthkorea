@@ -21,7 +21,7 @@
 
   var CATS = { broadcast: '종합뉴스', tknews: 'TK 뉴스', event: '행사·세미나' };
   var NEWS_CATS = ['broadcast', 'tknews'];
-  /* 없어진 분류(옛 진실알리기 등)로 들어온 주소는 종합뉴스로 보여 드립니다 */
+  /* 없어진 옛 분류(truth 등)로 들어온 주소는 종합뉴스로 보여 드립니다 */
   var CAT_ALIAS = { truth: 'broadcast', Culture_War: 'broadcast', PresidentYoon: 'broadcast', TK_broadcast: 'broadcast', TK_NEWS: 'tknews' };
   var SELECT = 'id,category,title,body,youtube_id,video_after,extra_videos,links,images,thumb,thumb_w,thumb_h,published_at,show_on_home,event_start,event_end';
   /* 옛 홈페이지 게시판 → 새 목록 (옛 글 번호로 들어왔는데 글이 없을 때 그 목록으로 안내) */
@@ -392,12 +392,16 @@
     var poster = el('span', 'video__poster');
     var pic = videoPoster(p, id, nth, opts && opts.allowBlob);
     if (pic) {
-      var img = el('img');
-      img.src = pic.src;
+      /* 넓은 화면에서는 작은 미리 보기 그림을 늘리지 않고 가운데 두고, 둘레는 같은 그림을 흐리게 깔아 채웁니다 */
+      var amb = el('span', 'video__ambient');
+      amb.style.backgroundImage = 'url("' + pic.src.replace(/["\\\n\r]/g, '') + '")';
+      poster.appendChild(amb);
+      var img = el('img', 'video__img');
+      if (nth > 1) img.loading = 'lazy';
+      img.decoding = 'async';
       img.alt = '';
       img.width = pic.w; img.height = pic.h;
-      img.decoding = 'async';
-      if (nth > 1) img.loading = 'lazy';
+      img.src = pic.src;
       poster.appendChild(img);
     }
     var disc = el('span', 'video__disc');
@@ -441,11 +445,11 @@
     if (!src) return;
     var fig = el('figure', 'post__figure' + (p.category === 'event' ? ' post__figure--poster' : ''));
     var img = el('img');
-    img.src = src;
-    img.alt = im.alt || ('‘' + p.title + '’ 글의 사진 ' + (i + 1));
-    if (im.width && im.height) { img.width = im.width; img.height = im.height; }
     if (i > 0 || opts.lazyFirst) img.loading = 'lazy';
     img.decoding = 'async';
+    img.alt = im.alt || ('‘' + p.title + '’ 글의 사진 ' + (i + 1));
+    if (im.width && im.height) { img.width = im.width; img.height = im.height; }
+    img.src = src;
     fig.appendChild(img);
     if (im.caption) {
       var cap = el('figcaption', 'post__caption');
@@ -551,15 +555,15 @@
     media.setAttribute('aria-hidden', 'true');
     var t = thumbOf(p);
     var img = el('img', 'card__img');
-    img.src = t.src;
+    img.loading = 'lazy';      /* src보다 먼저 정해야 화면 밖 그림을 미리 받지 않습니다 */
+    img.decoding = 'async';
     img.alt = '';
     img.width = t.w; img.height = t.h;
-    img.loading = 'lazy';
-    img.decoding = 'async';
     if (kind === 'lead' && t.big) {
       img.srcset = t.src + ' ' + t.w + 'w, ' + t.big.src + ' ' + t.big.w + 'w';
-      img.sizes = '(min-width: 1024px) 380px, (min-width: 600px) 720px, 100vw';
+      img.sizes = '(min-width: 1024px) 380px, (min-width: 600px) 400px, 100vw';
     }
+    img.src = t.src;
     media.appendChild(img);
     if (isVideo) {
       var pill = el('span', 'card__pill');
@@ -592,11 +596,11 @@
     media.setAttribute('aria-hidden', 'true');
     var t = thumbOf(p);
     var img = el('img', 'poster__img');
-    img.src = t.src;
-    img.alt = '';
-    img.width = t.w; img.height = t.h;
     img.loading = 'lazy';
     img.decoding = 'async';
+    img.alt = '';
+    img.width = t.w; img.height = t.h;
+    img.src = t.src;
     media.appendChild(img);
     a.appendChild(media);
     var body = el('span', 'poster__body');
