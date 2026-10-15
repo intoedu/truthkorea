@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+  <!-- 남색·빨강 빗금 (반복). 6~8px 높이의 꾸밈 막대에 씁니다. 글자 바탕으로는 쓰지 마세요. -->
+  <rect width="16" height="16" fill="#10315C"/>
+  <path d="M-4 4 L4 -4 M0 16 L16 0 M12 20 L20 12" stroke="#C8102E" stroke-width="5.66"/>
+</svg>

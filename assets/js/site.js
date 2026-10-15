@@ -47,6 +47,14 @@
   }
   window.TKCopy = copyText;
 
+  /* 알림 글(복사했습니다 등)이 화면 아래 막대에 가려지지 않게, 보이는 곳까지만 살짝 올립니다
+     (html의 scroll-padding-bottom이 막대 높이만큼 비워 둡니다) */
+  function reveal(node) {
+    if (!node || !node.getBoundingClientRect) return;
+    try { node.scrollIntoView({ block: 'nearest' }); } catch (e) { try { node.scrollIntoView(false); } catch (e2) {} }
+  }
+  window.TKReveal = reveal;
+
   /* 뒤로 가기로 돌아온 화면(저장된 화면)과 다른 창에도 고른 크기를 다시 맞춥니다 */
   window.addEventListener('pageshow', function (e) { if (e.persisted) { load(); sync(); } });
   window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { load(); sync(); } });
@@ -74,6 +82,7 @@
           out.textContent = ok
             ? (cp.getAttribute('data-copy-ok') || '복사했습니다. 붙여 넣을 곳에서 붙여넣기를 하시면 됩니다.')
             : '복사하지 못했습니다. 글자를 길게 눌러 직접 복사해 주세요: ' + text;
+          reveal(out);
         });
       }
     });

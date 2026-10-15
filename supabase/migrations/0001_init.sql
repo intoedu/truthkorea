@@ -15,8 +15,8 @@ begin;
 create table public.posts (
   id            text primary key default gen_random_uuid()::text,
   category      text not null
-                check (category in ('broadcast', 'tknews', 'truth', 'event')),
-                -- broadcast = 종합뉴스, tknews = TK 뉴스, truth = 진실알리기, event = 행사·세미나
+                check (category in ('broadcast', 'tknews', 'event')),
+                -- broadcast = 종합뉴스, tknews = TK 뉴스, event = 행사·세미나
   title         text not null check (length(btrim(title)) between 1 and 300),
   body          text not null default '',
   youtube_id    text check (youtube_id is null or youtube_id ~ '^[A-Za-z0-9_-]{11}$'),
@@ -29,6 +29,11 @@ create table public.posts (
   images        jsonb not null default '[]'::jsonb check (jsonb_typeof(images) = 'array'),
                 -- [{ "src": "https://…/post-images/… 또는 assets/uploads/legacy/…", "alt": "사진 설명", "width": 1000, "height": 563,
                 --    "caption": "사진 아래 글(선택)", "after": 문단 번호(선택, 옛 글), "thumb": "목록용 작은 그림(선택)", "full": "원본(선택)" }]
+  thumb         text check (thumb is null or (length(thumb) <= 500 and (thumb ~ '^https://' or thumb ~ '^assets/[A-Za-z0-9_./-]+$'))),
+                -- 목록·처음 화면 카드에 쓰는 작은 그림(선택). 옛 글은 assets/uploads/legacy/… 를 씁니다.
+                -- 비어 있으면 화면이 첫 사진 → 유튜브 미리 보기 그림 → 기본 그림 순서로 고릅니다.
+  thumb_w       integer check (thumb_w is null or thumb_w between 1 and 10000),
+  thumb_h       integer check (thumb_h is null or thumb_h between 1 and 10000),
   published_at  timestamptz not null default now(),
   is_published  boolean not null default true,
   show_on_home  boolean not null default true,
@@ -42,7 +47,7 @@ create table public.posts (
     check (event_end is null or (event_start is not null and event_end >= event_start))
 );
 
-comment on table public.posts is '홈페이지 글: 종합뉴스(broadcast), TK 뉴스(tknews), 진실알리기(truth), 행사·세미나(event)';
+comment on table public.posts is '홈페이지 글: 종합뉴스(broadcast), TK 뉴스(tknews), 행사·세미나(event)';
 
 create index posts_category_published_at_idx on public.posts (category, published_at desc);
 create index posts_published_at_idx on public.posts (published_at desc) where is_published;
