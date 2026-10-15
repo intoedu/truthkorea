@@ -1,5 +1,5 @@
 -- 자동으로 만든 파일입니다. 고치지 말고 data/posts.json을 고친 뒤 `node supabase/make-seed.mjs`를 다시 실행하세요.
--- 옛 홈페이지(국민주권운동.com)에서 옮겨 온 글 20개를 public.posts 표에 넣습니다.
+-- 옛 홈페이지에서 옮겨 온 글 20개를 public.posts 표에 넣습니다.
 -- 먼저 supabase/migrations/0001_init.sql 을 실행한 다음, Supabase 대시보드 > SQL Editor 에서 이 파일을 실행합니다.
 -- 같은 id가 이미 있으면 건너뜁니다(여러 번 실행해도 안전).
 

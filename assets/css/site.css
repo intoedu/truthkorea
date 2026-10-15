@@ -325,7 +325,7 @@ a {
 }
 .brand__emblem { width: 44px; height: 44px; flex: none; }
 .brand__text { display: flex; flex-direction: column; line-height: 1.2; }
-.brand__name { font-size: 1.3125rem; font-weight: 800; letter-spacing: -.01em; color: var(--navy-900); }
+.brand__name { font-size: 1.3125rem; font-weight: 800; letter-spacing: .16em; margin-right: -.16em; color: var(--navy-900); }
 .brand__sub { font-size: 1.0625rem; font-weight: 700; letter-spacing: .06em; color: var(--red-800); }
 
 .gnb {
@@ -946,7 +946,11 @@ html:not(.js) .skel { display: none; }
   .hero-tile--red:hover { background: var(--red-hover); color: #FFFFFF; }
   .hero-tile--white:hover { background: var(--sky); color: var(--navy-900); }
 }
-@media (max-width: 359.98px) { .hero__media { aspect-ratio: 16 / 10; } }
+@media (max-width: 359.98px) {
+  .hero__media { aspect-ratio: 16 / 10; }
+  /* 낮은 사진: 머리말(TRUTHKOREA)이 걸리는 아래쪽을 일찍 남색으로 채워 7:1 */
+  .hero__media::after { background: linear-gradient(to bottom, rgba(11, 31, 77, 0) 35%, rgba(11, 31, 77, .6) 55%, #0B1F4D calc(100% - 72px)); }
+}
 @media (min-width: 600px) {
   .hero__media { aspect-ratio: 16 / 9; }
   .hero__img { object-position: 60% 35%; }
