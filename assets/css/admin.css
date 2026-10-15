@@ -1,13 +1,14 @@
 /* 트루스코리아 관리자 화면 전용 (site.css 다음에 불러옵니다) */
 
 .admin-badge {
-  margin: 0;
-  padding-left: .75rem;
-  border-left: .375rem solid var(--c-red);
-  color: var(--c-red);
-  font-size: var(--fs-ui);
+  margin: 8px 0;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--red-tint);
+  color: var(--red-800);
+  font-size: var(--fs-meta);
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.5;
 }
 .admin-wrap > * { max-width: 52rem; }
 .admin-loading { font-weight: 700; }
@@ -18,7 +19,38 @@
   gap: .5rem 1rem;
   margin-top: 1rem;
 }
-.admin-userbar__who { margin: 0; overflow-wrap: anywhere; }
+.admin-userbar__who { margin: 0; overflow-wrap: anywhere; color: var(--on-navy-2); }
+.admin-userbar__who strong { color: #FFFFFF; }
+
+/* 글 관리 · 서명 명단 고르기 */
+.admin-tabs { margin: 0 0 1.5rem; }
+.admin-tabs__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 32rem; border: 2px solid var(--navy-800); border-radius: 12px; overflow: hidden; }
+.admin-tabs__list li { margin: 0; }
+.admin-tabs__list li + li { border-left: 2px solid var(--navy-800); }
+.admin-tabs__btn {
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+  width: 100%; min-height: 56px; margin: 0; padding: 4px 10px; border: 0;
+  background: #FFFFFF; color: var(--navy-800); font: 800 1.1875rem/1.25 var(--font); cursor: pointer;
+}
+.admin-tabs__btn[aria-pressed="true"] { background: var(--navy-900); color: #FFFFFF; }
+.admin-tabs__btn:focus-visible { outline: 3px solid var(--focus-k); outline-offset: -3px; box-shadow: inset 0 0 0 7px var(--focus-y); }
+
+/* 서명 명단 */
+.admin-count--big { font-size: 1.375rem; color: var(--navy-900); }
+.signs-search { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0 1rem; }
+.signs-search .field { flex: 1 1 18rem; margin-bottom: 1rem; }
+.signs-search .btn-row { margin-bottom: 1rem; }
+.table-wrap { overflow-x: auto; margin: 0 0 1.25rem; border: 1px solid var(--rule); border-radius: 12px; }
+.table-wrap:focus-visible { outline: 4px solid var(--focus-k); box-shadow: 0 0 0 4px var(--focus-y); }
+.signs-table { width: 100%; border-collapse: collapse; font-size: 1.0625rem; min-width: 46rem; }
+.signs-table th, .signs-table td { padding: .5rem .75rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: middle; }
+.signs-table th { background: var(--paper); color: var(--navy-900); font-weight: 800; white-space: nowrap; }
+.signs-table__name { font-weight: 800; }
+.signs-table__phone { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.signs-table__btn { min-height: 48px; padding: .25rem .875rem; font-size: 1.0625rem; white-space: nowrap; }
+.signs-table__img { display: block; width: 240px; height: 120px; object-fit: contain; background: #FFFFFF; border: 1px solid var(--rule); border-radius: 8px; }
+.signs-table__none { color: var(--muted); font-weight: 700; }
+.admin-pager .btn { flex: 0 0 auto; }
 .admin-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -176,5 +208,6 @@ select.field__input { cursor: pointer; }
 }
 
 .site-footer--admin { padding-block: 2rem; }
-.site-footer--admin p { margin: 0 0 .5rem; }
+.site-footer--admin::before { display: none; }
+.site-footer--admin p { margin: 0 0 .5rem; color: var(--on-navy-2); }
 .admin-page .site-footer__copy { margin: 0; }

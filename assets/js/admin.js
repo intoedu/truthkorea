@@ -1,11 +1,15 @@
-/* 트루스코리아 관리자 화면: 로그인, 글 목록, 글 쓰기·고치기·지우기, 사진 올리기
+/* 트루스코리아 관리자 화면: 로그인, 글 목록, 글 쓰기·고치기·지우기, 사진 올리기, 서명 명단
    - Supabase Auth(이메일+비밀번호)로 로그인합니다. 권한은 데이터베이스의 RLS 규칙이 지킵니다(public.admins 표에 있는 사람만 쓰기 가능).
-   - 글 내용은 화면에 넣을 때 textContent만 씁니다. */
+   - 글 내용과 서명 명단은 화면에 넣을 때 textContent만 씁니다.
+   - 사진을 올리면 목록·처음 화면용 작은 그림(가로 640px)도 함께 올립니다(images[].thumb). */
 (function () {
   'use strict';
   var BUCKET = 'post-images';
+  var SIGN_BUCKET = 'signatures';
   var PAGE = 30;
+  var SIGN_PAGE = 50;
   var MAX_SIDE = 1600;
+  var THUMB_W = 640;
 
   var $ = function (id) { return document.getElementById(id); };
   var TK = window.TK;
@@ -20,9 +24,14 @@
   var dateAtOpen = '';    // 글을 열었을 때의 ‘올린 날짜와 시간’ 칸 값
 
   /* ---------- 화면 바꾸기와 알림 ---------- */
-  var VIEWS = ['view-loading', 'view-setup', 'view-login', 'view-denied', 'view-error', 'view-list', 'view-editor'];
+  var VIEWS = ['view-loading', 'view-setup', 'view-login', 'view-denied', 'view-error', 'view-list', 'view-editor', 'view-signs'];
   function show(id) {
     VIEWS.forEach(function (v) { var e = $(v); if (e) e.hidden = v !== id; });
+    var tabs = $('admin-tabs');
+    if (tabs) tabs.hidden = !(id === 'view-list' || id === 'view-editor' || id === 'view-signs');
+    var onSigns = id === 'view-signs';
+    if ($('tab-posts')) $('tab-posts').setAttribute('aria-pressed', String(!onSigns));
+    if ($('tab-signs')) $('tab-signs').setAttribute('aria-pressed', String(onSigns));
   }
   function msg(kind, text, focus) {
     var m = $('admin-msg');
@@ -97,6 +106,17 @@
     if (typeof src !== 'string' || src.indexOf(prefix) !== 0) return null;
     try { return decodeURIComponent(src.slice(prefix.length).split('?')[0]); } catch (e) { return null; }
   }
+  /* 글의 사진 파일 경로들 (사진과 작은 그림) */
+  function imagePaths(images) {
+    var out = [];
+    (images || []).forEach(function (im) {
+      if (!im) return;
+      var a = storagePath(im.src), b = storagePath(im.thumb);
+      if (a) out.push(a);
+      if (b) out.push(b);
+    });
+    return out;
+  }
   function newPath() {
     var d = new Date(Date.now() + 9 * 3600 * 1000);
     var rand = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
@@ -122,20 +142,32 @@
       i.src = url;
     });
   }
+  function drawTo(img, w, h) {
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    var ctx = c.getContext('2d');
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, w, h);
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, w, h);
+    return c;
+  }
+  function toJpeg(c, q) {
+    return new Promise(function (resolve, reject) {
+      c.toBlob(function (b) { b ? resolve(b) : reject(new Error('toBlob')); }, 'image/jpeg', q);
+    });
+  }
+  /* 화면용(긴 쪽 1600px)과 목록용 작은 그림(가로 640px) 두 가지를 만듭니다 */
   function resizeImage(file) {
     return loadImage(file).then(function (s) {
       var scale = Math.min(1, MAX_SIDE / Math.max(s.w, s.h));
       var w = Math.max(1, Math.round(s.w * scale)), h = Math.max(1, Math.round(s.h * scale));
-      var c = document.createElement('canvas');
-      c.width = w; c.height = h;
-      var ctx = c.getContext('2d');
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, w, h);
-      ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(s.img, 0, 0, w, h);
+      var big = drawTo(s.img, w, h);
+      var tw = Math.min(THUMB_W, w), th = Math.max(1, Math.round(h * tw / w));
+      var small = drawTo(big, tw, th);
       s.done();
-      return new Promise(function (resolve, reject) {
-        c.toBlob(function (b) { b ? resolve({ blob: b, width: w, height: h }) : reject(new Error('toBlob')); }, 'image/jpeg', 0.85);
+      return Promise.all([toJpeg(big, 0.85), toJpeg(small, 0.8)]).then(function (b) {
+        return { blob: b[0], width: w, height: h, thumbBlob: b[1] };
       });
     });
   }
@@ -419,7 +451,7 @@
         if (!/^image\//.test(file.type)) { failed.push(file.name); return; }
         return resizeImage(file).then(function (r) {
           if (session !== editorSession) return;  /* 그사이 글 쓰기 화면을 닫았음 */
-          photos.push({ src: '', alt: '', caption: '', width: r.width, height: r.height, isNew: true, blob: r.blob, previewUrl: URL.createObjectURL(r.blob), extra: {} });
+          photos.push({ src: '', alt: '', caption: '', width: r.width, height: r.height, isNew: true, blob: r.blob, thumbBlob: r.thumbBlob, previewUrl: URL.createObjectURL(r.blob), extra: {} });
           added++;
         }, function () { failed.push(file.name); });
       });
@@ -492,13 +524,23 @@
         n++;
         msg('', '사진을 올리는 중입니다 (' + n + '/' + newOnes.length + ')…');
         var path = newPath();
+        var tpath = path.replace(/\.jpg$/, '-thumb.jpg');
         return sb.storage.from(BUCKET).upload(path, p.blob, { contentType: 'image/jpeg', cacheControl: '31536000', upsert: false }).then(function (res) {
           if (res.error) throw { stage: 'upload', error: res.error };
           if (session === editorSession) sessionUploads.push(path);
           p.src = sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+          if (!p.thumbBlob) return null;
+          return sb.storage.from(BUCKET).upload(tpath, p.thumbBlob, { contentType: 'image/jpeg', cacheControl: '31536000', upsert: false });
+        }).then(function (res) {
+          if (res && !res.error) {
+            if (session === editorSession) sessionUploads.push(tpath);
+            p.extra = p.extra || {};
+            p.extra.thumb = sb.storage.from(BUCKET).getPublicUrl(tpath).data.publicUrl;
+          }
           p.isNew = false;
           if (p.previewUrl) { URL.revokeObjectURL(p.previewUrl); p.previewUrl = null; }
           p.blob = null;
+          p.thumbBlob = null;
         });
       });
     });
@@ -512,6 +554,14 @@
         if (p.width && p.height) { o.width = p.width; o.height = p.height; }
         return o;
       });
+      /* 옛 글의 목록 그림(thumb)은 영상이나 첫 사진이 바뀌면 지웁니다 (화면이 첫 사진 → 기본 그림 순서로 다시 고름) */
+      if (editing && editing.thumb) {
+        var oldFirst = Array.isArray(editing.images) && editing.images[0] ? (editing.images[0].src || editing.images[0]) : null;
+        var newFirst = d.images[0] ? d.images[0].src : null;
+        if ((editing.youtube_id || null) !== (d.youtube_id || null) || oldFirst !== newFirst) {
+          d.thumb = null; d.thumb_w = null; d.thumb_h = null;
+        }
+      }
       msg('', '글을 저장하는 중입니다…');
       var q = editing
         ? sb.from('posts').update(d).eq('id', editing.id).select('id,images').single()
@@ -523,8 +573,8 @@
       });
     }).then(function (saved) {
       // 고친 글에서 뺀 사진 파일은 저장소에서도 지웁니다 (실패해도 글은 이미 저장됨)
-      var oldPaths = editing && Array.isArray(editing.images) ? editing.images.map(function (im) { return storagePath(im && im.src); }).filter(Boolean) : [];
-      var keep = d.images.map(function (im) { return storagePath(im.src); });
+      var oldPaths = editing && Array.isArray(editing.images) ? imagePaths(editing.images) : [];
+      var keep = imagePaths(d.images);
       var gone = oldPaths.filter(function (p) { return keep.indexOf(p) < 0; });
       var cleanup = gone.length ? sb.storage.from(BUCKET).remove(gone).then(function () {}, function () {}) : Promise.resolve();
       return cleanup.then(function () {
@@ -555,7 +605,7 @@
       busy(button, false);
       if (res.error) { msg('error', '글을 지우지 못했습니다: ' + dbError(res.error), true); return; }
       if (!res.data || !res.data.length) { msg('error', '글을 지우지 못했습니다. 이미 지워졌거나 관리자 권한이 없습니다.', true); return; }
-      var paths = (res.data[0].images || []).map(function (im) { return storagePath(im && im.src); }).filter(Boolean);
+      var paths = imagePaths(res.data[0].images || []);
       var cleanup = paths.length ? sb.storage.from(BUCKET).remove(paths).then(function () {}, function () {}) : Promise.resolve();
       cleanup.then(function () {
         openList().then(function () { msg('ok', '‘' + (row.title || '') + '’ 글을 지웠습니다.', true); });
@@ -595,7 +645,185 @@
     h.focus();
   }
 
+  /* ---------- 서명 명단 ---------- */
+  var signOffset = 0, signGen = 0, signQuery = '';
+  function fmtPhone(d) {
+    d = String(d || '');
+    if (/^02\d{7,8}$/.test(d)) return d.slice(0, 2) + '-' + d.slice(2, d.length - 4) + '-' + d.slice(-4);
+    if (/^0\d{9,10}$/.test(d)) return d.slice(0, 3) + '-' + d.slice(3, d.length - 4) + '-' + d.slice(-4);
+    return d;
+  }
+  function fmtDateTime(iso) {
+    var t = Date.parse(iso);
+    if (isNaN(t)) return '';
+    var d = new Date(t + 9 * 3600 * 1000);
+    return d.getUTCFullYear() + '년 ' + (d.getUTCMonth() + 1) + '월 ' + d.getUTCDate() + '일 ' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes());
+  }
+  function signFilter(q) {
+    var v = (signQuery || '').trim();
+    if (!v) return q;
+    var digits = v.replace(/[\s-]/g, '');
+    if (/^\d{2,11}$/.test(digits)) return q.like('phone', '%' + digits + '%');
+    return q.ilike('name', '%' + v.replace(/[%_\\]/g, '') + '%');
+  }
+  function openSigns(focus) {
+    if (dirty && !window.confirm('저장하지 않은 내용이 사라집니다. 서명 명단으로 갈까요?')) return;
+    setDirty(false);
+    discardUploads();
+    editorSession++;
+    $('admin-title').textContent = '서명 명단';
+    document.title = '서명 명단 - 트루스코리아 관리자';
+    msg('', '');
+    show('view-signs');
+    signOffset = 0;
+    loadSignTotal();
+    loadSigns().then(function () { if (focus) { var h = $('signs-heading'); h.tabIndex = -1; h.focus(); } });
+  }
+  function loadSignTotal() {
+    var out = $('signs-total');
+    out.textContent = '서명하신 분 수를 세는 중입니다…';
+    sb.from('signatures').select('id', { count: 'exact', head: true }).then(function (res) {
+      if (res.error) { out.textContent = '서명하신 분 수를 세지 못했습니다: ' + dbError(res.error); return; }
+      out.textContent = '서명하신 분은 모두 ' + (res.count || 0).toLocaleString('ko-KR') + '명입니다.';
+    });
+  }
+  function loadSigns() {
+    var gen = ++signGen;
+    var body = $('signs-body');
+    $('signs-count').textContent = '명단을 불러오는 중입니다…';
+    var q = sb.from('signatures').select('id,name,phone,region,signature_path,created_at,consent_version', { count: 'exact' })
+      .order('created_at', { ascending: false }).order('id', { ascending: false })
+      .range(signOffset, signOffset + SIGN_PAGE - 1);
+    q = signFilter(q);
+    return q.then(function (res) {
+      if (gen !== signGen) return;
+      clear(body);
+      if (res.error) { $('signs-count').textContent = ''; msg('error', '서명 명단을 불러오지 못했습니다: ' + dbError(res.error), true); return; }
+      var rows = res.data || [], total = typeof res.count === 'number' ? res.count : rows.length;
+      rows.forEach(function (r) { body.appendChild(signRow(r)); });
+      if (!rows.length) {
+        $('signs-count').textContent = signQuery ? '찾는 분이 없습니다. 이름이나 번호를 다시 확인해 주세요.' : '아직 서명이 없습니다.';
+      } else {
+        $('signs-count').textContent = (signQuery ? '찾은 분 ' + total + '명 중 ' : '모두 ' + total + '명 중 ') + (signOffset + 1) + '~' + (signOffset + rows.length) + '번째를 보고 있습니다.';
+      }
+      $('signs-prev').hidden = signOffset <= 0;
+      $('signs-next').hidden = signOffset + rows.length >= total;
+    }, function () {
+      if (gen !== signGen) return;
+      $('signs-count').textContent = '';
+      msg('error', '서명 명단을 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 다시 해 주세요.', true);
+    });
+  }
+  function signRow(r) {
+    var tr = el('tr');
+    var who = r.name || '';
+    tr.appendChild(el('td', 'signs-table__name', who));
+    tr.appendChild(el('td', 'signs-table__phone', fmtPhone(r.phone)));
+    tr.appendChild(el('td', null, r.region || '—'));
+    tr.appendChild(el('td', null, fmtDateTime(r.created_at)));
+    var sig = el('td', 'signs-table__sig');
+    if (r.signature_path) {
+      var b = btn('btn btn--outline signs-table__btn', '서명 보기', ': ' + who);
+      b.addEventListener('click', function () {
+        busy(b, true, '여는 중…');
+        sb.storage.from(SIGN_BUCKET).createSignedUrl(r.signature_path, 300).then(function (res) {
+          if (res.error || !res.data || !res.data.signedUrl) { busy(b, false); msg('error', '서명 그림을 열지 못했습니다: ' + dbError(res.error), true); return; }
+          var img = el('img', 'signs-table__img');
+          img.src = res.data.signedUrl;
+          img.alt = '‘' + who + '’ 님의 손글씨 서명';
+          img.width = 240; img.height = 120;
+          sig.replaceChild(img, b);
+        }, function () { busy(b, false); msg('error', '서명 그림을 열지 못했습니다. 인터넷 연결을 확인해 주세요.', true); });
+      });
+      sig.appendChild(b);
+    } else {
+      sig.appendChild(el('span', 'signs-table__none', '없음'));
+    }
+    tr.appendChild(sig);
+    var delTd = el('td');
+    var del = btn('btn btn--danger signs-table__btn', '지우기', ': ' + who + ' 님의 서명');
+    del.addEventListener('click', function () { deleteSign(r, del); });
+    delTd.appendChild(del);
+    tr.appendChild(delTd);
+    return tr;
+  }
+  function deleteSign(r, button) {
+    var ok = window.confirm('‘' + (r.name || '') + '’ 님(' + fmtPhone(r.phone) + ')의 서명을 지울까요?\n지운 서명은 되살릴 수 없습니다.');
+    if (!ok) return;
+    busy(button, true, '지우는 중…');
+    sb.from('signatures').delete().eq('id', r.id).select('id,signature_path').then(function (res) {
+      busy(button, false);
+      if (res.error) { msg('error', '서명을 지우지 못했습니다: ' + dbError(res.error), true); return; }
+      if (!res.data || !res.data.length) { msg('error', '서명을 지우지 못했습니다. 이미 지워졌거나 관리자 권한이 없습니다.', true); return; }
+      var path = res.data[0].signature_path;
+      var cleanup = path ? sb.storage.from(SIGN_BUCKET).remove([path]).then(function () {}, function () {}) : Promise.resolve();
+      cleanup.then(function () {
+        loadSignTotal();
+        loadSigns().then(function () { msg('ok', '‘' + (r.name || '') + '’ 님의 서명을 지웠습니다.', true); });
+      });
+    });
+  }
+  /* CSV(엑셀에서 한글이 보이도록 UTF-8 BOM). 칸 첫 글자가 = + - @ 이면 앞에 ' 를 붙여 수식으로 읽히지 않게 합니다. */
+  function csvCell(v) {
+    var s = String(v == null ? '' : v);
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+  function downloadCsv() {
+    var b = $('btn-csv');
+    busy(b, true, 'CSV 만드는 중…');
+    var all = [], from = 0, STEP = 1000;
+    function step() {
+      return sb.from('signatures').select('name,phone,region,created_at,consent_version')
+        .order('created_at', { ascending: true }).order('id', { ascending: true })
+        .range(from, from + STEP - 1).then(function (res) {
+          if (res.error) throw res.error;
+          var rows = res.data || [];
+          all = all.concat(rows);
+          from += rows.length;
+          return rows.length === STEP ? step() : all;
+        });
+    }
+    step().then(function (rows) {
+      var lines = [['이름', '휴대폰', '사는 곳', '서명 날짜', '동의 버전'].map(csvCell).join(',')];
+      rows.forEach(function (r) {
+        lines.push([r.name, fmtPhone(r.phone), r.region || '', fmtDateTime(r.created_at), r.consent_version].map(csvCell).join(','));
+      });
+      var blob = new Blob(['﻿' + lines.join('\r\n') + '\r\n'], { type: 'text/csv;charset=utf-8' });
+      var d = new Date(Date.now() + 9 * 3600 * 1000);
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'signatures-' + d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + '.csv';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.parentNode.removeChild(a); }, 1000);
+      busy(b, false);
+      msg('ok', 'CSV 파일(' + rows.length + '명)을 내려받았습니다. 안전하게 보관해 주세요.');
+    }).catch(function (e) {
+      busy(b, false);
+      msg('error', 'CSV 파일을 만들지 못했습니다: ' + dbError(e), true);
+    });
+  }
+
   function bind() {
+    $('tab-posts').addEventListener('click', function () {
+      if ($('view-list').hidden === false) return;
+      if (dirty && !window.confirm('저장하지 않은 내용이 사라집니다. 글 목록으로 갈까요?')) return;
+      discardUploads();
+      msg('', '');
+      openList();
+    });
+    $('tab-signs').addEventListener('click', function () { if ($('view-signs').hidden) openSigns(true); });
+    $('signs-search').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      signQuery = $('signs-q').value;
+      signOffset = 0;
+      loadSigns();
+    });
+    $('signs-prev').addEventListener('click', function () { signOffset = Math.max(0, signOffset - SIGN_PAGE); loadSigns(); });
+    $('signs-next').addEventListener('click', function () { signOffset += SIGN_PAGE; loadSigns(); });
+    $('btn-csv').addEventListener('click', downloadCsv);
+
     $('login-form').addEventListener('submit', function (ev) {
       ev.preventDefault();
       var email = $('login-email').value.trim(), pw = $('login-password').value;

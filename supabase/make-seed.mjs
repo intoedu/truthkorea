@@ -2,13 +2,13 @@
 // 쓰는 법 (저장소 맨 위 폴더에서):  node supabase/make-seed.mjs
 // 옛 홈페이지에서 옮겨 온 글을 Supabase의 public.posts 표에 넣는 SQL을 만듭니다.
 // 같은 id가 이미 있으면 건너뛰므로(ON CONFLICT DO NOTHING) 여러 번 실행해도 안전합니다.
-// 사진 주소(images[].src)는 assets/uploads/legacy/… 처럼 사이트 안 주소 그대로 둡니다.
+// 사진 주소(images[].src)와 목록용 작은 그림(thumb)은 assets/uploads/legacy/… 처럼 사이트 안 주소 그대로 둡니다.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const root = new URL('..', import.meta.url);
 const posts = JSON.parse(readFileSync(new URL('data/posts.json', root), 'utf8'));
 
-const CATS = new Set(['broadcast', 'tknews', 'truth', 'event']);
+const CATS = new Set(['broadcast', 'tknews', 'event']);
 const lit = (v) => (v === null || v === undefined || v === '' ? 'null' : `'${String(v).replace(/'/g, "''")}'`);
 const bool = (v, dflt) => (v === undefined ? dflt : !!v) ? 'true' : 'false';
 
@@ -16,6 +16,7 @@ const rows = posts.map((p) => {
   if (!/^[A-Za-z0-9_-]{1,100}$/.test(p.id)) throw new Error(`bad id: ${p.id}`);
   if (!CATS.has(p.category)) throw new Error(`bad category: ${p.id}`);
   if (Number.isNaN(Date.parse(p.published_at))) throw new Error(`bad date: ${p.id}`);
+  if (p.thumb && !/^assets\/[A-Za-z0-9_.\/-]+$/.test(p.thumb)) throw new Error(`bad thumb: ${p.id}`);
   const images = (p.images || []).map((im) => {
     const o = { src: im.src, alt: im.alt || '' };
     if (im.width && im.height) { o.width = im.width; o.height = im.height; }
@@ -36,6 +37,9 @@ const rows = posts.map((p) => {
     `${lit(JSON.stringify(extraVideos))}::jsonb`,
     `${lit(JSON.stringify(links))}::jsonb`,
     `${lit(JSON.stringify(images))}::jsonb`,
+    lit(p.thumb),
+    Number.isInteger(p.thumb_w) ? String(p.thumb_w) : 'null',
+    Number.isInteger(p.thumb_h) ? String(p.thumb_h) : 'null',
     `${lit(p.published_at)}::timestamptz`,
     bool(p.is_published, true),
     bool(p.show_on_home, true),
@@ -51,7 +55,7 @@ const sql = `-- 자동으로 만든 파일입니다. 고치지 말고 data/posts
 -- 같은 id가 이미 있으면 건너뜁니다(여러 번 실행해도 안전).
 
 insert into public.posts
-  (id, category, title, body, youtube_id, video_after, extra_videos, links, images, published_at, is_published, show_on_home, source_url, event_start, event_end)
+  (id, category, title, body, youtube_id, video_after, extra_videos, links, images, thumb, thumb_w, thumb_h, published_at, is_published, show_on_home, source_url, event_start, event_end)
 values
 ${rows.join(',\n')}
 on conflict (id) do nothing;
