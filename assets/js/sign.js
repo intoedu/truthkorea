@@ -354,13 +354,27 @@
       });
     });
 
-    /* 입력하는 동안 아래 막대를 숨깁니다 (화면 자판 위에 뜨지 않게) */
-    document.addEventListener('focusin', function (e) {
-      if (e.target && e.target.matches && e.target.matches('input, select, textarea, canvas')) document.body.classList.add('is-typing');
-    });
-    document.addEventListener('focusout', function (e) {
+    /* 서명 칸을 쓰는 동안 아래 막대를 숨깁니다 (화면 자판 위에 뜨지 않게).
+       초점이 서명 칸 안의 다른 곳(동의 칸, ‘서명 제출하기’ 단추 등)으로 옮겨 가는 동안에는 계속 숨겨 둡니다.
+       막대가 누르는 손가락 밑에 갑자기 나타나면, 단추 대신 막대(후원하기)가 눌릴 수 있기 때문입니다.
+       서명 칸 밖으로 나가면 잠시(0.6초) 뒤에 다시 보입니다. */
+    var showTimer = null;
+    function hideBar() {
+      if (showTimer) { clearTimeout(showTimer); showTimer = null; }
+      document.body.classList.add('is-typing');
+    }
+    function showBarLater() {
+      if (showTimer) clearTimeout(showTimer);
+      showTimer = setTimeout(function () {
+        showTimer = null;
+        if (!form.contains(document.activeElement)) document.body.classList.remove('is-typing');
+      }, 600);
+    }
+    form.addEventListener('focusin', hideBar);
+    form.addEventListener('focusout', function (e) {
       var to = e.relatedTarget;
-      if (!to || !to.matches || !to.matches('input, select, textarea, canvas')) document.body.classList.remove('is-typing');
+      if (to && form.contains(to)) return;
+      showBarLater();
     });
   }
 
