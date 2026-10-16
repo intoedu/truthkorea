@@ -2130,3 +2130,10 @@ html.reduce-motion .sec-head.reveal .sec-head__title::after { transform: none !i
   .post__content a[href^="http"]::after { content: " (" attr(href) ")"; }
   .ph { background: none; outline: 1px dashed #000; }
 }
+
+/* 서명운동: 구글 설문 서명지 */
+.gform-card .gform-btn { min-height: 64px; font-size: 1.25rem; }
+.gform-sub { margin: 2.5rem 0 1rem; font-size: 1.375rem; font-weight: 800; color: var(--navy-900); }
+.gform-frame { border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; background: #FFFFFF; }
+.gform-frame iframe { display: block; width: 100%; height: 2400px; border: 0; }
+@media print { .gform-sub, .gform-frame { display: none; } }
