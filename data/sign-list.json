@@ -1,0 +1,60 @@
+{
+  "title": "부정선거 의혹 국회독재당 51명 명단",
+  "per_page": 9,
+  "people": [
+    {
+      "name": "이재명",
+      "img": "assets/img/sign/list-lee-jaemyung.webp",
+      "w": 230,
+      "h": 348
+    },
+    {
+      "name": "박찬대",
+      "img": "assets/img/sign/list-park-chandae.webp",
+      "w": 230,
+      "h": 348
+    },
+    {
+      "name": "추미애",
+      "img": "assets/img/sign/list-choo-miae.webp",
+      "w": 230,
+      "h": 348
+    },
+    {
+      "name": "김민석",
+      "img": "assets/img/sign/list-kim-minseok.webp",
+      "w": 230,
+      "h": 348
+    },
+    {
+      "name": "곽상언",
+      "img": "assets/img/sign/list-kwak-sangeon.webp",
+      "w": 230,
+      "h": 348
+    },
+    {
+      "name": "이언주",
+      "img": "assets/img/sign/list-lee-eonju.webp",
+      "w": 230,
+      "h": 348
+    },
+    {
+      "name": "고민정",
+      "img": "assets/img/sign/list-ko-minjung.webp",
+      "w": 230,
+      "h": 348
+    },
+    {
+      "name": "이인영",
+      "img": "assets/img/sign/list-lee-inyoung.webp",
+      "w": 230,
+      "h": 348
+    },
+    {
+      "name": "전현희",
+      "img": "assets/img/sign/list-jeon-hyunhee.webp",
+      "w": 230,
+      "h": 348
+    }
+  ]
+}
