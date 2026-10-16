@@ -74,7 +74,11 @@
     setState(true);
     var box = band.querySelector('[data-sign-count]'), num = band.querySelector('[data-sign-count-num]');
     fetchCount(c).then(function (n) {
-      if (n && n >= 1 && box && num) { num.textContent = fmtNum(n); box.hidden = false; }
+      if (n && n >= 1 && box && num) {
+        box.hidden = false;
+        box.setAttribute('aria-live', 'polite');
+        if (window.TKCountUp) window.TKCountUp(num, n, fmtNum); else num.textContent = fmtNum(n);   /* 한 번만 세어 올림 */
+      }
     });
   }
 

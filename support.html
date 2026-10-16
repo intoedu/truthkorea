@@ -23,18 +23,18 @@
 <link rel="icon" href="assets/img/favicon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
-<link rel="stylesheet" href="assets/css/site.css?v=20261015c">
-<script src="assets/js/site.js?v=20261015c"></script>
-<script src="assets/js/config.js?v=20261015c" defer></script>
-<script src="assets/js/posts.js?v=20261015c" defer></script>
+<link rel="stylesheet" href="assets/css/site.css?v=20261016a">
+<script src="assets/js/site.js?v=20261016a"></script>
+<script src="assets/js/config.js?v=20261016a" defer></script>
+<script src="assets/js/posts.js?v=20261016a" defer></script>
 </head>
-<body>
+<body id="top">
 <a class="skip-link" href="#main">본문 바로가기</a>
 
-<header class="site-header" id="top">
-  <div class="util-bar needs-js">
-    <div class="container util-bar__inner">
-      <a class="util-bar__call" href="contact.html"><svg class="util-bar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg><span>전화 문의 <span class="util-bar__num">010-2705-5000</span></span></a>
+<section class="util-bar needs-js" aria-label="화면 설정">
+  <div class="container util-bar__inner">
+    <a class="util-bar__call" href="contact.html"><svg class="util-bar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg><span>전화 문의 <span class="util-bar__num">010-2705-5000</span></span></a>
+    <div class="util-bar__tools">
       <div class="fontsize" role="group" aria-labelledby="fontsize-label">
         <span class="fontsize__label" id="fontsize-label">글자 크기</span>
         <div class="fontsize__buttons">
@@ -43,28 +43,66 @@
           <button type="button" class="fontsize__btn" data-set-font-size="xlarge" aria-pressed="false"><span class="fontsize__check" aria-hidden="true">✓</span>아주 크게</button>
         </div>
       </div>
+      <button type="button" class="motion-btn util-bar__motion" data-motion-toggle aria-pressed="false"><span class="motion-btn__track" aria-hidden="true"><span class="motion-btn__dot"></span></span><span class="motion-btn__label">움직임 줄이기</span></button>
     </div>
   </div>
+</section>
 
-  <div class="header-main">
-    <div class="container header-main__inner">
+<header class="site-header">
+  <div class="container site-header__inner">
     <a class="brand" href="index.html">
       <img class="brand__emblem" src="assets/img/brand/emblem-112.png" srcset="assets/img/brand/emblem-112.png 2x, assets/img/brand/emblem-200.webp 3x" width="44" height="44" alt="">
       <span class="brand__text"><span class="brand__name">트루스코리아</span><span class="brand__sub" lang="en">TRUTHKOREA</span></span><span class="sr-only"> 처음 화면으로</span>
     </a>
     <nav class="gnb" aria-label="주 메뉴">
       <ul class="gnb__list">
-        <li class="gnb__item"><a class="gnb__link" href="index.html">처음으로</a></li>
-        <li class="gnb__item"><a class="gnb__link" href="about.html">단체 소개</a></li>
-        <li class="gnb__item"><a class="gnb__link" href="news.html">뉴스·<wbr>영상</a></li>
-        <li class="gnb__item"><a class="gnb__link" href="events.html">행사·<wbr>세미나</a></li>
-        <li class="gnb__item"><a class="gnb__link gnb__link--sign" href="sign.html">서명운동</a></li>
-        <li class="gnb__item"><a class="gnb__link gnb__link--give" href="support.html" aria-current="page">후원하기</a></li>
+        <li class="gnb__item"><a class="gnb__link" href="index.html"><span class="gnb__text">처음으로</span></a></li>
+        <li class="gnb__item"><a class="gnb__link" href="about.html"><span class="gnb__text">단체 소개</span></a></li>
+        <li class="gnb__item"><a class="gnb__link" href="news.html"><span class="gnb__text">뉴스·<wbr>영상</span></a></li>
+        <li class="gnb__item"><a class="gnb__link" href="events.html"><span class="gnb__text">행사·<wbr>세미나</span></a></li>
+        <li class="gnb__item"><a class="gnb__link gnb__link--sign" href="sign.html"><span class="gnb__text">서명운동</span></a></li>
+        <li class="gnb__item"><a class="gnb__link gnb__link--give" href="support.html" aria-current="page"><svg class="gnb__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20s-7-4.4-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.6-9 9-9 9z"/></svg><span class="gnb__text">후원하기</span></a></li>
       </ul>
     </nav>
+    <div class="site-header__actions">
+      <a class="hdr-give" href="support.html"><svg class="hdr-give__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20s-7-4.4-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.6-9 9-9 9z"/></svg><span>후원하기</span></a>
+      <button type="button" class="menu-btn needs-js" aria-expanded="false" aria-controls="mmenu" aria-haspopup="dialog"><svg class="menu-btn__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="menu-btn__label">메뉴</span></button>
+      <a class="menu-btn menu-btn--nojs" href="#footer-menu"><svg class="menu-btn__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="menu-btn__label">메뉴</span></a>
     </div>
   </div>
 </header>
+
+<div class="mmenu needs-js" id="mmenu" role="dialog" aria-modal="true" aria-labelledby="mmenu-title" hidden>
+  <div class="mmenu__panel">
+    <div class="container mmenu__top">
+      <p class="mmenu__title" id="mmenu-title">전체 메뉴</p>
+      <button type="button" class="mmenu__close" data-mmenu-close><svg class="mmenu__close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg><span>닫기</span></button>
+    </div>
+    <nav class="container mmenu__nav" aria-label="전체 메뉴">
+      <ul class="mmenu__list">
+        <li class="mmenu__item" style="--i:0"><a class="mmenu__link" href="index.html"><span>처음으로</span><svg class="mmenu__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></li>
+        <li class="mmenu__item" style="--i:1"><a class="mmenu__link" href="about.html"><span>단체 소개</span><svg class="mmenu__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></li>
+        <li class="mmenu__item" style="--i:2"><a class="mmenu__link" href="news.html"><span>뉴스·영상</span><svg class="mmenu__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></li>
+        <li class="mmenu__item" style="--i:3"><a class="mmenu__link" href="events.html"><span>행사·세미나</span><svg class="mmenu__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></li>
+        <li class="mmenu__item" style="--i:4"><a class="mmenu__link" href="sign.html"><span>서명운동</span><svg class="mmenu__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></li>
+        <li class="mmenu__item" style="--i:5"><a class="mmenu__link" href="support.html" aria-current="page"><span>후원하기</span><svg class="mmenu__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></li>
+        <li class="mmenu__item" style="--i:6"><a class="mmenu__link" href="contact.html"><span>연락처</span><svg class="mmenu__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></li>
+      </ul>
+    </nav>
+    <div class="container mmenu__tools">
+      <div class="fontsize" role="group" aria-labelledby="mmenu-fontsize-label">
+        <span class="fontsize__label" id="mmenu-fontsize-label">글자 크기</span>
+        <div class="fontsize__buttons">
+          <button type="button" class="fontsize__btn" data-set-font-size="normal" aria-pressed="true"><span class="fontsize__check" aria-hidden="true">✓</span>보통</button>
+          <button type="button" class="fontsize__btn" data-set-font-size="large" aria-pressed="false"><span class="fontsize__check" aria-hidden="true">✓</span>크게</button>
+          <button type="button" class="fontsize__btn" data-set-font-size="xlarge" aria-pressed="false"><span class="fontsize__check" aria-hidden="true">✓</span>아주 크게</button>
+        </div>
+      </div>
+      <button type="button" class="motion-btn mmenu__motion" data-motion-toggle aria-pressed="false"><span class="motion-btn__track" aria-hidden="true"><span class="motion-btn__dot"></span></span><span class="motion-btn__label">움직임 줄이기</span></button>
+      <a class="mmenu__call" href="tel:01027055000"><svg class="mmenu__call-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg><span>전화 걸기 <span class="mmenu__call-num">010-2705-5000</span></span></a>
+    </div>
+  </div>
+</div>
 
 <main id="main" tabindex="-1">
   <div class="page-band band band--photo band--a08">
@@ -194,7 +232,8 @@
         <div><dt>후원 계좌</dt><dd>하나은행 <span class="nowrap">212-910016-02504</span><br>예금주 트루스코리아</dd></div>
       </dl>
     </div>
-    <nav class="footer-menu" aria-label="아래 메뉴">
+    <nav class="footer-menu" id="footer-menu" aria-label="아래 메뉴">
+      <p class="footer-menu__title" aria-hidden="true">전체 메뉴</p>
       <ul class="footer-menu__list">
         <li><a class="footer-menu__link" href="index.html">처음으로</a></li>
         <li><a class="footer-menu__link" href="about.html">단체 소개</a></li>
@@ -206,12 +245,14 @@
       </ul>
     </nav>
     <div class="site-footer__bottom">
-      <p class="site-footer__tip needs-js">글자를 더 크게 보시려면 화면 <span class="nowrap">맨 위</span> <span class="nowrap">‘글자 크기’</span>에서 <span class="nowrap">‘크게’</span>나 <span class="nowrap">‘아주 크게’</span>를 누르세요.</p>
+      <p class="site-footer__tip needs-js">글자를 더 크게 보시려면 화면 <span class="nowrap">맨 위</span> <span class="nowrap">‘글자 크기’</span>에서 <span class="nowrap">‘크게’</span>나 <span class="nowrap">‘아주 크게’</span>를 누르세요. 화면이 움직이는 것이 불편하시면 <span class="nowrap">‘움직임 줄이기’</span>를 누르세요.</p>
       <p class="site-footer__tip">컴퓨터에서는 Ctrl 키와&nbsp;+&nbsp;키를 함께 눌러도 글자가 커집니다.</p>
       <p class="site-footer__copy">© TRUTHKOREA</p>
     </div>
   </div>
 </footer>
+
+<a class="to-top needs-js" href="#top"><svg class="to-top__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="to-top__label">맨 위로</span></a>
 
 <nav class="quickbar" aria-label="빠른 메뉴">
   <a class="quickbar__item" href="tel:01027055000"><svg class="quickbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg><span class="quickbar__label">전화 걸기</span></a>

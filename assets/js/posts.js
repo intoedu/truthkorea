@@ -557,11 +557,9 @@
   /* ---------- 목록 카드 ---------- */
   /* 카드 그림이 화면에서 차지하는 너비 (site.css의 배치와 맞춤): 브라우저가 알맞은 크기의 그림을 고릅니다 */
   var SIZES = {
-    lead: '(min-width: 1024px) 380px, (min-width: 600px) 480px, 100vw',
-    card: '(min-width: 1024px) 380px, (min-width: 600px) 50vw, 100vw',
-    row: '(min-width: 1024px) 380px, (min-width: 600px) 50vw, (max-width: 359.98px) 100vw, 44vw',
-    poster: '(min-width: 1280px) 381px, (min-width: 768px) 33vw, (max-width: 359.98px) 112px, 50vw',
-    posterRow: '(min-width: 1280px) 381px, (min-width: 768px) 33vw, 112px'
+    card: '(min-width: 1248px) 384px, (min-width: 1024px) 31vw, (min-width: 600px) 50vw, 100vw',
+    poster: '(min-width: 1280px) 290px, (min-width: 768px) 33vw, (max-width: 359.98px) 112px, 50vw',
+    posterRow: '(min-width: 1280px) 290px, (min-width: 768px) 33vw, 112px'
   };
   /* kind: 'card' | 'lead' | 'row' */
   function cardItem(p, kind, showCat) {
@@ -579,8 +577,7 @@
     img.width = t.w; img.height = t.h;
     if (t.big) {
       img.srcset = t.src + ' ' + t.w + 'w, ' + t.big.src + ' ' + t.big.w + 'w';
-      img.sizes = SIZES[kind] || SIZES.card;
-      if (kind === 'row' && document.documentElement.getAttribute('data-font-size') === 'xlarge') img.sizes = SIZES.card;
+      img.sizes = SIZES.card;
     }
     img.src = t.src;
     media.appendChild(img);
@@ -686,10 +683,7 @@
     var offset = 0, busy = false, count = 0;
     function itemFor(p) {
       if (style === 'poster') return posterItem(p);
-      var kind = 'card';
-      if (style === 'rows') kind = 'row';
-      else if (style === 'lead-rows' || style === 'news') kind = count === 0 ? 'lead' : 'row';
-      return cardItem(p, kind, o.showCat);
+      return cardItem(p, 'card', o.showCat);   /* 8차: 모든 목록이 같은 카드(3·2·1칸) */
     }
     /* retried: ‘다시 불러오기’를 눌러 다시 부른 경우. 눌렀던 단추가 사라지므로 새로 나온 첫 글(또는 알림)로 초점을 옮깁니다. */
     function load(first, retried) {
