@@ -4,6 +4,7 @@
      파일을 읽지 못하거나 자바스크립트가 꺼져 있으면 sign.html에 적힌 숫자가 그대로 보입니다.
    - 명단: data/sign-list.json의 people[]을 9명씩 보여 줍니다. 9명보다 많을 때만 ‘이전/다음 명단’ 단추가 나옵니다.
    - 유튜브: [data-yt] 칸의 영상은 누를 때만 youtube-nocookie에서 불러옵니다(그 전에는 사이트 안 그림만 보임).
+   - 공유: 숫자 아래 ‘카카오톡 공유 · 링크 복사 · QR 코드 보기’ (자바스크립트가 꺼져 있으면 숨김)
    - ‘움직임 줄이기’면 세어 올리지 않고 바로 숫자를 씁니다. 화면에 넣는 글자는 모두 textContent로 넣습니다. */
 (function () {
   'use strict';
@@ -38,11 +39,7 @@
   }
 
   /* ---------- 참가 신청 인원 ---------- */
-  function padDigits(n) {
-    var s = String(n);
-    while (s.length < 6) s = '0' + s;
-    return s;
-  }
+  function padDigits(n) { return String(n); }
   function buildTiles(box, n) {
     while (box.firstChild) box.removeChild(box.firstChild);
     var s = padDigits(n), tiles = [];
@@ -55,10 +52,16 @@
     }
     return tiles;
   }
+  /* 세어 올리는 동안 앞자리의 0은 흐리게 보입니다(자리 수가 바뀌어 숫자가 흔들리지 않게) */
   function setTiles(tiles, n) {
-    var s = String(n);
+    var s = String(n), lead = true;
     while (s.length < tiles.length) s = '0' + s;
-    for (var i = 0; i < tiles.length; i++) tiles[i].textContent = s.charAt(i);
+    for (var i = 0; i < tiles.length; i++) {
+      var ch = s.charAt(i);
+      if (ch !== '0' || i === tiles.length - 1) lead = false;
+      tiles[i].textContent = ch;
+      tiles[i].classList.toggle('is-lead', lead);
+    }
   }
   function animate(D, step) {
     if (reduced() || !window.requestAnimationFrame) { step(1); return; }
@@ -185,7 +188,94 @@
     })(boxes[i]);
   }
 
-  function init() { initStats(); initList(); initVideos(); }
+  /* ---------- 공유: 카카오톡 · 링크 복사 · QR ----------
+     카카오 SDK 키가 없으므로, 휴대전화의 ‘공유하기’ 창(navigator.share)이 있으면 그 창을 열고(카카오톡을 고를 수 있음),
+     없으면 주소를 복사한 뒤 카카오톡 대화방에 붙여 넣으시도록 알려 드립니다.
+     QR 코드는 누를 때 assets/vendor/qrcode-generator 를 불러와 브라우저 안에서 만듭니다(바깥으로 보내는 것 없음). */
+  var toastTimer = null;
+  function toast(text) {
+    var t = document.getElementById('sg-toast');
+    if (!t) return;
+    if (toastTimer) clearTimeout(toastTimer);
+    t.classList.remove('is-on');
+    t.textContent = '';
+    setTimeout(function () {
+      t.textContent = text;
+      t.classList.add('is-on');
+      toastTimer = setTimeout(function () { t.classList.remove('is-on'); }, 5000);
+    }, 60);
+  }
+  function pageUrl() { return location.href.split('#')[0]; }
+  function copyLink(okText) {
+    var url = pageUrl();
+    var done = function (ok) { toast(ok ? okText : '복사하지 못했습니다. 주소를 길게 눌러 직접 복사해 주세요: ' + url); };
+    if (window.TKCopy) window.TKCopy(url, null, done); else done(false);
+  }
+  var QR_SRC = 'assets/vendor/qrcode-generator/qrcode.js?v=20261019a';
+  var qrLoading = null;
+  function loadQr() {
+    if (window.qrcode) return Promise.resolve(window.qrcode);
+    if (qrLoading) return qrLoading;
+    qrLoading = new Promise(function (resolve, reject) {
+      var sc = document.createElement('script');
+      sc.src = ROOT + QR_SRC;
+      sc.onload = function () { window.qrcode ? resolve(window.qrcode) : reject(new Error('qr')); };
+      sc.onerror = function () { qrLoading = null; reject(new Error('qr')); };
+      document.head.appendChild(sc);
+    });
+    return qrLoading;
+  }
+  function toggleQr(btn) {
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!panel) return;
+    var open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var label = btn.querySelector('[data-qr-label]');
+    if (label) label.textContent = open ? 'QR 코드 접기' : 'QR 코드 보기';
+    panel.hidden = !open;
+    if (!open) return;
+    var box = panel.querySelector('[data-qr-box]');
+    var urlEl = panel.querySelector('[data-qr-url]');
+    var url = pageUrl();
+    if (urlEl) urlEl.textContent = url;
+    if (box.getAttribute('data-for') === url) return;
+    loadQr().then(function (qrcode) {
+      var qr = qrcode(0, 'M');
+      qr.addData(url, 'Byte');
+      qr.make();
+      var img = el('img');
+      img.src = qr.createDataURL(8, 4);
+      img.alt = '이 서명운동 화면 주소의 QR 코드';
+      img.width = 220; img.height = 220;
+      while (box.firstChild) box.removeChild(box.firstChild);
+      box.appendChild(img);
+      box.setAttribute('data-for', url);
+    }).catch(function () {
+      while (box.firstChild) box.removeChild(box.firstChild);
+      box.appendChild(el('p', null, 'QR 코드를 만들지 못했습니다. 아래 주소를 알려 주세요.'));
+    });
+  }
+  function initShare() {
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-share]') : null;
+      if (!b) return;
+      var kind = b.getAttribute('data-share');
+      if (kind === 'copy') { copyLink('링크를 복사했습니다. 붙여 넣을 곳에 붙여 넣어 주세요.'); return; }
+      if (kind === 'qr') { toggleQr(b); return; }
+      if (kind === 'kakao') {
+        var kakaoMsg = '링크를 복사했습니다. 카카오톡 대화방에 붙여 넣어 주세요.';
+        if (navigator.share) {
+          navigator.share({ title: document.title, text: '국회해산 서명운동에 함께해 주세요.', url: pageUrl() }).catch(function (e) {
+            if (!e || e.name !== 'AbortError') copyLink(kakaoMsg);
+          });
+        } else {
+          copyLink(kakaoMsg);
+        }
+      }
+    });
+  }
+
+  function init() { initStats(); initShare(); initList(); initVideos(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
