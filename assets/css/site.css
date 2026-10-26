@@ -2251,11 +2251,16 @@ a[data-sg-link][href=""], [data-yt=""], .sg-debate:has(> a[href=""]) { display: 
 .sg-act__em { color: #A00B1C; }
 .sg-act--culture { background: #000000; border-color: #000000; color: #FFFFFF; }
 .sg-act--culture:visited { color: #FFFFFF; }
+.sg-act--ccp { background: #A00B1C; border-color: #A00B1C; color: #FFFFFF; }
+.sg-act--ccp:visited { color: #FFFFFF; }
+.sg-act__stack { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.sg-act__sub { font-size: 1.0625rem; font-weight: 700; }
 .sg-act:focus-visible { outline: 4px solid var(--focus-k); outline-offset: 2px; box-shadow: 0 0 0 4px var(--focus-y); }
 @media (hover: hover) { .sg-act:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); } }
 @media (min-width: 600px) {
   .sg-acts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .sg-acts__item--culture { grid-column: 1 / -1; }
+  .sg-acts__item--culture,
+  .sg-acts__item--ccp { grid-column: 1 / -1; }
 }
 
 /* 8. LIVE COMMUNITY */
