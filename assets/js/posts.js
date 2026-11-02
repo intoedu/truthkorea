@@ -19,9 +19,10 @@
   }
   var ROOT = findRoot();
 
-  var CATS = { broadcast: '종합뉴스', tknews: 'TK 뉴스', event: '행사·세미나' };
-  var NEWS_CATS = ['broadcast', 'tknews'];
-  /* 없어진 옛 분류(truth 등)로 들어온 주소는 종합뉴스로 보여 드립니다 */
+  var CATS = { broadcast: '트루스데일리', tknews: 'TK 뉴스', event: '행사·세미나' };
+  /* TK 뉴스 칸은 단체 요청으로 목록에서 뺐습니다(11차). 옛 TK 뉴스 글 주소는 그대로 열립니다. */
+  var NEWS_CATS = ['broadcast'];
+  /* 없어진 옛 분류(truth 등)로 들어온 주소는 트루스데일리(옛 종합뉴스) 목록으로 보여 드립니다 */
   var CAT_ALIAS = { truth: 'broadcast', Culture_War: 'broadcast', PresidentYoon: 'broadcast', TK_broadcast: 'broadcast', TK_NEWS: 'tknews' };
   var SELECT = 'id,category,title,body,youtube_id,video_after,extra_videos,links,images,thumb,thumb_w,thumb_h,published_at,show_on_home,event_start,event_end';
   /* 옛 홈페이지 게시판 → 새 목록 (옛 글 번호로 들어왔는데 글이 없을 때 그 목록으로 안내) */
@@ -566,7 +567,12 @@
     var isVideo = !!p.youtube_id;
     var li = el('li', 'card' + (kind === 'lead' ? ' card--lead' : '') + (kind === 'row' ? ' card--row' : '') + (isVideo ? ' card--video' : ''));
     var a = el('a', 'card__a');
-    a.href = postHref(p.id);
+    /* 영상 글은 유튜브로 바로 갑니다(11차) */
+    if (isVideo) {
+      a.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(p.youtube_id);
+      a.target = '_blank';
+      a.rel = 'noopener';
+    } else a.href = postHref(p.id);
     var media = el('span', 'card__media');
     media.setAttribute('aria-hidden', 'true');
     var t = thumbOf(p);
@@ -603,6 +609,7 @@
     }
     meta.appendChild(timeEl(p.published_at, '', 'card__date'));
     body.appendChild(meta);
+    if (isVideo) body.appendChild(el('span', 'sr-only', ' (유튜브, 새 창)'));
     a.appendChild(body);
     li.appendChild(a);
     return li;
