@@ -236,8 +236,10 @@
       if (p) { stop(); } else { if (steps >= n) steps = 0; run(); }
       render();
     }
-    hero.querySelector('[data-hero-prev]').addEventListener('click', function () { show(cur - 1, true); });
-    hero.querySelector('[data-hero-next]').addEventListener('click', function () { show(cur + 1, true); });
+    /* 넘기기 단추는 단체 요청으로 뺐습니다(11차). 단추가 다시 생기면 그대로 동작합니다. */
+    var prev = hero.querySelector('[data-hero-prev]'), next = hero.querySelector('[data-hero-next]');
+    if (prev) prev.addEventListener('click', function () { show(cur - 1, true); });
+    if (next) next.addEventListener('click', function () { show(cur + 1, true); });
     if (toggle) toggle.addEventListener('click', function () { setPaused(!paused); });
     hero.addEventListener('mouseenter', function () { hold.hover = true; render(); });
     hero.addEventListener('mouseleave', function () { hold.hover = false; render(); });

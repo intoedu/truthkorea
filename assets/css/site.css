@@ -2477,3 +2477,75 @@ html.js .share__qr:not([hidden]) { animation: rise-in .4s var(--ease-out) both; 
 @media (forced-colors: active) { .share__btn, .page-sign .sg-sec:not(.sg-top) > .sg-narrow { border: 2px solid CanvasText; } }
 .page-sign .state-card__actions { gap: 18px; }
 @media (min-width: 1024px) { .page-sign .page-band__inner { padding-bottom: 56px; } }
+
+/* ===== 33. 11차: 트루스데일리 자동 목록 · 서명운동 칸 · 큰 후원 사진 · 소액주주운동 ===== */
+.section-lead { margin: -8px 0 20px; font-size: var(--fs-body); color: #3D4757; }
+.card__media--logo { background: #FFFFFF; }
+.card__media--logo .card__img { object-fit: contain; padding: 10% 14%; }
+
+/* 서명운동 칸 (홈) */
+.camps { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
+.camp { margin: 0; min-width: 0; }
+.camp__a {
+  display: flex; flex-direction: column; height: 100%;
+  border: 1px solid var(--rule); border-radius: var(--radius-lg); overflow: hidden;
+  background: #FFFFFF; color: var(--ink); text-decoration: none;
+  box-shadow: 0 6px 18px -10px rgba(11, 31, 77, .3);
+  transition: transform .2s var(--ease-out), box-shadow .2s;
+}
+a.camp__a:visited { color: var(--ink); }
+a.camp__a:focus-visible { outline: 4px solid var(--focus-k); outline-offset: 2px; box-shadow: 0 0 0 4px var(--focus-y); }
+.camp__media { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--navy-900); }
+.camp__img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+.camp__media--soon { display: flex; align-items: center; justify-content: center; background: var(--paper); }
+.camp__emblem { width: 112px; height: 112px; opacity: .5; }
+.camp__body { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; flex: 1; padding: 20px 20px 24px; }
+.camp__state { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: #FDECEE; color: var(--red-700); font-size: 1rem; font-weight: 800; }
+.camp__dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+.camp__state--soon { background: var(--paper); color: #3D4757; }
+.camp__title { font-size: 1.5rem; font-weight: 800; line-height: 1.35; color: var(--navy-900); }
+.camp__text { font-size: var(--fs-body); line-height: 1.7; color: #2B3443; }
+.camp__more {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  margin-top: auto; min-height: 52px; padding: 10px 24px; border-radius: 999px;
+  background: var(--red-700); color: #FFFFFF; font-size: 1.125rem; font-weight: 800;
+}
+.camp__more .icon { width: 22px; height: 22px; }
+.camp--soon .camp__a { border-style: dashed; box-shadow: none; }
+@media (hover: hover) { a.camp__a:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); } }
+@media (min-width: 768px) { .camps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
+
+/* 후원 배너: 위에 큰 사진, 아래 글과 계좌 */
+.promo--give { display: block; min-height: 0; }
+.give-photo { margin: 0; background: var(--navy-900); }
+.give-photo__img { display: block; width: 100%; height: auto; }
+.promo--give .promo__body { padding-top: 26px; }
+@media (min-width: 1024px) { .promo--give .promo__body { padding: 44px 56px 52px 64px; } }
+
+/* 후원하기 화면: 계좌 칸을 넓게 */
+.account-section__inner { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 768px) {
+  .account-section__main { max-width: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
+}
+
+/* 소액주주운동: 사진과 구호, 더보기로 자세한 글 */
+.sh-photo { margin: 0 0 20px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); background: var(--navy-900); }
+.sh-photo__img { display: block; width: 100%; height: auto; }
+.sh-slogan { margin: 0 0 8px; font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; line-height: 1.3; letter-spacing: -.02em; color: var(--navy-900); }
+.sh-sub { margin: 0 0 20px; font-size: 1.25rem; font-weight: 700; line-height: 1.6; color: var(--navy-900); }
+.sh-more { margin: 0; }
+.sh-more__btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: var(--tap); padding: 10px 26px;
+  border: 2px solid var(--navy-900); border-radius: 999px; background: #FFFFFF;
+  color: var(--navy-900); font-size: 1.1875rem; font-weight: 800; cursor: pointer; list-style: none;
+}
+.sh-more__btn::-webkit-details-marker { display: none; }
+.sh-more__btn:focus-visible { outline: 4px solid var(--focus-k); outline-offset: 2px; box-shadow: 0 0 0 4px var(--focus-y); }
+.sh-more__chev { width: 22px; height: 22px; transition: transform .2s; }
+.sh-more__close { display: none; }
+.sh-more[open] .sh-more__open { display: none; }
+.sh-more[open] .sh-more__close { display: inline; }
+.sh-more[open] .sh-more__chev { transform: rotate(180deg); }
+.sh-more__body { margin-top: 20px; }
+@media (hover: hover) { .sh-more__btn:hover { background: var(--navy-900); color: #FFFFFF; } }
+@media print { .sh-more__body { display: block; } }

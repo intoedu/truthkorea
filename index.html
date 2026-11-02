@@ -25,11 +25,12 @@
 <link rel="preload" as="image" href="assets/img/banners/hero-rally-3x2-720.webp" imagesrcset="assets/img/banners/hero-rally-3x2-720.webp 720w, assets/img/banners/hero-rally-3x2-1080.webp 1080w" imagesizes="100vw" media="(max-width: 599px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/banners/hero-rally-1280.webp" imagesrcset="assets/img/banners/hero-rally-800.webp 800w, assets/img/banners/hero-rally-1280.webp 1280w" imagesizes="100vw" media="(min-width: 600px)" fetchpriority="high">
 <link rel="stylesheet" href="assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
-<link rel="stylesheet" href="assets/css/site.css?v=20261026a">
-<script src="assets/js/site.js?v=20261026a"></script>
-<script src="assets/js/config.js?v=20261026a" defer></script>
-<script src="assets/js/posts.js?v=20261026a" defer></script>
-<script src="assets/js/sign.js?v=20261026a" defer></script>
+<link rel="stylesheet" href="assets/css/site.css?v=20261102a">
+<script src="assets/js/site.js?v=20261102a"></script>
+<script src="assets/js/config.js?v=20261102a" defer></script>
+<script src="assets/js/posts.js?v=20261102a" defer></script>
+<script src="assets/js/sign.js?v=20261102a" defer></script>
+<script src="assets/js/feeds.js?v=20261102a" defer></script>
 </head>
 <body id="top" class="page-home">
 <a class="skip-link" href="#main">본문 바로가기</a>
@@ -133,19 +134,8 @@
         <p class="hero__lead">영상과 뉴스, 행사 소식을 전하고 서명운동과 후원을 안내합니다.</p>
         <p class="hero__btns">
           <a class="btn btn--red btn--pill hero__btn" href="sign.html"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg><span data-sign-state="on" hidden>서명하기</span><span data-sign-state="off">서명운동</span></a>
-          <a class="btn btn--glass btn--pill hero__btn" href="news.html?cat=broadcast"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg>영상 보기</a>
+          <a class="btn btn--glass btn--pill hero__btn" href="news.html"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg>뉴스·영상 보기</a>
         </p>
-      </div>
-      <div class="hero-ctrl needs-js" role="group" aria-label="사진 넘기기">
-        <button type="button" class="hero-ctrl__btn" data-hero-prev aria-label="이전 사진"><svg class="hero-ctrl__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <span class="hero-ctrl__count" aria-hidden="true"><span class="hero-ctrl__cur" data-hero-cur>01</span><span class="hero-ctrl__sep">/</span><span data-hero-total>03</span></span>
-        <button type="button" class="hero-ctrl__btn" data-hero-next aria-label="다음 사진"><svg class="hero-ctrl__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></button>
-        <button type="button" class="hero-ctrl__btn hero-ctrl__toggle" data-hero-toggle aria-label="사진 자동 넘김 멈추기">
-          <svg class="hero-ctrl__ring" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false"><circle class="hero-ctrl__ring-bg" cx="24" cy="24" r="22"/><circle class="hero-ctrl__ring-bar" cx="24" cy="24" r="22" pathLength="100" data-hero-ring/></svg>
-          <svg class="hero-ctrl__icon hero-ctrl__icon--pause" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>
-          <svg class="hero-ctrl__icon hero-ctrl__icon--play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg>
-        </button>
-        <span class="sr-only" role="status" data-hero-status></span>
       </div>
     </div>
   </section>
@@ -164,7 +154,7 @@
           <span class="acard__go"><svg class="acard__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></span>
         </a></li>
         <li class="actions__item" style="--i:2"><a class="acard acard--red" href="news.html">
-          <span class="acard__text"><span class="acard__title">뉴스·영상</span><span class="acard__desc">종합뉴스와 TK 뉴스를 영상과 사진으로 보실 수 있습니다.</span></span>
+          <span class="acard__text"><span class="acard__title">뉴스·영상</span><span class="acard__desc">트루스데일리 기사와 트루스데일리TV 영상을 보실 수 있습니다.</span></span>
           <span class="acard__icon"><svg class="acard__svg acard__svg--play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></span>
           <span class="acard__go"><svg class="acard__chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></span>
         </a></li>
@@ -172,66 +162,107 @@
     </div>
   </nav>
 
-  <section class="section section--first" id="videos" aria-labelledby="videos-title">
+  <section class="section section--first" id="truthdaily" aria-labelledby="truthdaily-title">
     <div class="container">
       <div class="sec-head reveal">
         <div class="sec-head__text">
-          <p class="sec-head__eyebrow" aria-hidden="true" lang="en">VIDEO NEWS</p>
-          <h2 class="sec-head__title" id="videos-title">종합뉴스</h2>
-          <p class="sec-head__sub">영상으로 전하는 소식입니다.</p>
+          <p class="sec-head__eyebrow" aria-hidden="true" lang="en">TRUTH DAILY</p>
+          <h2 class="sec-head__title" id="truthdaily-title">트루스데일리</h2>
+          <p class="sec-head__sub">트루스데일리의 새 기사가 자동으로 올라옵니다. 누르시면 기사로 바로 갑니다.</p>
         </div>
-        <a class="sec-head__more" href="news.html?cat=broadcast"><span class="sec-head__more-text">더보기<span class="sr-only">: 종합뉴스 전체</span></span><span class="sec-head__plus" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span></a>
+        <a class="sec-head__more" href="https://www.truthdaily.co.kr" target="_blank" rel="noopener"><span class="sec-head__more-text">더보기<span class="sr-only">: 트루스데일리 홈페이지 (새 창)</span></span><span class="sec-head__plus" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span></a>
       </div>
-      <noscript><p class="notice notice--warn">종합뉴스 목록은 자바스크립트가 켜져 있어야 보입니다. 인터넷 앱의 설정에서 자바스크립트를 켜 주시거나, 전화(<span class="nowrap">010-2705-5000</span>)로 문의해 주세요.</p></noscript>
-      <div class="post-list reveal-group" data-tk-list data-cats="broadcast" data-limit="3" data-home="1" data-style="video">
+      <noscript><p class="notice notice--warn">트루스데일리 목록은 자바스크립트가 켜져 있어야 보입니다. <a href="https://www.truthdaily.co.kr">트루스데일리 홈페이지</a>에서 바로 보실 수 있습니다.</p></noscript>
+      <div class="post-list reveal-group" data-td-feed="news" data-limit="3">
         <ul class="cards cards--video skel" aria-hidden="true"><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li></ul>
       </div>
-      <p class="sec-more"><a class="btn btn--outline sec-more__btn" href="news.html?cat=broadcast">종합뉴스 전체 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></p>
+      <p class="sec-more"><a class="btn btn--outline sec-more__btn" href="https://www.truthdaily.co.kr" target="_blank" rel="noopener">트루스데일리 바로 가기<span class="sr-only"> (새 창)</span><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></p>
     </div>
   </section>
 
-  <section class="section section--promo" aria-labelledby="sign-title" data-sign-band>
-    <div class="container">
-      <div class="promo promo--sign reveal">
-        <div class="promo__media" aria-hidden="true">
-          <img class="promo__img" src="assets/img/banners/rally-crowd-1000.webp" width="1000" height="563" alt="" loading="lazy" decoding="async">
-        </div>
-        <div class="promo__body">
-          <p class="promo__kicker"><svg class="promo__kicker-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>서명운동</p>
-          <h2 class="promo__title" id="sign-title">국회해산 서명운동</h2>
-          <div class="sign-band__state" data-sign-state="off">
-            <p class="promo__text">서명 접수를 준비하고 있습니다. 준비가 끝나면 이 홈페이지에서 바로 서명하실 수 있습니다.</p>
-          </div>
-          <div class="sign-band__state" data-sign-state="on" hidden>
-            <p class="promo__text">이름과 휴대폰 번호를 적고 동의하시면 서명이 접수됩니다.</p>
-            <p class="lock-line"><svg class="lock-line__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>서명하신 내용은 관리자만 볼 수 있습니다.</p>
-            <p class="sign-count" data-sign-count hidden>지금까지 <strong class="sign-count__num" data-sign-count-num></strong>명이 서명하셨습니다</p>
-          </div>
-          <p class="promo__cta"><a class="btn btn--red btn--pill btn--xl" href="sign.html"><span data-sign-state="on" hidden>서명하러 가기</span><span data-sign-state="off">서명운동 안내 보기</span><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="tknews" aria-labelledby="tknews-title">
+  <section class="section section--paper" id="truthdailytv" aria-labelledby="truthdailytv-title">
     <div class="container">
       <div class="sec-head reveal">
         <div class="sec-head__text">
-          <p class="sec-head__eyebrow" aria-hidden="true" lang="en">TRUTHKOREA NEWS</p>
-          <h2 class="sec-head__title" id="tknews-title">TK 뉴스</h2>
-          <p class="sec-head__sub">현장 사진과 기사로 전하는 소식입니다.</p>
+          <p class="sec-head__eyebrow" aria-hidden="true" lang="en">TRUTH DAILY TV</p>
+          <h2 class="sec-head__title" id="truthdailytv-title">트루스데일리TV</h2>
+          <p class="sec-head__sub">유튜브 새 영상이 자동으로 올라옵니다. 누르시면 유튜브로 바로 갑니다.</p>
         </div>
-        <a class="sec-head__more" href="news.html?cat=tknews"><span class="sec-head__more-text">더보기<span class="sr-only">: TK 뉴스 전체</span></span><span class="sec-head__plus" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span></a>
+        <a class="sec-head__more" href="https://www.youtube.com/channel/UC3rddsNSjWKgt_4shyUyb9g" target="_blank" rel="noopener"><span class="sec-head__more-text">더보기<span class="sr-only">: 트루스데일리TV 유튜브 채널 (새 창)</span></span><span class="sec-head__plus" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span></a>
       </div>
-      <noscript><p class="notice notice--warn">TK 뉴스 목록은 자바스크립트가 켜져 있어야 보입니다. 인터넷 앱의 설정에서 자바스크립트를 켜 주시거나, 전화(<span class="nowrap">010-2705-5000</span>)로 문의해 주세요.</p></noscript>
-      <div class="post-list reveal-group" data-tk-list data-cats="tknews" data-limit="3" data-home="1" data-style="cards">
-        <ul class="cards cards--cards skel" aria-hidden="true"><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li></ul>
+      <noscript><p class="notice notice--warn">트루스데일리TV 목록은 자바스크립트가 켜져 있어야 보입니다. <a href="https://www.youtube.com/channel/UC3rddsNSjWKgt_4shyUyb9g">트루스데일리TV 유튜브 채널</a>에서 바로 보실 수 있습니다.</p></noscript>
+      <div class="post-list reveal-group" data-td-feed="videos" data-limit="3">
+        <ul class="cards cards--video skel" aria-hidden="true"><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li><li class="card"><span class="card__a"><span class="card__media"></span><span class="card__body"><span class="skel__line"></span><span class="skel__line skel__line--short"></span></span></span></li></ul>
       </div>
-      <p class="sec-more"><a class="btn btn--outline sec-more__btn" href="news.html?cat=tknews">TK 뉴스 전체 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></p>
+      <p class="sec-more"><a class="btn btn--outline sec-more__btn" href="https://www.youtube.com/channel/UC3rddsNSjWKgt_4shyUyb9g" target="_blank" rel="noopener">유튜브 채널 바로 가기<span class="sr-only"> (새 창)</span><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></p>
     </div>
   </section>
 
-  <section class="section section--paper" id="events" aria-labelledby="events-title">
+  <section class="section" id="campaigns" aria-labelledby="campaigns-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div class="sec-head__text">
+          <p class="sec-head__eyebrow" aria-hidden="true" lang="en">CAMPAIGN</p>
+          <h2 class="sec-head__title" id="campaigns-title">서명운동</h2>
+          <p class="sec-head__sub">함께하실 서명운동을 골라 주세요.</p>
+        </div>
+      </div>
+      <ul class="camps reveal">
+        <li class="camp">
+          <a class="camp__a" href="sign.html">
+            <span class="camp__media" aria-hidden="true"><img class="camp__img" src="assets/img/sign/sign-poster-480.webp" width="480" height="503" alt="" loading="lazy" decoding="async"></span>
+            <span class="camp__body">
+              <span class="camp__state"><span class="camp__dot" aria-hidden="true"></span>서명 받는 중</span>
+              <span class="camp__title">국회해산 서명운동</span>
+              <span class="camp__text">헌법 안 지키는 국회, 해산이 답이다! 국회해산 천만서명에 함께해 주세요.</span>
+              <span class="camp__more">더보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></span>
+            </span>
+          </a>
+        </li>
+        <li class="camp camp--soon">
+          <div class="camp__a">
+            <span class="camp__media camp__media--soon" aria-hidden="true"><img class="camp__emblem" src="assets/img/brand/emblem-200.webp" width="200" height="200" alt="" loading="lazy" decoding="async"></span>
+            <span class="camp__body">
+              <span class="camp__state camp__state--soon">준비 중</span>
+              <span class="camp__title">새 서명운동</span>
+              <span class="camp__text">다음 서명운동을 준비하고 있습니다. 준비되면 이곳에서 안내해 드립니다.</span>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--promo" id="give" aria-labelledby="give-title">
+    <div class="container">
+      <div class="promo promo--give reveal">
+        <figure class="give-photo">
+          <img class="give-photo__img" src="assets/img/banners/shareholder-640.webp" srcset="assets/img/banners/shareholder-640.webp 640w, assets/img/banners/shareholder-998.webp 998w" sizes="(min-width: 1248px) 1200px, 100vw" width="998" height="300" alt="언론·영화 소액주주운동 안내 그림: 태극기 앞의 세 인물 사진" loading="lazy" decoding="async">
+        </figure>
+        <div class="promo__body give-band">
+          <div class="give-band__text">
+            <p class="promo__kicker"><svg class="promo__kicker-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20s-7-4.4-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.6-9 9-9 9z"/></svg>후원하기 <span class="promo__kicker-sub">문화전쟁 · 소액주주운동</span></p>
+            <h2 class="promo__title" id="give-title"><span class="gold">3.5%</span> 175만 명의 기적, <span class="nowrap">당신의 손으로!</span></h2>
+            <p class="promo__text">소액주주운동으로 언론과 문화를 되찾아 자유를 수호합시다!</p>
+            <p class="promo__cta promo__cta--link"><a class="btn btn--on-dark btn--pill" href="support.html">후원 안내 자세히 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></p>
+          </div>
+          <div class="give-band__card">
+            <div class="account-card account-card--dark">
+              <p class="account-card__bank"><span class="sr-only">은행: </span>하나은행</p>
+              <p class="account-card__number"><span class="sr-only">계좌번호: </span><span id="home-account-number">212-<wbr>910016-<wbr>02504</span></p>
+              <p class="account-card__holder">예금주 트루스코리아</p>
+              <div class="copy needs-js">
+                <button type="button" class="btn btn--red btn--block copy__btn" data-copy-text="21291001602504" data-copy-status="home-account-copy-status" data-copy-ok="계좌번호를 복사했습니다. 은행 앱의 계좌번호 칸에 붙여 넣으시면 됩니다. 은행은 하나은행, 예금주는 트루스코리아입니다."><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>계좌번호 복사</button>
+                <p class="copy__status" id="home-account-copy-status" role="status"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="events" aria-labelledby="events-title">
     <div class="container">
       <div class="sec-head reveal">
         <div class="sec-head__text">
@@ -264,35 +295,6 @@
           <li class="vchip"><svg class="vchip__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/></svg><span>청년·<wbr>대학 애국아카데미 지원</span></li>
         </ul>
         <p class="about-strip__more"><a class="btn btn--navy btn--pill" href="about.html#vision">비전 선언문 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--promo section--promo-last" id="give" aria-labelledby="give-title">
-    <div class="container">
-      <div class="promo promo--give reveal">
-        <div class="promo__media" aria-hidden="true">
-          <img class="promo__img" src="assets/img/banners/culture-war-m-768.webp" width="768" height="511" alt="" loading="lazy" decoding="async">
-        </div>
-        <div class="promo__body give-band">
-          <div class="give-band__text">
-            <p class="promo__kicker"><svg class="promo__kicker-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20s-7-4.4-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.6-9 9-9 9z"/></svg>후원하기 <span class="promo__kicker-sub">문화전쟁 · 소액주주운동</span></p>
-            <h2 class="promo__title" id="give-title"><span class="gold">3.5%</span> 175만 명의 기적, <span class="nowrap">당신의 손으로!</span></h2>
-            <p class="promo__text">소액주주운동으로 언론과 문화를 되찾아 자유를 수호합시다!</p>
-            <p class="promo__cta promo__cta--link"><a class="btn btn--on-dark btn--pill" href="support.html">후원 안내 자세히 보기<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg></a></p>
-          </div>
-          <div class="give-band__card">
-            <div class="account-card account-card--dark">
-              <p class="account-card__bank"><span class="sr-only">은행: </span>하나은행</p>
-              <p class="account-card__number"><span class="sr-only">계좌번호: </span><span id="home-account-number">212-<wbr>910016-<wbr>02504</span></p>
-              <p class="account-card__holder">예금주 트루스코리아</p>
-              <div class="copy needs-js">
-                <button type="button" class="btn btn--red btn--block copy__btn" data-copy-text="21291001602504" data-copy-status="home-account-copy-status" data-copy-ok="계좌번호를 복사했습니다. 은행 앱의 계좌번호 칸에 붙여 넣으시면 됩니다. 은행은 하나은행, 예금주는 트루스코리아입니다."><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>계좌번호 복사</button>
-                <p class="copy__status" id="home-account-copy-status" role="status"></p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
