@@ -2483,45 +2483,6 @@ html.js .share__qr:not([hidden]) { animation: rise-in .4s var(--ease-out) both; 
 .card__media--logo { background: #FFFFFF; }
 .card__media--logo .card__img { object-fit: contain; padding: 10% 14%; }
 
-/* 서명운동 칸 (홈) */
-.camps { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
-.camp { margin: 0; min-width: 0; }
-.camp__a {
-  display: flex; flex-direction: column; height: 100%;
-  border: 1px solid var(--rule); border-radius: var(--radius-lg); overflow: hidden;
-  background: #FFFFFF; color: var(--ink); text-decoration: none;
-  box-shadow: 0 6px 18px -10px rgba(11, 31, 77, .3);
-  transition: transform .2s var(--ease-out), box-shadow .2s;
-}
-a.camp__a:visited { color: var(--ink); }
-a.camp__a:focus-visible { outline: 4px solid var(--focus-k); outline-offset: 2px; box-shadow: 0 0 0 4px var(--focus-y); }
-.camp__media { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--navy-900); }
-.camp__img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
-.camp__media--soon { display: flex; align-items: center; justify-content: center; background: var(--paper); }
-.camp__emblem { width: 112px; height: 112px; opacity: .5; }
-.camp__body { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; flex: 1; padding: 20px 20px 24px; }
-.camp__state { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: #FDECEE; color: var(--red-700); font-size: 1rem; font-weight: 800; }
-.camp__dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
-.camp__state--soon { background: var(--paper); color: #3D4757; }
-.camp__title { font-size: 1.5rem; font-weight: 800; line-height: 1.35; color: var(--navy-900); }
-.camp__text { font-size: var(--fs-body); line-height: 1.7; color: #2B3443; }
-.camp__more {
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  margin-top: auto; min-height: 52px; padding: 10px 24px; border-radius: 999px;
-  background: var(--red-700); color: #FFFFFF; font-size: 1.125rem; font-weight: 800;
-}
-.camp__more .icon { width: 22px; height: 22px; }
-.camp--soon .camp__a { border-style: dashed; box-shadow: none; }
-@media (hover: hover) { a.camp__a:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); } }
-@media (min-width: 768px) { .camps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
-
-/* 후원 배너: 위에 큰 사진, 아래 글과 계좌 */
-.promo--give { display: block; min-height: 0; }
-.give-photo { margin: 0; background: var(--navy-900); }
-.give-photo__img { display: block; width: 100%; height: auto; }
-.promo--give .promo__body { padding-top: 26px; }
-@media (min-width: 1024px) { .promo--give .promo__body { padding: 44px 56px 52px 64px; } }
-
 /* 후원하기 화면: 계좌 칸을 넓게 */
 .account-section__inner { grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 768px) {
