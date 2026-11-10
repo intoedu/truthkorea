@@ -1,6 +1,20 @@
 {
  "news": [
   {
+   "title": "美 IT업계, 한국 공정위 과징금에 반발… USTR 조사 촉구",
+   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7159",
+   "date": "2026-11-11T06:26:32+09:00",
+   "summary": "미국 IT업계가 한국 공정거래위원회의 과징금 부과 방식에 문제를 제기하고 미국 정부에 통상 차원의 대응을 촉구한 것으로 드러났다.연합뉴스 5일 보도에 따르면, 미국 컴퓨터통신산업협회(CCIA)는 ‘한국 공정위의 불균형한 법 집행(The KFTC’s U",
+   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7159_14103_2545_v150.jpg"
+  },
+  {
+   "title": "도쿄 한복판서 스마트폰 1만 대 먹통… 中 남성 ‘가짜 기지국’ 의혹",
+   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7158",
+   "date": "2026-11-11T04:47:28+09:00",
+   "summary": "도쿄의 번화가에서 가짜 휴대전화 기지국을 이용해 주변 스마트폰의 통신을 방해하고 중국어 피싱 문자메시지를 보내 신용카드 정보를 빼내려 한 것으로 의심되는 사건이 발생했다.교도통신 10일 보도에 따르면 일본 경시청은 무허가 무선국을 운영하고 이동통신사 ",
+   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7158_14102_4514_v150.jpg"
+  },
+  {
    "title": "천마총 금관 발굴 현장 지휘한 김동현 전 연구소장 별세",
    "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7157",
    "date": "2026-11-11T02:47:29+09:00",
@@ -69,23 +83,15 @@
    "date": "2026-11-10T14:09:12+09:00",
    "summary": "대한민국 최전방 경계망에 심각한 경고등이 켜졌다. 30대 여성 한 명이 강원도 철원 지역의 민간인출입통제선(민통선) 이북으로 무단 진입한 데 이어 최전방 일반전초(GOP) 철책에 접근해 경계 센서까지 훼손했다. 군은 이 여성을 최초 포착하고도 신병을 ",
    "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7153_14087_830_v150.jpg"
-  },
-  {
-   "title": "[TD사설] 380억 들여 ‘피고 이재명’ 재판 공소취소 한다고?",
-   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7143",
-   "date": "2026-11-10T13:33:09+09:00",
-   "summary": "‘특검’ 지우개가 두 서류를 문지른다. 하나는 ‘이재명 관련 사건’, 다른 하나는 ‘문재인정부 관련 사건’이다. 지우개를 쥔 손에는 ‘셀프수사’라는 꼬리표가 달렸다. 이 장면이 던지는 질문은 간단하다. 자신이 피고인인 사건의 수사·기소 과정을 조사할 ",
-   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7143_14086_3254_v150.jpg"
-  },
-  {
-   "title": "美첩보원이 쓰고 韓첩보원이 옮긴 심리전 교과서 ‘첩보 심리전’ 출간",
-   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7152",
-   "date": "2026-11-10T13:14:26+09:00",
-   "summary": "전쟁은 총과 포탄으로만 치러지지 않는다. 상대의 판단을 흔들고 의지를 꺾으며, 때로는 총 한 발 쏘지 않고도 적의 행동을 바꾸는 전쟁이 있다. 정보와 언어, 이미지와 선전을 무기로 삼는 심리전이다. 미국의 정치학자이자 군 장교로 활동한 폴 라인바거(S",
-   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7152_14084_837_v150.jpg"
   }
  ],
  "videos": [
+  {
+   "id": "ynRqW8Rg58o",
+   "title": "부실선거 음모론에 속지말자 선관위 특검 앞 2026.11.10",
+   "date": "2026-11-10T20:04:29+00:00",
+   "ago": ""
+  },
   {
    "id": "bv2I3WFBIYA",
    "title": "길거리 민심 이재명 형사재판 5개 재판찬성 VS 재판반대 도봉산역 2026.11.10",
@@ -102,12 +108,6 @@
    "id": "3VZabWUMHtU",
    "title": "트루스데일리TV 라이브 스트리밍 중",
    "date": "2026-11-10T11:28:54+00:00",
-   "ago": ""
-  },
-  {
-   "id": "ynRqW8Rg58o",
-   "title": "부실선거 음모론에 속지말자 선관위 특검 앞 2026.11.10",
-   "date": "2026-11-10T07:05:46+00:00",
    "ago": ""
   },
   {
@@ -161,5 +161,5 @@
  ],
  "channel": "https://www.youtube.com/channel/UC3rddsNSjWKgt_4shyUyb9g",
  "site": "https://www.truthdaily.co.kr",
- "updated_at": "2026-11-10T17:55:32.789Z"
+ "updated_at": "2026-11-10T23:28:17.665Z"
 }
