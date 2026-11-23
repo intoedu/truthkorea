@@ -254,7 +254,7 @@ Supabase는 글과 사진을 저장하고, 관리자 로그인을 맡는 서비�
    **service_role 키나 secret 키는 절대 넣지 마세요.** 이 파일은 누구나 볼 수 있습니다. 공개 키는 보여도 괜찮고, 권한은 2번의 규칙이 지킵니다.
 8. **확인**: 홈페이지 ‘뉴스·영상’에 글이 그대로 나오는지, `/admin/`에서 로그인되는지, 처음 화면 서명 띠가 ‘서명하러 가기’로 바뀌고 `sign.html`에 서명 칸이 나오는지 확인합니다.
    시험 서명을 한 번 해 보고 관리자 화면 ‘서명 명단’에서 보이는지 확인한 뒤 지웁니다.
-9. **관리자 링크 다시 넣기**: Supabase 연결 전에는 관리자 화면을 쓸 수 없어서, 모든 페이지 맨 아래의 ‘관리자’ 링크를 빼 두었습니다. 연결을 마치면 각 페이지(404.html, about.html, contact.html, events.html, index.html, news.html, post.html, sign.html, support.html)의 `<p class="site-footer__copy">© TRUTHKOREA</p>` 바로 아래에 `<a class="footer-admin" href="admin/">관리자</a>`를 다시 넣습니다(404.html은 `href="/admin/"`). 모양은 CSS에 이미 들어 있습니다.
+9. **관리자 링크 다시 넣기**: Supabase 연결 전에는 관리자 화면을 쓸 수 없어서, 모든 페이지 맨 아래의 ‘관리자’ 링크를 빼 두었습니다. 연결을 마치면 각 페이지(404.html, about.html, contact.html, events.html, index.html, news.html, post.html, sign.html, support.html)의 `<p class="site-footer__copy">© TRUTHKOREA</p>` 바로 아래에 `<a class="footer-admin" href="admin/">관리자</a>`를 다시 넣습니다(404.html도 `href="admin/"`). 모양은 CSS에 이미 들어 있습니다.
 
 ## 관리자가 글 쓰는 법
 
@@ -306,8 +306,7 @@ Supabase는 글과 사진을 저장하고, 관리자 로그인을 맡는 서비�
 
 1. 저장소 파일을 **폴더 구조 그대로** 호스팅의 맨 위 폴더에 올립니다. `.git`, `README.md`, `CONTENT-TODO.md`, `supabase/`는 올리지 않아도 됩니다(올려도 해는 없음).
 2. 기본 문서는 `index.html`, 없는 주소 쪽은 `404.html`로 정합니다(위의 정적 호스팅들은 저절로 그렇게 합니다).
-3. **404.html은 주소가 `/`로 시작합니다.** 사이트를 도메인 맨 위(`https://truthkorea.net/`)에 올린다는 전제입니다. 옛 주소(`/bbs/…`)처럼 하위 폴더 주소에서도 스타일과 메뉴가 깨지지 않게 하려는 것입니다.
-   하위 폴더(예: `https://example.github.io/truthkorea/`)에 올릴 때는 404.html의 `href="/`, `src="/`, `srcset="/`를 그 폴더(`/truthkorea/`)로 바꾸고, `assets/js/legacy-redirect.js`의 `BASE`도 같은 값으로 바꿉니다. (다른 쪽은 모두 상대 주소라 그대로 됩니다.)
+3. **404.html은 사이트 맨 위 폴더를 스스로 찾습니다.** 머리말의 작은 스크립트가 주소가 `/truthkorea/`로 시작하면 그 폴더를, 아니면 `/`(도메인 맨 위, 예: `https://truthkorea.net/`)를 `<base>`로 정합니다. `assets/js/legacy-redirect.js`의 `BASE`도 같은 방식입니다. 그래서 GitHub Pages 하위 폴더에서도, 도메인을 옮긴 뒤에도 고칠 것이 없습니다. 다른 폴더 이름으로 올릴 때만 두 곳의 `truthkorea`를 그 이름으로 바꿉니다.
 4. 호스팅이 준 임시 주소로 먼저 열어 모든 쪽과 휴대전화 화면을 확인합니다.
 5. **도메인 연결(DNS)**: 도메인 등록 업체의 DNS 관리 화면에서 호스팅이 알려 준 값으로 바꿉니다.
    - 새 도메인은 `truthkorea.net`입니다. GitHub Pages에 연결할 때는 저장소 Settings → Pages → Custom domain에 `truthkorea.net`을 넣고, 도메인 업체에서 A 레코드 4개(185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153)와 `www` CNAME(`intoedu.github.io`)을 설정합니다.
