@@ -1,5 +1,5 @@
-/* 트루스데일리 최신 기사와 트루스데일리TV 최신 영상을 그립니다.
-   목록은 data/truthdaily.json 에 있고, GitHub Actions가 한 시간마다 새로 받아 둡니다(scripts/update-feeds.mjs).
+/* 트루스데일리 최신 기사와 트루스코리아 유튜브 최신 영상을 그립니다.
+   목록은 data/truthdaily.json 에 있고, GitHub Actions가 매시간 새로 받아 둡니다(scripts/update-feeds.mjs).
    누르면 트루스데일리 기사나 유튜브 영상이 새 창으로 바로 열립니다.
    쓰는 곳: <div data-td-feed="news|videos" data-limit="3"> */
 (function () {
@@ -11,7 +11,7 @@
   var script = document.currentScript;
   var ROOT = script ? script.src.replace(/assets\/js\/feeds\.js.*$/, '') : '';
   var SITE = 'https://www.truthdaily.co.kr';
-  var CHANNEL = 'https://www.youtube.com/channel/UC3rddsNSjWKgt_4shyUyb9g';
+  var CHANNEL = 'https://www.youtube.com/@%ED%8A%B8%EB%A3%A8%EC%8A%A4%EC%BD%94%EB%A6%AC%EC%95%84';
   var LOGO = ROOT + 'assets/img/banners/related-truthdaily.webp';
 
   function el(tag, cls, text) {
@@ -101,7 +101,7 @@
   function videoCards(items) {
     return items.filter(function (x) { return x && okVideo(x.id) && str(x.title); }).map(function (x) {
       return card({
-        href: 'https://www.youtube.com/watch?v=' + x.id, title: x.title, label: '트루스데일리TV',
+        href: 'https://www.youtube.com/watch?v=' + x.id, title: x.title, label: '트루스코리아 유튜브',
         when: x.date ? fmtDate(x.date) : str(x.ago), video: true,
         img: 'https://i.ytimg.com/vi/' + x.id + '/hqdefault.jpg', w: 480, h: 360
       });
@@ -111,7 +111,7 @@
   function fail(host, kind) {
     var p = el('p', 'notice');
     p.appendChild(document.createTextNode('목록을 불러오지 못했습니다. '));
-    var a = el('a', null, kind === 'videos' ? '트루스데일리TV 유튜브에서 보기' : '트루스데일리 홈페이지에서 보기');
+    var a = el('a', null, kind === 'videos' ? '트루스코리아 유튜브에서 보기' : '트루스데일리 홈페이지에서 보기');
     a.href = kind === 'videos' ? CHANNEL : SITE;
     a.target = '_blank';
     a.rel = 'noopener';

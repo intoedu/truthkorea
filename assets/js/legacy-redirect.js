@@ -15,25 +15,22 @@
   var BASE = /^\/truthkorea(\/|$)/.test(location.pathname) ? '/truthkorea/' : '/';
   /* 옛 게시판 → 새 목록 */
   var LIST = {
-    TK_broadcast: 'news.html?cat=broadcast',
-    TK_NEWS: 'news.html?cat=tknews',
-    /* 옛 truth·Culture_War·PresidentYoon 게시판의 글은 새 홈페이지에서 종합뉴스로 모았습니다 */
-    truth: 'news.html?cat=broadcast',
-    Culture_War: 'news.html?cat=broadcast',
-    PresidentYoon: 'news.html?cat=broadcast',
+    /* 옛 뉴스 게시판의 글은 옮기지 않았습니다(단체 요청, 12차). 새 뉴스·영상 화면으로 보냅니다 */
+    TK_broadcast: 'news.html',
+    TK_NEWS: 'news.html',
+    truth: 'news.html',
+    Culture_War: 'news.html',
+    PresidentYoon: 'news.html',
     event: 'events.html',
     /* 옛 서명하기 게시판 → 새 서명운동 화면 */
     Sign: 'sign.html'
   };
   /* 새 홈페이지로 옮긴 글 (게시판: 옛 글 번호). data/posts.json·supabase/seed.sql의 글과 같게 */
   var MOVED = {
-    TK_broadcast: [47, 48, 49, 52, 54, 55, 57, 58],
-    TK_NEWS: [17, 19, 20, 22],
-    truth: [12, 13, 14],
     event: [63, 66, 67, 69]
   };
   /* 두 게시판에 똑같이 올라 있던 글: 숨긴 쪽 → 보이는 쪽 (posts.js의 LEGACY_SAME과 같게) */
-  var SAME = { 'legacy-PresidentYoon-8': 'legacy-truth-12' };
+  var SAME = {};
   var PAGES = { visionpc: 'about.html', vision: 'about.html', intro: 'about.html', supportpc: 'support.html', support: 'support.html' };
   var q, to = null, path = location.pathname;
   try { q = new URLSearchParams(location.search); } catch (e) { return; }
