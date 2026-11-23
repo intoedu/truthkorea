@@ -34,7 +34,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          end=$(( $(date +%s) + 350*60 ))
+          end=$(( $(date +%s) + 340*60 ))   # 작업 제한(355분)보다 여유 있게
           while :; do
             # 그사이 main에 올라온 변경을 먼저 받아 둡니다(사이트 수정과 겹치지 않게)
             git pull --rebase --quiet origin "${GITHUB_REF_NAME}" || git rebase --abort || true
