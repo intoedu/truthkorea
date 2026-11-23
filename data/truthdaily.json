@@ -1,6 +1,13 @@
 {
  "news": [
   {
+   "title": "[속보] 젠슨 황 11일 만에 엔비디아 CEO 전격 복귀",
+   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7418",
+   "date": "2026-11-24T01:58:01+09:00",
+   "summary": "젠슨 황이 사임 11일 만에 엔비디아 최고경영자(CEO)로 전격 복귀했다. 중국 간첩 연루 의혹과 첨단 인공지능(AI) 반도체의 중국 우회 반출 논란으로 불거진 국가안보 우려에도 엔비디아 이사회는 만장일치로 그의 복귀를 결정했다.엔비디아는 23일(현지",
+   "thumb": ""
+  },
+  {
    "title": "[TD만평] 잘난 놈 위에 보는 놈!",
    "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7413",
    "date": "2026-11-23T16:47:53+09:00",
@@ -76,13 +83,6 @@
    "date": "2026-11-22T11:22:45+09:00",
    "summary": "당에서 제명된 한동훈의 국민의힘 복당을 둘러싼 논란이 정치권을 달구고 있다. 한쪽에서는 복당과 창당, 차기 당권 경쟁을 놓고 정치적 유불리를 계산하고, 다른 쪽에서는 한동훈의 과거 정치적 선택과 당원게시판(당게) 사건을 둘러싼 의혹을 먼저 해명하라고 ",
    "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7310_14663_1831_v150.jpg"
-  },
-  {
-   "title": "[기획] 조희대 대법원장 탄핵론자들, 헌법을 지키겠다는 것인가 짓밟겠다는 것인가",
-   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7309",
-   "date": "2026-11-22T10:10:22+09:00",
-   "summary": "대한민국의 헌법 질서를 지켜야 할 정치권이 오히려 헌정 질서의 근간을 흔드는 것 아닌가. 조희대 대법원장을 향한 탄핵 공세가 본격화하면서 이 질문을 피할 수 없게 됐다.더불어민주당은 11월 20일 조 대법원장 탄핵소추 추진을 당론으로 채택했다. 조국혁",
-   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7309_14662_99_v150.jpg"
   }
  ],
  "videos": [
@@ -161,5 +161,5 @@
  ],
  "channel": "https://www.youtube.com/channel/UC6fv-T2sGK1iztcbUdt07QQ",
  "site": "https://www.truthdaily.co.kr",
- "updated_at": "2026-11-23T08:01:03.321Z"
+ "updated_at": "2026-11-23T17:01:02.101Z"
 }
