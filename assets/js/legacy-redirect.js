@@ -9,10 +9,10 @@
      - 옛 truth·Culture_War·PresidentYoon 게시판의 옮기지 않은 글과 목록 → 종합뉴스 목록 (/news.html?cat=broadcast)
    카카오톡 등으로 퍼진 옛 글 주소가 없는 글 화면으로 가지 않고 늘 열리는 화면으로 가게 하려는 것입니다.
    관리자 화면에서 옛 글을 지우면 그 옛 주소는 ‘글을 찾을 수 없습니다’와 목록 단추가 있는 화면으로 갑니다.
-   사이트를 도메인 맨 위가 아닌 하위 폴더에 올리면 BASE를 그 폴더('/폴더/')로 바꿉니다. */
+   지금처럼 /truthkorea/ 하위 폴더(GitHub Pages)에 있으면 그 폴더를, 도메인 맨 위로 옮기면 /를 씁니다. */
 (function () {
   'use strict';
-  var BASE = '/';
+  var BASE = /^\/truthkorea(\/|$)/.test(location.pathname) ? '/truthkorea/' : '/';
   /* 옛 게시판 → 새 목록 */
   var LIST = {
     TK_broadcast: 'news.html?cat=broadcast',
