@@ -1,12 +1,12 @@
-// 트루스데일리 최신 기사(RSS)와 트루스데일리TV 최신 영상을 모아 data/truthdaily.json 으로 저장합니다.
-// GitHub Actions(.github/workflows/update-feeds.yml)가 한 시간마다 실행합니다. 따로 설치할 것은 없습니다(Node 20 이상).
+// 트루스데일리 최신 기사(RSS)와 트루스코리아 유튜브 최신 영상을 모아 data/truthdaily.json 으로 저장합니다.
+// GitHub Actions(.github/workflows/update-feeds.yml)가 매시간 실행합니다. 따로 설치할 것은 없습니다(Node 20 이상).
 // 가져오기에 실패한 쪽은 지난번 내용을 그대로 둡니다. 둘 다 실패하면 파일을 고치지 않습니다.
 import { readFile, writeFile } from 'node:fs/promises';
 
 const OUT = new URL('../data/truthdaily.json', import.meta.url);
 const SITE = 'https://www.truthdaily.co.kr';
 const RSS = SITE + '/rss/allArticle.xml';
-const CHANNEL_ID = 'UC3rddsNSjWKgt_4shyUyb9g'; // 트루스데일리TV (트루스데일리 홈페이지에 연결된 채널)
+const CHANNEL_ID = 'UC6fv-T2sGK1iztcbUdt07QQ'; // 트루스코리아 공식 유튜브 (@트루스코리아)
 const CHANNEL_URL = 'https://www.youtube.com/channel/' + CHANNEL_ID;
 const N_NEWS = 12;
 const N_VIDEOS = 12;

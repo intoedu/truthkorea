@@ -19,7 +19,8 @@
   }
   var ROOT = findRoot();
 
-  var CATS = { broadcast: '트루스데일리', tknews: 'TK 뉴스', event: '행사·세미나' };
+  /* 옛 뉴스 글(broadcast·tknews)은 단체 요청으로 지웠습니다(12차). 옛 주소로 오면 뉴스·영상 화면으로 안내합니다. */
+  var CATS = { broadcast: '뉴스·영상', tknews: '뉴스·영상', event: '행사·세미나' };
   /* TK 뉴스 칸은 단체 요청으로 목록에서 뺐습니다(11차). 옛 TK 뉴스 글 주소는 그대로 열립니다. */
   var NEWS_CATS = ['broadcast'];
   /* 없어진 옛 분류(truth 등)로 들어온 주소는 트루스데일리(옛 종합뉴스) 목록으로 보여 드립니다 */
@@ -28,7 +29,7 @@
   /* 옛 홈페이지 게시판 → 새 목록 (옛 글 번호로 들어왔는데 글이 없을 때 그 목록으로 안내) */
   var LEGACY_LIST = { TK_broadcast: 'broadcast', TK_NEWS: 'tknews', truth: 'broadcast', Culture_War: 'broadcast', PresidentYoon: 'broadcast', event: 'event' };
   /* 옛 홈페이지에서 두 게시판에 똑같이 올라 있던 글: 숨긴 쪽 → 보이는 쪽 (legacy-redirect.js의 SAME과 같게) */
-  var LEGACY_SAME = { 'legacy-PresidentYoon-8': 'legacy-truth-12' };
+  var LEGACY_SAME = {};
   var ID_RE = /^[A-Za-z0-9_-]{1,100}$/;
   var YT_RE = /^[A-Za-z0-9_-]{11}$/;
   var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -327,7 +328,7 @@
 
   /* ---------- 주소 ---------- */
   function postHref(id) { return ROOT + 'post.html?id=' + encodeURIComponent(id); }
-  function listHref(cat) { return cat === 'event' ? ROOT + 'events.html' : ROOT + 'news.html?cat=' + cat; }
+  function listHref(cat) { return cat === 'event' ? ROOT + 'events.html' : ROOT + 'news.html'; }
 
   /* ---------- 글 본문: 빈 줄 = 새 문단, 한 줄 바꿈 = <br>, 인터넷 주소 = 링크 ---------- */
   var URL_RE = /https?:\/\/[^\s<>"'“”‘’]+/g;
