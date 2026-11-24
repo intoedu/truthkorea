@@ -1,6 +1,13 @@
 {
  "news": [
   {
+   "title": "[정부영칼럼] 헌법이 법관 신분을 보장해 준 까닭",
+   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7426",
+   "date": "2026-11-24T16:38:40+09:00",
+   "summary": "대법원장 탄핵 문제에는 집단으로 목소리를 내면서, 이재명 재판의 재개 여부와 당선 효력을 다투는 소송의 처리, 직무정지 신청의 판단을 기다리는 국민에게는 왜 설명이 없는가. 법관들이 사법부 독립을 지키겠다며 나서는 것만큼이나, 국민은 그 독립을 어디에",
+   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7426_14748_368_v150.jpg"
+  },
+  {
    "title": "[이주연의 산중일기] 국민 가려운 곳 못 긁어주는 ‘국민신문고’의 허상",
    "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7416",
    "date": "2026-11-24T14:48:32+09:00",
@@ -36,7 +43,7 @@
    "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7422_14741_3830_v150.jpg"
   },
   {
-   "title": "美 민주당, 한국 3500억달러 투자 협정 들여다본다",
+   "title": "美민주당, 한국 3500억달러 투자 협정 들여다본다",
    "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7421",
    "date": "2026-11-24T04:32:57+09:00",
    "summary": "미국 민주당이 의회 주도권을 확보하면서 한국의 3500억달러 규모 대미 투자 합의까지 조사하겠다고 밝혀 국내 기업들의 미국 사업에도 새로운 통상 변수가 등장했다.연합뉴스 23일 보도에 따르면, 미국 민주당은 내년 1월 새 의회 출범을 계기로 도널드 트",
@@ -76,13 +83,6 @@
    "date": "2026-11-24T02:36:51+09:00",
    "summary": "얼마 전, 불교계 바닥에서 구를 대로 구른 한 노스님에게서 느닷없는 문자를 받았다. 첫마디부터 한다는 소리가 “맘에 안 들면 이쁜 보살도 죽여. 조폭 집단이나 다름없어요”였다.불교계 문제를 글로 쓰고 국민신문고에 민원을 넣는 것을 알고 하는 말인가. ",
    "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7419_14734_3316_v150.jpg"
-  },
-  {
-   "title": "[속보] 젠슨 황 11일 만에 엔비디아 CEO 전격 복귀",
-   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7418",
-   "date": "2026-11-24T01:58:01+09:00",
-   "summary": "젠슨 황이 사임 11일 만에 엔비디아 최고경영자(CEO)로 전격 복귀했다. 중국 간첩 연루 의혹과 첨단 인공지능(AI) 반도체의 중국 우회 반출 논란으로 불거진 국가안보 우려에도 엔비디아 이사회는 만장일치로 그의 복귀를 결정했다.엔비디아는 23일(현지",
-   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7418_14733_5735_v150.jpg"
   }
  ],
  "videos": [
@@ -161,5 +161,5 @@
  ],
  "channel": "https://www.youtube.com/channel/UC6fv-T2sGK1iztcbUdt07QQ",
  "site": "https://www.truthdaily.co.kr",
- "updated_at": "2026-11-24T06:01:03.547Z"
+ "updated_at": "2026-11-24T12:39:59.079Z"
 }
