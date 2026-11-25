@@ -1,6 +1,13 @@
 {
  "news": [
   {
+   "title": "[TD만평] 리트냥이 이전에 대통령냥이",
+   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7437",
+   "date": "2026-11-25T12:07:16+09:00",
+   "summary": "",
+   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7437_14786_654_v150.jpg"
+  },
+  {
    "title": "[TD만평] 인사코드: 무경험자·친중 경력자",
    "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7432",
    "date": "2026-11-25T10:53:44+09:00",
@@ -76,13 +83,6 @@
    "date": "2026-11-24T16:38:40+09:00",
    "summary": "대법원장 탄핵 문제에는 집단으로 목소리를 내면서, 이재명 재판의 재개 여부와 당선 효력을 다투는 소송의 처리, 직무정지 신청의 판단을 기다리는 국민에게는 왜 설명이 없는가. 법관들이 사법부 독립을 지키겠다며 나서는 것만큼이나, 국민은 그 독립을 어디에",
    "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7426_14748_368_v150.jpg"
-  },
-  {
-   "title": "[이주연의 산중일기] 국민 가려운 곳 못 긁어주는 ‘국민신문고’의 허상",
-   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7416",
-   "date": "2026-11-24T14:48:32+09:00",
-   "summary": "국민신문고에 긴 민원을 쓰고 나면 기대가 생긴다. 적어도 내가 무엇을 물었는지는 읽어 주겠지 하는 착한 기대다. 법 문구를 찾아보고, 과거의 관련 제도를 뒤지고, 재산의 이동과 국고 지원, 운영 주체의 변화까지 하나하나 짚어 장문의 질문을 보냈다. 돌",
-   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7416_14747_5121_v150.jpg"
   }
  ],
  "videos": [
@@ -161,5 +161,5 @@
  ],
  "channel": "https://www.youtube.com/channel/UC6fv-T2sGK1iztcbUdt07QQ",
  "site": "https://www.truthdaily.co.kr",
- "updated_at": "2026-11-25T03:01:02.510Z"
+ "updated_at": "2026-11-25T04:01:02.237Z"
 }
