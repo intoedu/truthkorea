@@ -1,6 +1,20 @@
 {
  "news": [
   {
+   "title": "[TD만평] 요즘 간첩이 어디 있냐고?",
+   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7474",
+   "date": "2026-11-28T10:19:47+09:00",
+   "summary": "",
+   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7474_14917_374_v150.jpg"
+  },
+  {
+   "title": "[서평] AI 부정시험·국정 난맥의 시대, 이승만의 ‘독립정신’을 다시 읽어야 하는 이유",
+   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7472",
+   "date": "2026-11-28T10:18:30+09:00",
+   "summary": "인공지능(AI)을 활용한 부정 시험으로 절차가 파괴 되어가는 21세기 우리나라의 모습이 마치 구한 말 모습과 흡사하고, 십상시들로 조정이 무너지는 현상을 보면 지금은 이승만 저 ‘독립정신’(비봉출판사) 책 읽기를 권한다는 트루스데일리 독자의 요청이 있",
+   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7472_14928_1349_v150.jpg"
+  },
+  {
    "title": "2026년 11월 28일 애국 우파 집회 소식(서울)",
    "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7211",
    "date": "2026-11-28T07:27:48+09:00",
@@ -43,14 +57,14 @@
    "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7457_14878_2759_v150.jpg"
   },
   {
-   "title": "美 CIA·정보기관까지 뚫렸다… 美 안보망 해킹 충격",
+   "title": "CIA·정보기관까지 뚫렸다… 美안보망 해킹 충격",
    "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7458",
    "date": "2026-11-28T06:17:19+09:00",
    "summary": "미국 중앙정보국(CIA)과 국가정보국(ODNI)이 사용하는 비기밀 정보 분석망이 해킹돼 일부 정보가 노출된 것으로 알려지면서 미국 정보기관과 금융권의 사이버 보안 취약성에 대한 우려가 커지고 있다.로이터통신 24일 보도에 따르면, CIA와 ODNI는 ",
    "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7458_14879_3157_v150.jpg"
   },
   {
-   "title": "대장동관련 5명 사망, 계엄은 6시간만에 해제",
+   "title": "[TD만평] 대장동 5명 사망, 계엄은 6시간 만에 해제",
    "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7473",
    "date": "2026-11-28T05:04:04+09:00",
    "summary": "",
@@ -69,20 +83,6 @@
    "date": "2026-11-27T17:48:31+09:00",
    "summary": "국민의힘이 추경호 대구시장의 내란 중요임무 종사 혐의 1심 무죄 판결과 관련해 조은석 특별검사 등을 형법상 법왜곡죄 혐의로 고발했다. 핵심 증거를 확보하고도 재판에 제때 제출하지 않았다는 의혹과 함께, 범죄 성립 요건이 충족되지 않았는데도 무리하게 공",
    "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7470_14906_4733_v150.jpg"
-  },
-  {
-   "title": "[김대중 경제정책⑦] 적화통일 방안인 ‘낮은 단계 연방제’ 동의한 DJ의 통일정책",
-   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7469",
-   "date": "2026-11-27T17:32:15+09:00",
-   "summary": "DJ의 1997년 대선 때, 북한에서 당시 대선 캠프인 국민회의에 편지가 날아왔다. 그 편지는 북한 조선사회민주당 위원장 김병식이 보내왔는데, 1971년 가을, 즉 DJ의 박정희와의 대선 후, 20만달러의 자금을 DJ에게 지원한 사실을 말하며, 만일 ",
-   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7469_14905_2833_v150.jpg"
-  },
-  {
-   "title": "[김대중 경제정책⑥] 민주노총에 날개 달아준 DJ의 노동문제",
-   "url": "https://www.truthdaily.co.kr/news/articleView.html?idxno=7468",
-   "date": "2026-11-27T17:27:44+09:00",
-   "summary": "IMF체제는 기업의 회생을 위한 정리해고 등의 노동의 유연성을 요구하였다. 이것은 평소의 DJ의 노동관과 맞지 않았다. 그래도 시대적 상황은 이 노동의 유연성이 제고 되지 않으면 기업의 회생이 어려운 상황이 펼쳐진다. 그래서 DJ는 이것을 노동자단체와",
-   "thumb": "https://www.truthdaily.co.kr/news/thumbnail/202611/7468_14904_2441_v150.jpg"
   }
  ],
  "videos": [
@@ -161,5 +161,5 @@
  ],
  "channel": "https://www.youtube.com/channel/UC6fv-T2sGK1iztcbUdt07QQ",
  "site": "https://www.truthdaily.co.kr",
- "updated_at": "2026-11-28T00:01:02.411Z"
+ "updated_at": "2026-11-28T03:01:02.898Z"
 }
